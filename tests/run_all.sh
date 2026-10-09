@@ -6,6 +6,7 @@ cd "$(dirname "$0")/.."
 GODOT="${GODOT:-godot}"
 status=0
 tools/check_time_calls.sh || status=1
+tools/check_validator_refs.sh || status=1
 "$GODOT" --headless --path . --import >/dev/null 2>&1
 ids=$(timeout 120 "$GODOT" --headless --path . --script res://tools/validate_persistent_ids.gd 2>&1)
 code=$?

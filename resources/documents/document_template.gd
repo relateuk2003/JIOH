@@ -13,6 +13,8 @@ extends Resource
 @export var fields: Array[DocumentField] = []
 @export var requires_signature: bool = false
 @export var requires_stamp: bool = false
+## Sheets that are filed rather than lodged must be punched first.
+@export var requires_punch: bool = false
 ## -1 for no expiry.
 @export var validity_days: int = -1
 @export var paper_scene: PackedScene

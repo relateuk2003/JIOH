@@ -161,6 +161,45 @@ static func date_string(epoch_day: int) -> String:
 	return Time.get_date_string_from_unix_time(epoch_day * SECONDS_PER_DAY)
 
 
+## Epoch day of a civil date (proleptic Gregorian), by arithmetic alone.
+## Used to read dates players write on forms.
+static func epoch_day_from_civil(year: int, month: int, day: int) -> int:
+	var y := year - (1 if month <= 2 else 0)
+	var era := floori(y / 400.0)
+	var yoe := y - era * 400
+	var mp := (month + 9) % 12
+	var doy := (153 * mp + 2) / 5 + day - 1
+	var doe := yoe * 365 + yoe / 4 - yoe / 100 + doy
+	return era * 146097 + doe - 719468
+
+
+## Parses a form date written as dd/mm/yy (the three two-character boxes).
+## Returns -1 if any box is blank or the date does not exist.
+static func epoch_day_from_form_date(text: String) -> int:
+	var parts := text.split("/")
+	if parts.size() != 3:
+		return -1
+	for p in parts:
+		if p.strip_edges().length() != 2 or not p.strip_edges().is_valid_int():
+			return -1
+	var d := int(parts[0])
+	var m := int(parts[1])
+	var y := 2000 + int(parts[2])
+	if m < 1 or m > 12 or d < 1 or d > 31:
+		return -1
+	var e := epoch_day_from_civil(y, m, d)
+	# Reject 31/02 and friends: the date must survive a round trip.
+	if date_string(e) != "%04d-%02d-%02d" % [y, m, d]:
+		return -1
+	return e
+
+
+## "dd/mm/yy" for an epoch day, as a form would want it written.
+static func form_date(epoch_day: int) -> String:
+	var iso := date_string(epoch_day)
+	return "%s/%s/%s" % [iso.substr(8, 2), iso.substr(5, 2), iso.substr(2, 2)]
+
+
 ## 0 = Sunday .. 6 = Saturday. 1970-01-01 was a Thursday.
 static func weekday_of(epoch_day: int) -> int:
 	return posmod(epoch_day + 4, 7)
