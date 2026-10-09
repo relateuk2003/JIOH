@@ -11,23 +11,26 @@ func _draw() -> void:
 
 
 ## Helpers shared by the painters.
+## Printed text: the body face at the nearest whole scale for px, or the
+## display face for headings (JIOH-63). Origins land on whole pixels.
 func text(at: Vector2, s: String, px: int, col: Color, width: float = -1.0,
-		align := HORIZONTAL_ALIGNMENT_LEFT) -> void:
-	draw_string(ThemeDB.fallback_font, at, s, align, width, px, col)
+		align := HORIZONTAL_ALIGNMENT_LEFT, face := JiohFonts.Face.BODY) -> void:
+	var size_px := JiohFonts.size(face, JiohFonts.scale_for(px, face))
+	draw_string(JiohFonts.font(face), at.round(), s, align, width, size_px, col)
 
 
 ## Marker or biro writing, nudged per glyph like the handwriting on forms.
+## Whole-pixel nudges only, never tilted or scaled fractionally.
 func hand(at: Vector2, s: String, px: int, col: Color, seed_key: Variant = 0) -> float:
-	var font := ThemeDB.fallback_font
-	var x := at.x
+	var font := JiohFonts.font(JiohFonts.Face.BODY)
+	var size_px := JiohFonts.size(JiohFonts.Face.BODY, JiohFonts.scale_for(px))
+	var x := roundf(at.x)
 	for i in s.length():
 		var ch := s[i]
 		var h := hash([seed_key, i, ch])
-		var jitter := Vector2(((h & 0xff) / 255.0 - 0.5) * px * 0.1, (((h >> 8) & 0xff) / 255.0 - 0.5) * px * 0.15)
-		draw_set_transform(Vector2(x, at.y) + jitter, (((h >> 16) & 0xff) / 255.0 - 0.5) * 0.14 - 0.04)
-		draw_char(font, Vector2.ZERO, ch, px, col)
-		x += font.get_char_size(ch.unicode_at(0), px).x * 0.94
-	draw_set_transform(Vector2.ZERO)
+		var jitter := Vector2(posmod(h, 3) - 1, posmod(h >> 8, 3) - 1)
+		draw_char(font, Vector2(x, roundf(at.y)) + jitter, ch, size_px, col)
+		x += font.get_char_size(ch.unicode_at(0), size_px).x
 	return x - at.x
 
 

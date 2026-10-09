@@ -15,6 +15,7 @@ extends Control
 func _ready() -> void:
 	if world_scene:
 		viewport.add_child(world_scene.instantiate())
+	Subtitles.attach(viewport)
 
 
 # Forwarded from _unhandled_input so root-level debug overlays (the time

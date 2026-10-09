@@ -136,22 +136,14 @@ func _build() -> void:
 
 
 func _label(text: String, i: int, at: Vector3) -> void:
-	var label := Label3D.new()
-	label.name = "Label_%d" % i
-	label.text = text
-	label.font_size = 36
-	label.pixel_size = 0.0011
-	label.width = 240.0
-	label.autowrap_mode = TextServer.AUTOWRAP_OFF
-	label.outline_size = 0
-	# Faded white paint, each hand-lettered slightly differently.
+	# Faded white paint on the fascia, each hand-lettered slightly differently.
 	var rng := RandomNumberGenerator.new()
 	rng.seed = hash(text)
-	label.modulate = Color(0.86, 0.83, 0.74).lerp(Color(0.48, 0.34, 0.20), rng.randf_range(0.2, 0.4))
-	label.alpha_cut = Label3D.ALPHA_CUT_DISCARD
+	var paint := Color(0.86, 0.83, 0.74).lerp(Color(0.48, 0.34, 0.20), rng.randf_range(0.2, 0.4))
+	var label := PixelDecal.make(text, paint, Color(0.48, 0.34, 0.20), 0.0032)
+	label.name = "Label_%d" % i
 	label.rotation.z = deg_to_rad(rng.randf_range(-2.5, 2.5))
 	label.position = at
-	label.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
 	add_child(label)
 
 

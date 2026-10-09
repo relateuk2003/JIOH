@@ -23,13 +23,14 @@ func _draw() -> void:
 	if doc == null:
 		return
 	var tpl := doc.template
-	var font := ThemeDB.fallback_font
+	var font := JiohFonts.font(JiohFonts.Face.BODY)
 	var ink := clampf(doc.print_quality, 0.0, 1.0)
 	var print_col := Color(PRINT, ink)
-	draw_string(font, Vector2(size.x * 0.06, size.y * 0.07), tpl.display_name.to_upper(),
-		HORIZONTAL_ALIGNMENT_LEFT, -1, int(size.y * 0.032), print_col)
-	draw_string(font, Vector2(size.x * 0.06, size.y * 0.11), tpl.form_code,
-		HORIZONTAL_ALIGNMENT_LEFT, -1, int(size.y * 0.02), print_col)
+	var display := JiohFonts.font(JiohFonts.Face.DISPLAY)
+	draw_string(display, _at(size.x * 0.06, size.y * 0.07), tpl.display_name.to_upper(),
+		HORIZONTAL_ALIGNMENT_LEFT, -1, JiohFonts.size(JiohFonts.Face.DISPLAY, JiohFonts.scale_for(size.y * 0.032, JiohFonts.Face.DISPLAY)), print_col)
+	draw_string(font, _at(size.x * 0.06, size.y * 0.11), tpl.form_code,
+		HORIZONTAL_ALIGNMENT_LEFT, -1, _fs(size.y * 0.02), print_col)
 	draw_line(Vector2(size.x * 0.05, size.y * 0.135), Vector2(size.x * 0.95, size.y * 0.135), print_col, 2.0)
 	var prev_y := -1.0
 	for f in tpl.fields:
@@ -39,15 +40,15 @@ func _draw() -> void:
 		var label_size := int(clampf(size.y * 0.018, 8, 18))
 		if shares_row and f.type != DocumentField.FieldType.TICKBOX:
 			# A time beside its date: the label is printed small above the box.
-			draw_string(font, Vector2(r.position.x, r.position.y - 2), f.printed_label.get_slice("(", 1).trim_suffix(")"),
-				HORIZONTAL_ALIGNMENT_LEFT, r.size.x, int(label_size * 0.75), print_col)
+			draw_string(font, _at(r.position.x, r.position.y - 2), f.printed_label.get_slice("(", 1).trim_suffix(")"),
+				HORIZONTAL_ALIGNMENT_LEFT, r.size.x, _fs(label_size * 0.75), print_col)
 		elif f.type == DocumentField.FieldType.TICKBOX:
 			# Tickboxes share a line; each label sits to the right of its box.
-			draw_string(font, Vector2(r.end.x + 3, r.position.y + r.size.y * 0.8), f.printed_label,
-				HORIZONTAL_ALIGNMENT_LEFT, size.x * 0.13 - r.size.x - 4, int(label_size * 0.8), print_col)
+			draw_string(font, _at(r.end.x + 3, r.position.y + r.size.y * 0.8), f.printed_label,
+				HORIZONTAL_ALIGNMENT_LEFT, size.x * 0.13 - r.size.x - 4, _fs(label_size * 0.8), print_col)
 		else:
-			draw_string(font, Vector2(size.x * 0.06, r.position.y + minf(r.size.y, size.y * 0.04) * 0.75),
-				f.printed_label, HORIZONTAL_ALIGNMENT_LEFT, r.position.x - size.x * 0.08, label_size, print_col)
+			draw_string(font, _at(size.x * 0.06, r.position.y + minf(r.size.y, size.y * 0.04) * 0.75),
+				f.printed_label, HORIZONTAL_ALIGNMENT_LEFT, r.position.x - size.x * 0.08, _fs(label_size), print_col)
 		if f.type == DocumentField.FieldType.DATE:
 			for i in 3:
 				var w := r.size.x / 3.0
@@ -93,26 +94,24 @@ func _draw_value(f: DocumentField, r: Rect2, value: Variant, font: Font) -> void
 func _hand(text: String, r: Rect2, font: Font, seed_key: StringName) -> void:
 	if text == "":
 		return
-	var px := int(clampf(minf(r.size.y, size.y * 0.045) * 0.62, 9, 26))
+	var px := _fs(clampf(minf(r.size.y, size.y * 0.045) * 0.62, 9, 26))
 	var lines := 1 if r.size.y < px * 2.6 else int(r.size.y / (px * 1.25))
 	var x := r.position.x + px * 0.3
 	var line := 0
 	for i in text.length():
 		var ch := text[i]
-		var adv := font.get_char_size(ch.unicode_at(0), px).x * 0.92
+		var adv := font.get_char_size(ch.unicode_at(0), px).x
 		if x + adv > r.end.x - 2:
 			if line + 1 >= lines:
 				break
 			line += 1
 			x = r.position.x + px * 0.3
 		var h := hash([seed_key, i, ch])
-		var jitter := Vector2(((h & 0xff) / 255.0 - 0.5) * px * 0.12, (((h >> 8) & 0xff) / 255.0 - 0.5) * px * 0.18)
-		var tilt := (((h >> 16) & 0xff) / 255.0 - 0.5) * 0.18
-		var base := Vector2(x, r.position.y + px * 1.05 + line * px * 1.25) + jitter
-		draw_set_transform(base, tilt - 0.06, Vector2(0.95, 1.0))
-		draw_char(font, Vector2.ZERO, ch, px, BIRO)
+		# Whole-pixel nudges only: no tilt, no fractional placement (JIOH-63).
+		var jitter := Vector2i(posmod(h, 3) - 1, posmod(h >> 8, 3) - 1)
+		var base := Vector2i(roundi(x), roundi(r.position.y + px * 1.05 + line * px * 1.25)) + jitter
+		draw_char(font, Vector2(base), ch, px, BIRO)
 		x += adv
-	draw_set_transform(Vector2.ZERO)
 
 
 func _draw_stamp(font: Font) -> void:
@@ -122,13 +121,23 @@ func _draw_stamp(font: Font) -> void:
 	draw_set_transform(c, deg_to_rad(s.rotation_degrees))
 	var box := Rect2(Vector2(-size.x * 0.12, -size.y * 0.035), Vector2(size.x * 0.24, size.y * 0.07))
 	draw_rect(box, col, false, 2.0)
-	draw_string(font, Vector2(box.position.x + 4, box.position.y + box.size.y * 0.38), "RECEIVED",
-		HORIZONTAL_ALIGNMENT_CENTER, box.size.x - 8, int(size.y * 0.018), col)
+	draw_string(font, _at(box.position.x + 4, box.position.y + box.size.y * 0.38), "RECEIVED",
+		HORIZONTAL_ALIGNMENT_CENTER, box.size.x - 8, _fs(size.y * 0.018), col)
 	var d := s.stamped_date.split("-")
 	var months := ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]
 	var text := s.stamped_date
 	if d.size() == 3 and int(d[1]) >= 1 and int(d[1]) <= 12:
 		text = "%s %s %s" % [d[2], months[int(d[1]) - 1], d[0].substr(2)]
-	draw_string(font, Vector2(box.position.x + 4, box.position.y + box.size.y * 0.85), text,
-		HORIZONTAL_ALIGNMENT_CENTER, box.size.x - 8, int(size.y * 0.024), col)
+	draw_string(font, _at(box.position.x + 4, box.position.y + box.size.y * 0.85), text,
+		HORIZONTAL_ALIGNMENT_CENTER, box.size.x - 8, _fs(size.y * 0.024), col)
 	draw_set_transform(Vector2.ZERO)
+
+
+## A body-face size at the nearest whole scale for a line height in pixels.
+func _fs(px: float) -> int:
+	return JiohFonts.size(JiohFonts.Face.BODY, JiohFonts.scale_for(px))
+
+
+## Text origins land on whole pixels.
+func _at(x: float, y: float) -> Vector2:
+	return Vector2(roundi(x), roundi(y))

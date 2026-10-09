@@ -1,0 +1,17 @@
+[remap]
+
+importer="font_data_bmfont"
+type="FontFile"
+uid="uid://d25q1k4mo004e"
+path="res://.godot/imported/jioh_body_6px.fnt-aa413c5d1ca041c57cba9635e9ac0d34.fontdata"
+
+[deps]
+
+source_file="res://resources/fonts/jioh_body_6px.fnt"
+dest_files=["res://.godot/imported/jioh_body_6px.fnt-aa413c5d1ca041c57cba9635e9ac0d34.fontdata"]
+
+[params]
+
+fallbacks=[]
+compress=true
+scaling_mode=1

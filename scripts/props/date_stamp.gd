@@ -34,7 +34,7 @@ const YEAR_COUNT := 10
 
 var handle: Interactable
 var bands: Array[StampBand] = []
-var _labels: Array[Label3D] = []
+var _labels: Array[PixelDecal] = []
 var _ratchet := 0.0
 var _rng := RandomNumberGenerator.new()
 
@@ -157,7 +157,7 @@ func _build() -> void:
 	for i in 3:
 		var x := -0.022 + i * 0.022
 		PropMesh.box(self, "Wheel_%d" % i, Vector3(x, 0.065, 0.008), Vector3(0.018, 0.03, 0.012), Color(0.55, 0.52, 0.47))
-		_labels.append(PropMesh.label(self, "BandLabel_%d" % i, "", Vector3(x, 0.065, 0.0145), 22))
+		_labels.append(PropMesh.label(self, "BandLabel_%d" % i, "", Vector3(x, 0.065, 0.0145), 22, Color(0.55, 0.52, 0.47)))
 		var band := StampBand.new()
 		band.stamp = self
 		band.band = i

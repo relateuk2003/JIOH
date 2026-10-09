@@ -193,7 +193,7 @@ func _stand_at_hatch() -> void:
 func _visible_controls() -> int:
 	var n := 0
 	for c in get_tree().root.find_children("*", "Control", true, false):
-		if (c as Control).is_visible_in_tree() and c.get_parent() != Subtitles:
+		if (c as Control).is_visible_in_tree() and not c is PixelText:
 			n += 1
 	return n
 

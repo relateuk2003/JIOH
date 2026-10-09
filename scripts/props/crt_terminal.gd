@@ -175,11 +175,11 @@ func _set_locked(on: bool) -> void:
 func _paint(c: FaceCanvas) -> void:
 	c.draw_rect(Rect2(Vector2.ZERO, c.size), Color(0.02, 0.05, 0.03))
 	if not active:
-		c.text(Vector2(20, 40), "SITE OFFICE SYSTEM", 20, DIM)
+		c.text(Vector2(20, 40), "SITE OFFICE SYSTEM", 20, DIM, -1.0, HORIZONTAL_ALIGNMENT_LEFT, JiohFonts.Face.TERMINAL)
 		return
 	var y := 30.0
 	for line in screen_text().split("\n"):
-		c.text(Vector2(14, y), line, 18, GREEN)
+		c.text(Vector2(14, y), line, 18, GREEN, -1.0, HORIZONTAL_ALIGNMENT_LEFT, JiohFonts.Face.TERMINAL)
 		y += 22.0
 	if is_drawing():
-		c.text(Vector2(14, 30), "PLEASE WAIT", 18, DIM)
+		c.text(Vector2(14, 30), "PLEASE WAIT", 18, DIM, -1.0, HORIZONTAL_ALIGNMENT_LEFT, JiohFonts.Face.TERMINAL)

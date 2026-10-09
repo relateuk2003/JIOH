@@ -36,7 +36,7 @@ func _paint(c: FaceCanvas) -> void:
 	if not CampaignState.has_campaign():
 		return
 	var cell := Vector2(s.x / 7.0, (s.y - 40) / 2.0)
-	c.text(Vector2(12, 28), "WORKS PLANNER", 22, Color(0.2, 0.2, 0.2))
+	c.text(Vector2(12, 28), "WORKS PLANNER", 22, Color(0.2, 0.2, 0.2), -1.0, HORIZONTAL_ALIGNMENT_LEFT, JiohFonts.Face.DISPLAY)
 	var columns := {}  # campaign day -> top-left of its cell
 	for i in CampaignState.CAMPAIGN_LENGTH:
 		var day := i + 1

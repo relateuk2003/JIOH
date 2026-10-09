@@ -36,17 +36,12 @@ static func handle(parent: Node, it: Interactable, n: String, centre: Vector3, s
 	return it
 
 
-## Small painted lettering, read by looking closely.
-static func label(parent: Node, n: String, text: String, at: Vector3, size := 24) -> Label3D:
-	var l := Label3D.new()
-	l.name = n
-	l.text = text
-	l.font_size = size
-	l.pixel_size = 0.0006
-	l.outline_size = 0
-	l.modulate = Color(0.08, 0.08, 0.08)
-	l.alpha_cut = Label3D.ALPHA_CUT_DISCARD
-	l.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
-	l.position = at
-	parent.add_child(l)
-	return l
+## Small printed or painted lettering, read by looking closely: a bitmap
+## decal (JIOH-63), sized from the old Label3D font size so layouts hold.
+static func label(parent: Node, n: String, text: String, at: Vector3, size := 24,
+		paper := Color(0.9, 0.88, 0.8), ink := Color(0.08, 0.08, 0.08)) -> PixelDecal:
+	var d := PixelDecal.make(text, ink, paper, size * 0.0006 / JiohFonts.NATIVE[JiohFonts.Face.BODY])
+	d.name = n
+	d.position = at
+	parent.add_child(d)
+	return d
