@@ -66,8 +66,19 @@ func execute(line: String) -> String:
 				return "usage: era on|off"
 			EraBus.set_bypass(args[0] == "off")
 			return "era %s" % args[0]
+		"tone":
+			# JIOH-70: hear a room tone column without moving the clock.
+			if args.is_empty():
+				return RoomTone.readout()
+			if args[0] == "clock":
+				RoomTone.clear_force(2.0)
+				return "tone follows the clock"
+			if StringName(args[0]) not in RoomToneMatrix.COLUMNS:
+				return "usage: tone [%s|clock]" % "|".join(RoomToneMatrix.COLUMNS)
+			RoomTone.force_column(StringName(args[0]), 2.0)
+			return "tone %s" % args[0]
 		"help":
-			return "goto <day> <phase> | skip <2h|45m|3d> | freeze | thaw | rate <n> | now | reset | era on|off"
+			return "goto <day> <phase> | skip <2h|45m|3d> | freeze | thaw | rate <n> | now | reset | era on|off | tone [column|clock]"
 	return "unknown command: %s" % parts[0]
 
 

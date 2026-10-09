@@ -1,0 +1,118 @@
+[gd_resource type="Resource" script_class="RoomRegistry" load_steps=14 format=3]
+
+[ext_resource type="Script" path="res://scripts/office/room_info.gd" id="1_info"]
+[ext_resource type="Script" path="res://scripts/office/room_registry.gd" id="2_reg"]
+
+[sub_resource type="Resource" id="room_0"]
+script = ExtResource("1_info")
+key = &"Reception"
+centre = Vector2(11.0, 4.0)
+size = Vector2(10.0, 8.0)
+space = &"Space_hall"
+priority = 0
+neighbours = Array[StringName]([&"Hatch", &"Stairwell", &"Corridor", &"JanicesDesk"])
+has_tone = true
+
+[sub_resource type="Resource" id="room_1"]
+script = ExtResource("1_info")
+key = &"Hatch"
+centre = Vector2(4.0, 4.0)
+size = Vector2(4.0, 8.0)
+space = &"Space_dead"
+priority = 0
+neighbours = Array[StringName]([&"Reception", &"JanicesDesk"])
+has_tone = true
+
+[sub_resource type="Resource" id="room_2"]
+script = ExtResource("1_info")
+key = &"JanicesDesk"
+centre = Vector2(7.0, 5.5)
+size = Vector2(2.4, 3.0)
+space = &"Space_dead"
+priority = 1
+neighbours = Array[StringName]([&"Reception", &"Hatch"])
+has_tone = true
+
+[sub_resource type="Resource" id="room_3"]
+script = ExtResource("1_info")
+key = &"Stairwell"
+centre = Vector2(14.0, -2.0)
+size = Vector2(4.0, 4.0)
+space = &"Space_hall"
+priority = 0
+neighbours = Array[StringName]([&"Reception"])
+has_tone = true
+
+[sub_resource type="Resource" id="room_4"]
+script = ExtResource("1_info")
+key = &"Corridor"
+centre = Vector2(25.0, 6.5)
+size = Vector2(18.0, 2.0)
+space = &"Space_hall"
+priority = 0
+neighbours = Array[StringName]([&"Reception", &"FileStore", &"PrintRoom", &"KeyCabinet", &"CorridorSouth", &"YardDoor"])
+has_tone = false
+
+[sub_resource type="Resource" id="room_5"]
+script = ExtResource("1_info")
+key = &"CorridorSouth"
+centre = Vector2(25.0, 13.75)
+size = Vector2(2.0, 12.5)
+space = &"Space_hall"
+priority = 0
+neighbours = Array[StringName]([&"Corridor", &"Kitchen"])
+has_tone = false
+
+[sub_resource type="Resource" id="room_6"]
+script = ExtResource("1_info")
+key = &"FileStore"
+centre = Vector2(21.0, 2.75)
+size = Vector2(6.0, 5.5)
+space = &"Space_small"
+priority = 0
+neighbours = Array[StringName]([&"Corridor"])
+has_tone = true
+
+[sub_resource type="Resource" id="room_7"]
+script = ExtResource("1_info")
+key = &"PrintRoom"
+centre = Vector2(29.0, 2.75)
+size = Vector2(6.0, 5.5)
+space = &"Space_small"
+priority = 0
+neighbours = Array[StringName]([&"Corridor"])
+has_tone = true
+
+[sub_resource type="Resource" id="room_8"]
+script = ExtResource("1_info")
+key = &"KeyCabinet"
+centre = Vector2(19.0, 8.25)
+size = Vector2(2.0, 1.5)
+space = &"Space_small"
+priority = 0
+neighbours = Array[StringName]([&"Corridor"])
+has_tone = true
+
+[sub_resource type="Resource" id="room_9"]
+script = ExtResource("1_info")
+key = &"Kitchen"
+centre = Vector2(25.0, 22.5)
+size = Vector2(10.0, 5.0)
+space = &"Space_small"
+priority = 0
+neighbours = Array[StringName]([&"CorridorSouth"])
+has_tone = true
+
+[sub_resource type="Resource" id="room_10"]
+script = ExtResource("1_info")
+key = &"YardDoor"
+centre = Vector2(35.0, 6.5)
+size = Vector2(2.0, 2.0)
+space = &"Space_dead"
+priority = 0
+neighbours = Array[StringName]([&"Corridor"])
+has_tone = true
+
+[resource]
+script = ExtResource("2_reg")
+rooms = Array[ExtResource("1_info")]([SubResource("room_0"), SubResource("room_1"), SubResource("room_2"), SubResource("room_3"), SubResource("room_4"), SubResource("room_5"), SubResource("room_6"), SubResource("room_7"), SubResource("room_8"), SubResource("room_9"), SubResource("room_10")])

@@ -33,6 +33,7 @@ LodgementLedger="*res://autoload/lodgement_ledger.gd"
 InformationBoard="*res://autoload/information_board.gd"
 Subtitles="*res://autoload/subtitles.gd"
 EraBus="*res://autoload/era_bus.gd"
+RoomTone="*res://autoload/room_tone.gd"
 DebugHooks="*res://autoload/debug_hooks.gd"
 
 [display]

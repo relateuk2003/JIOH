@@ -41,6 +41,8 @@ func _ready() -> void:
 	var lp := AudioServer.get_bus_effect(AudioServer.get_bus_index(&"Era"), 0) as AudioEffectLowPassFilter
 	check(lp != null and lp.cutoff_hz == EraBus.profile.lowpass_hz and lp.cutoff_hz == 11000.0, "Era's low-pass sits at 11 kHz")
 
+	# Room tone (JIOH-70) would be measured too: quiet it for the test signal.
+	AudioServer.set_bus_mute(AudioServer.get_bus_index(&"Ambience"), true)
 	# 8-bit steps and sample hold, measured at Master.
 	tap = AudioEffectCapture.new()
 	tap.buffer_length = 1.0
