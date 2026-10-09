@@ -44,7 +44,9 @@ var queue: Array[Tradesperson] = []
 var resolver_attached := false
 ## Takes a sheet handed across while a query stands (JIOH-34).
 var answer_handler: Callable
+var sounds: HatchSounds
 var _leaving: Array[Tradesperson] = []
+var _notes: Dictionary = {}  # note id -> HatchNote
 var _greet_ends := 0.0
 var _resolve_ends := 0.0
 var _clock := 0.0
@@ -58,12 +60,16 @@ func _ready() -> void:
 	if zone == null:
 		zone = get_node_or_null("HatchHandoverZone")
 	zone.handout = self
+	sounds = HatchSounds.new()
+	sounds.name = "Sounds"
+	add_child(sounds)
 	scheduler = get_parent().get_node_or_null("ArrivalScheduler") as ArrivalScheduler
 	if scheduler:
 		scheduler.arrival_due.connect(_on_arrival)
 		scheduler.gave_up.connect(_on_gave_up)
 	WorldClock.minute_elapsed.connect(_tick_read)
 	_restore()
+	_refresh_notes.call_deferred()
 
 
 # --- Arrivals and the queue -------------------------------------------------
@@ -77,11 +83,50 @@ func _on_arrival(slot: ArrivalSlot) -> void:
 	var t := Tradesperson.make(trade, slot)
 	add_child(t)
 	t.place_at(DOOR, Vector3.FORWARD)
+	var wait := WaitingBehaviour.new()
+	wait.name = "WaitingBehaviour"
+	t.add_child(wait)
+	wait.setup(t, slot)
+	wait.beat.connect(_on_beat)
 	queue.append(t)
 	_shuffle_queue()
 
 
+## A beat of someone's wait. Knocks and the phone are heard wherever the
+## player is; the departure hands straight back to the scheduler so they go
+## on their stamp, to the second.
+func _on_beat(trade_id: StringName, b: StringName) -> void:
+	var trade := roster.get_trade(trade_id)
+	match b:
+		&"knock", &"knock_hard", &"phone":
+			if b != &"phone" or trade.waiting.uses_phone:
+				sounds.play(b, trade.waiting.knock_style)
+		&"waiting_look_around", &"waiting_check_watch":
+			var p := InteractionManager.player
+			if trade.waiting.mutters and p and is_instance_valid(p) and p.global_position.distance_to(global_position) < 8.0:
+				var line := trade.voice_set.line_for(&"waiting", ArrivalScheduler.day_rng(trade_id, WorldClock.get_campaign_day()).randi())
+				Subtitles.say(trade_id, line, Subtitles.seconds_for(line, trade.voice_set.words_per_minute))
+		&"departure":
+			if scheduler:
+				scheduler.check_now()
+
+
+## Notes left on the counter by trades who gave up, until picked up.
+func _refresh_notes() -> void:
+	var props := get_parent().get_node_or_null("Props")
+	var i := 0
+	for data in HatchOutcomes.notes_on_counter():
+		var id := String(data.id)
+		if not _notes.has(id):
+			var n := HatchNote.make(data)
+			(props if props else get_parent()).add_child(n)
+			n.global_transform = Transform3D(Basis(Vector3.UP, PI / 2), Vector3(6.2, 0.978, 3.05 + 0.13 * i))
+			_notes[id] = n
+		i += 1
+
+
 func _on_gave_up(slot: ArrivalSlot) -> void:
+	_refresh_notes()
 	var t := _find(slot.trade_id)
 	if t == null or (t == current and state >= State.READING):
 		return
@@ -180,6 +225,9 @@ func take_pack(stack: PaperStack) -> void:
 		CampaignState.add_document(doc)
 	if scheduler:
 		scheduler.mark_served(trade.trade_id)
+	var wait := current.get_node_or_null("WaitingBehaviour")
+	if wait:
+		wait.queue_free()
 	current.play(&"receive")
 	pack_taken.emit(trade.trade_id, stack)
 	# Timing first, from page count and pace alone; then the verdict, which

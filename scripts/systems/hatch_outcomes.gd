@@ -22,12 +22,56 @@ static func mark(trade_id: StringName, day: int, value: String) -> void:
 
 ## Nobody handed them a pack before their patience ran out. From the trade's
 ## side an empty hatch costs the same as a broken pack (JIOH-37): a strike.
-static func no_handout(trade_id: StringName, day: int) -> void:
+## The wait is recorded with its stamps, and a note left on the counter if
+## the trade writes one (JIOH-37).
+static func no_handout(trade_id: StringName, day: int, slot: ArrivalSlot = null, wait: WaitOutcome = null) -> void:
 	var r := CampaignState.get_relationship(trade_id)
 	r.strikes += 1
 	r.days_since_last_success += 1
 	mark(trade_id, day, "no_handout")
+	var rec := _record(day)
+	if slot and not rec.is_empty():
+		if not rec.has("waits"):
+			rec["waits"] = {}
+		rec.waits[String(trade_id)] = {"arrived": slot.arrival_unix,
+			"left": wait.departed_unix if wait else slot.patience_expiry_unix}
+	if slot and wait and wait.left_note:
+		leave_note(trade_id, day, slot.arrival_unix, wait.departed_unix)
 	CampaignState.commit(&"no_handout", true)
+
+
+## When a trade waited and when they gave up, or {} if they did not.
+static func wait_record(trade_id: StringName, day: int) -> Dictionary:
+	return _record(day).get("waits", {}).get(String(trade_id), {})
+
+
+## NoteData, kept in world_artefacts until the player picks the note up.
+static func leave_note(trade_id: StringName, day: int, arrived_unix: int, left_unix: int) -> void:
+	var came_for := "their pack"
+	for job in InformationBoard.live_jobs_on(day):
+		if job.trade == trade_id:
+			came_for = "%s %s" % [job.job_number, job.location]
+	CampaignState.world_artefacts.append({
+		"kind": "hatch_note",
+		"id": "note_%s_%d" % [trade_id, day],
+		"trade_id": String(trade_id),
+		"day": day,
+		"arrived_unix": arrived_unix,
+		"left_unix": left_unix,
+		"came_for": came_for,
+		"picked_up": false,
+	})
+
+
+static func notes_on_counter() -> Array:
+	return CampaignState.world_artefacts.filter(func(a): return a is Dictionary and a.get("kind") == "hatch_note" and not a.get("picked_up", false))
+
+
+static func pick_up_note(note_id: String) -> void:
+	for a in CampaignState.world_artefacts:
+		if a is Dictionary and a.get("id") == note_id:
+			a["picked_up"] = true
+	CampaignState.commit(&"note", true)
 
 
 static func no_show(trade_id: StringName, day: int) -> void:

@@ -15,6 +15,8 @@ extends Resource
 @export var punctuality: PunctualityProfile
 ## Seconds at the hatch before they give up (JIOH-37).
 @export var patience_seconds: float = 180.0
+## How they wait at an empty hatch before giving up (JIOH-37).
+@export var waiting: WaitingProfile
 ## Substantively wrong packs absorbed before escalating from queried to
 ## refused. 0..4 across the roster.
 @export_range(0, 4) var error_tolerance: int = 2

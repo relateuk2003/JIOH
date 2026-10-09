@@ -1,26 +1,32 @@
-[gd_resource type="Resource" script_class="TradespersonData" load_steps=6 format=3]
+[gd_resource type="Resource" script_class="TradespersonData" load_steps=8 format=3]
 
-[ext_resource type="Resource" path="res://resources/trades/bodies/gas_engineer.tres" id="1_t1cre"]
-[ext_resource type="Script" path="res://scripts/data/punctuality_profile.gd" id="2_ygm0x"]
-[ext_resource type="Script" path="res://scripts/data/tradesperson_data.gd" id="3_ra3ag"]
-[ext_resource type="Resource" path="res://resources/trades/voices/gas_engineer.tres" id="4_b25le"]
+[ext_resource type="Resource" path="res://resources/trades/bodies/gas_engineer.tres" id="1_ygm0x"]
+[ext_resource type="Script" path="res://scripts/data/punctuality_profile.gd" id="2_ra3ag"]
+[ext_resource type="Script" path="res://scripts/data/tradesperson_data.gd" id="3_b25le"]
+[ext_resource type="Resource" path="res://resources/trades/voices/gas_engineer.tres" id="4_5rybg"]
+[ext_resource type="Script" path="res://scripts/data/waiting_profile.gd" id="5_6fujr"]
 
-[sub_resource type="Resource" id="Resource_5rybg"]
-script = ExtResource("2_ygm0x")
+[sub_resource type="Resource" id="Resource_ej353"]
+script = ExtResource("2_ra3ag")
 window_end_minutes = 4.0
 variance_minutes = 1.0
 drift_per_campaign_day = 2.0
 
+[sub_resource type="Resource" id="Resource_qq0dh"]
+script = ExtResource("5_6fujr")
+knock_style = &"polite"
+
 [resource]
-script = ExtResource("3_ra3ag")
+script = ExtResource("3_b25le")
 trade_id = &"gas_engineer"
 display_name = "Alan Pryce"
 surname = "Pryce"
 company = "Pryce Heating & Gas"
-punctuality = SubResource("Resource_5rybg")
+punctuality = SubResource("Resource_ej353")
 patience_seconds = 420.0
+waiting = SubResource("Resource_qq0dh")
 error_tolerance = 0
 read_pace_seconds_per_page = 14.0
-voice_set = ExtResource("4_b25le")
-body_profile = ExtResource("1_t1cre")
+voice_set = ExtResource("4_5rybg")
+body_profile = ExtResource("1_ygm0x")
 required_document_types = Array[StringName]([&"job_sheet", &"permit_to_work", &"hot_works_permit", &"rams", &"isolation_certificate"])

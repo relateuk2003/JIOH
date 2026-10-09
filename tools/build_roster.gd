@@ -19,6 +19,24 @@ const B := BodyProfileData.Build
 # patience s, tolerance, read s/page,
 # [height, build, gait, kit colour, pose, kit notes],
 # [pitch, wpm], lines by situation
+#
+# WAITING: beat mask (bit per WaitingBehaviour.LADDER rung), knock style,
+# leaves a note, tries the phone, mutters. The scaffolder knocks twice and
+# goes; the asbestos surveyor never knocks, she writes.
+const ALL := 0xFF
+const NO_KNOCKS := 0xFF & ~(1 << 3) & ~(1 << 5)
+const WAITING := {
+	&"electrician": [ALL, &"rap", false, true, true],
+	&"carpenter": [ALL, &"knuckles", true, true, false],
+	&"gas_engineer": [ALL, &"polite", true, true, false],
+	&"plasterer": [ALL, &"bang", false, false, true],
+	&"decorator": [ALL, &"tap", true, false, false],
+	&"flooring_fitter": [ALL, &"rap", false, false, false],
+	&"fire_alarm_engineer": [ALL, &"polite", true, true, false],
+	&"asbestos_surveyor": [NO_KNOCKS, &"none", true, false, false],
+	&"cleaner": [ALL, &"tap", true, false, true],
+	&"scaffolder": [ALL, &"bang", false, false, true],
+}
 const CAST := [
 	[&"electrician", "Lee", "Hollins", "Hollins Electrical",
 		[5, 15, 4, 6, false], 150.0, 1, 6.0,
@@ -155,6 +173,14 @@ func _trade(row: Array, matrix: PackMatrix) -> TradespersonData:
 	t.patience_seconds = row[5]
 	t.error_tolerance = row[6]
 	t.read_pace_seconds_per_page = row[7]
+	var wp := WaitingProfile.new()
+	var wrow: Array = WAITING[id]
+	wp.beat_mask = wrow[0]
+	wp.knock_style = wrow[1]
+	wp.leaves_note = wrow[2]
+	wp.uses_phone = wrow[3]
+	wp.mutters = wrow[4]
+	t.waiting = wp
 	t.regular = id == &"cleaner"
 	t.works_saturdays = id == &"cleaner"
 	var b: Array = row[8]

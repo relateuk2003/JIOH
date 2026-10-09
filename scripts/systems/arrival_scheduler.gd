@@ -124,6 +124,13 @@ func present() -> Array[ArrivalSlot]:
 	return out
 
 
+## Evaluates the morning now rather than at the next minute: a waiting trade
+## reaching departure calls this, so they leave on their stamp to the second.
+func check_now() -> void:
+	if WorldClock.get_campaign_day() == today:
+		_check(WorldClock.now_unix())
+
+
 ## Handout (JIOH-30) calls this when a pack has gone across the hatch, so the
 ## trade's patience no longer runs.
 func mark_served(trade_id: StringName) -> void:
@@ -133,7 +140,9 @@ func mark_served(trade_id: StringName) -> void:
 func _expire(slot: ArrivalSlot, day: int) -> void:
 	if HatchOutcomes.status(slot.trade_id, day) in ["served", "no_handout"]:
 		return
-	HatchOutcomes.no_handout(slot.trade_id, day)
+	var trade := roster.get_trade(slot.trade_id)
+	var wait := WaitingBehaviour.simulate_to(trade, slot.arrival_unix, slot.patience_expiry_unix)
+	HatchOutcomes.no_handout(slot.trade_id, day, slot, wait)
 
 
 func _record_no_show(id: StringName, day: int) -> void:

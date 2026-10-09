@@ -1,27 +1,33 @@
-[gd_resource type="Resource" script_class="TradespersonData" load_steps=6 format=3]
+[gd_resource type="Resource" script_class="TradespersonData" load_steps=8 format=3]
 
-[ext_resource type="Resource" path="res://resources/trades/bodies/carpenter.tres" id="1_syl4d"]
-[ext_resource type="Script" path="res://scripts/data/punctuality_profile.gd" id="2_a23p2"]
-[ext_resource type="Script" path="res://scripts/data/tradesperson_data.gd" id="3_pw5go"]
-[ext_resource type="Resource" path="res://resources/trades/voices/carpenter.tres" id="4_qmlaa"]
+[ext_resource type="Resource" path="res://resources/trades/bodies/carpenter.tres" id="1_a23p2"]
+[ext_resource type="Script" path="res://scripts/data/punctuality_profile.gd" id="2_pw5go"]
+[ext_resource type="Script" path="res://scripts/data/tradesperson_data.gd" id="3_qmlaa"]
+[ext_resource type="Resource" path="res://resources/trades/voices/carpenter.tres" id="4_shi6o"]
+[ext_resource type="Script" path="res://scripts/data/waiting_profile.gd" id="5_07uth"]
 
-[sub_resource type="Resource" id="Resource_shi6o"]
-script = ExtResource("2_a23p2")
+[sub_resource type="Resource" id="Resource_xjuik"]
+script = ExtResource("2_pw5go")
 window_start_minutes = 20.0
 window_end_minutes = 45.0
 variance_minutes = 8.0
 drift_per_campaign_day = 5.0
 
+[sub_resource type="Resource" id="Resource_oakdh"]
+script = ExtResource("5_07uth")
+knock_style = &"knuckles"
+
 [resource]
-script = ExtResource("3_pw5go")
+script = ExtResource("3_qmlaa")
 trade_id = &"carpenter"
 display_name = "Kev Moyes"
 surname = "Moyes"
 company = "Moyes Joinery"
-punctuality = SubResource("Resource_shi6o")
+punctuality = SubResource("Resource_xjuik")
 patience_seconds = 240.0
+waiting = SubResource("Resource_oakdh")
 error_tolerance = 3
 read_pace_seconds_per_page = 3.0
-voice_set = ExtResource("4_qmlaa")
-body_profile = ExtResource("1_syl4d")
+voice_set = ExtResource("4_shi6o")
+body_profile = ExtResource("1_a23p2")
 required_document_types = Array[StringName]([&"job_sheet"])
