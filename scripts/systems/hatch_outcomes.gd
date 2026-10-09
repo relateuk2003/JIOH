@@ -34,6 +34,22 @@ static func no_show(trade_id: StringName, day: int) -> void:
 	mark(trade_id, day, "no_show")
 
 
+## How the hatch went for a trade (JIOH-34): accepted, refused or walked,
+## the fault behind it and whether a query was answered on the spot. Read by
+## end-of-day returns and the narrative; never shown as a number.
+static func record_reaction(trade_id: StringName, day: int, reaction: String, fault_id: StringName, query_resolved: bool) -> void:
+	var rec := _record(day)
+	if rec.is_empty():
+		return
+	if not rec.has("reactions"):
+		rec["reactions"] = {}
+	rec.reactions[String(trade_id)] = {"reaction": reaction, "fault": String(fault_id), "query_resolved": query_resolved}
+
+
+static func reaction(trade_id: StringName, day: int) -> Dictionary:
+	return _record(day).get("reactions", {}).get(String(trade_id), {})
+
+
 static func is_settled(day: int) -> bool:
 	return bool(_record(day).get("hatch_settled", false))
 

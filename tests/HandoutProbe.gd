@@ -98,9 +98,12 @@ func _ready() -> void:
 	check(finished.size() == 1 and finished[0][1].to_dict() == verdict_saved and PackValidator.calls == calls_before + 1,
 		"the read resolves with the saved verdict, not a new score")
 	check(rechecks + man.anim_log.count(&"read_document_recheck") == 1, "read_document_recheck happened exactly once")
-	await _frames(int(HandoutInteraction.RESOLVE_BEAT * 60) + 10)
+	var n := 0
+	while hatch.state != HandoutInteraction.State.DEPARTING and n < 1500:
+		await _frames(1)
+		n += 1
 	check(hatch.state == HandoutInteraction.State.DEPARTING and hatch.session().is_empty()
-		and man.anim_log.back() == &"walk_out", "with nobody resolving yet, he leaves with the pack")
+		and man.anim_log.back() == &"walk_out", "once he has reacted, he leaves")
 	check(HatchOutcomes.status(&"carpenter", 4) == "served", "his morning is recorded as served")
 	remove_test_saves()
 	finish()

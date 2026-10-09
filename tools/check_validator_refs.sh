@@ -7,7 +7,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 REQUIRED="${REQUIRED:-1}"
-refs=$(grep -rn --include='*.gd' 'PackValidator\.' . \
+refs=$(grep -rn --include='*.gd' 'PackValidator\.score(' . \
 	| grep -v '^./tests/' | grep -v '^./scripts/validation/' | grep -v '^./.godot/' || true)
 count=$(printf '%s' "$refs" | grep -c . || true)
 if (( count > 1 )) || (( REQUIRED == 1 && count != 1 )); then

@@ -42,6 +42,8 @@ var state: State = State.APPROACHING
 var queue: Array[Tradesperson] = []
 ## Set by the reaction resolver (JIOH-34) when it takes over RESOLVING.
 var resolver_attached := false
+## Takes a sheet handed across while a query stands (JIOH-34).
+var answer_handler: Callable
 var _leaving: Array[Tradesperson] = []
 var _greet_ends := 0.0
 var _resolve_ends := 0.0
@@ -149,12 +151,23 @@ func _greet() -> void:
 
 
 func can_take_pack() -> bool:
-	return current != null and state in [State.WAITING_FOR_PLAYER, State.GREETING, State.AWAITING_PACK]
+	if current == null:
+		return false
+	if state == State.RESOLVING:
+		return awaiting_answer() and answer_handler.is_valid()
+	return state in [State.WAITING_FOR_PLAYER, State.GREETING, State.AWAITING_PACK]
+
+
+func awaiting_answer() -> bool:
+	return session().get("state") == "awaiting_answer"
 
 
 ## The pack crosses the hatch. Called from the zone when the player pushes a
 ## held stack into it; scripted sequences and tests call it the same way.
 func take_pack(stack: PaperStack) -> void:
+	if state == State.RESOLVING:
+		answer_handler.call(stack)
+		return
 	var trade := current.data
 	var day := WorldClock.get_campaign_day()
 	stack.reparent(current.hand_r, false)
