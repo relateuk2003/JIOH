@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="DocumentTemplate" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://resources/documents/document_template.gd" id="1_tpl"]
+[ext_resource type="Script" path="res://resources/documents/document_field.gd" id="2_field"]
+
+[sub_resource type="Resource" id="Resource_ref"]
+script = ExtResource("2_field")
+key = &"permit_no"
+printed_label = "Permit No."
+type = 4
+required = true
+max_length = 8
+rect = Rect2(0.1, 0.1, 0.4, 0.05)
+source_hint = &"permit_register"
+
+[sub_resource type="Resource" id="Resource_loc"]
+script = ExtResource("2_field")
+key = &"location"
+printed_label = "Location of work"
+type = 0
+required = true
+max_length = 40
+rect = Rect2(0.1, 0.2, 0.8, 0.05)
+source_hint = &"job_sheet"
+
+[resource]
+script = ExtResource("1_tpl")
+doc_id = &"test_permit"
+display_name = "Test Permit"
+form_code = "TST-01/A"
+trades = Array[StringName]([&"electrician"])
+fields = Array[ExtResource("2_field")]([SubResource("Resource_ref"), SubResource("Resource_loc")])
+requires_signature = true
+requires_stamp = true
+validity_days = 7
