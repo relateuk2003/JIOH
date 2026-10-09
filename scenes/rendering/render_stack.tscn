@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/rendering/render_stack.gd" id="1_stack"]
 [ext_resource type="Script" path="res://scripts/rendering/internal_viewport.gd" id="2_vp"]
-[ext_resource type="PackedScene" path="res://tools/affine_test_room.tscn" id="3_world"]
+[ext_resource type="PackedScene" path="res://scenes/levels/office_level.tscn" id="3_world"]
 
 [node name="RenderStack" type="Control"]
 layout_mode = 3

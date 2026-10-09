@@ -14,6 +14,7 @@ var carries: Array = []
 
 
 func _ready() -> void:
+	CampaignState.slot = TEST_SLOT
 	level = LEVEL.instantiate()
 	add_child(level)
 	player = level.player
