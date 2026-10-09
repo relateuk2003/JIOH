@@ -26,3 +26,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		e.position = viewport.window_to_internal(event.position)
 		e.global_position = e.position
 	viewport.push_input(e, true)
+	# Whatever the world consumed (a key typed onto a form) goes no further,
+	# so root-level listeners such as InteractionManager never see it.
+	if viewport.is_input_handled():
+		get_viewport().set_input_as_handled()

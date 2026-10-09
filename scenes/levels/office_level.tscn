@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=13 format=3]
 
 [ext_resource type="Script" path="res://scripts/levels/office_level.gd" id="1_level"]
 [ext_resource type="PackedScene" path="res://scenes/office/office_blockout.tscn" id="2_office"]
@@ -10,6 +10,8 @@
 [ext_resource type="PackedScene" path="res://scenes/props/hole_punch.tscn" id="8_punch"]
 [ext_resource type="PackedScene" path="res://scenes/props/dot_matrix_printer.tscn" id="9_printer"]
 [ext_resource type="PackedScene" path="res://scenes/props/paper_box.tscn" id="10_box"]
+[ext_resource type="PackedScene" path="res://scenes/props/desk_fill.tscn" id="11_fill"]
+[ext_resource type="PackedScene" path="res://scenes/props/pen.tscn" id="12_pen"]
 
 [node name="OfficeLevel" type="Node3D"]
 script = ExtResource("1_level")
@@ -22,7 +24,13 @@ environment = ExtResource("4_env")
 [node name="PigeonHoleWall" parent="." instance=ExtResource("5_holes")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.2, 0, 0.13)
 
+[node name="DeskFill" parent="." instance=ExtResource("11_fill")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 9.7, 0.752, 3.6)
+
 [node name="Props" type="Node3D" parent="."]
+
+[node name="Pen" parent="Props" instance=ExtResource("12_pen")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.45, 0.752, 3.85)
 
 [node name="DateStamp" parent="Props" instance=ExtResource("6_stamp")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 9.62, 0.75, 3.0)

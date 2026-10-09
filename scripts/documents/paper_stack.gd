@@ -56,10 +56,15 @@ func turn_top_under() -> void:
 	interactable.object_id = documents[0].instance_id
 
 
+## How tall the stack stands, in metres.
+func height() -> float:
+	return maxf(SHEET_THICKNESS * documents.size(), 0.003)
+
+
 ## Puts more sheets on the bottom of the stack.
 func add(docs: Array[DocumentInstance]) -> void:
 	documents.append_array(docs)
-	var h := maxf(SHEET_THICKNESS * documents.size(), 0.003)
+	var h := height()
 	(_mesh.mesh as BoxMesh).size = Vector3(SHEET.x, h, SHEET.y)
 	_mesh.position.y = h / 2.0
 	var shape := interactable.get_child(0) as CollisionShape3D
