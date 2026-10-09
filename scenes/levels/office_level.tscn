@@ -1,0 +1,64 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/levels/office_level.gd" id="1_level"]
+[ext_resource type="PackedScene" path="res://scenes/office/office_blockout.tscn" id="2_office"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="3_player"]
+[ext_resource type="Environment" path="res://resources/environment/ps1_environment.tres" id="4_env"]
+
+[node name="OfficeLevel" type="Node3D"]
+script = ExtResource("1_level")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("4_env")
+
+[node name="Office" parent="." instance=ExtResource("2_office")]
+
+[node name="Props" type="Node3D" parent="."]
+
+[node name="Lights" type="Node3D" parent="."]
+
+[node name="ReceptionLight" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 2.2, 3)
+light_energy = 1.2
+omni_range = 8.0
+
+[node name="ReceptionLight2" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5, 2.2, 5)
+light_energy = 1.0
+omni_range = 7.0
+
+[node name="LobbyLight" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2.2, 4)
+light_energy = 0.8
+omni_range = 6.0
+
+[node name="CorridorLight" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2.2, 6.5)
+light_energy = 0.9
+omni_range = 7.0
+
+[node name="CorridorLight2" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 2.2, 6.5)
+light_energy = 0.9
+omni_range = 7.0
+
+[node name="FileStoreLight" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 2.2, 2.5)
+light_energy = 0.7
+omni_range = 6.0
+
+[node name="PrintRoomLight" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 2.2, 2.5)
+light_energy = 0.9
+omni_range = 6.0
+
+[node name="KitchenLight" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 2.2, 22.5)
+light_energy = 1.0
+omni_range = 8.0
+
+[node name="Ambient" type="DirectionalLight3D" parent="Lights"]
+transform = Transform3D(0.866, -0.25, 0.433, 0, 0.866, 0.5, -0.5, -0.433, 0.75, 0, 5, 0)
+light_energy = 0.25
+
+[node name="Player" parent="." instance=ExtResource("3_player")]
