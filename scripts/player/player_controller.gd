@@ -58,6 +58,20 @@ func look(relative: Vector2) -> void:
 	head.rotation.x = clampf(head.rotation.x - relative.y * profile.mouse_sensitivity, -limit, limit)
 
 
+## Turns the view part of the way toward a point over a moment: the one soft
+## nudge when someone at the hatch first speaks (JIOH-30). Never a lock; the
+## player can turn straight back.
+func nudge_toward(point: Vector3, seconds := 0.4, share := 0.4) -> void:
+	var to := point - eye.global_position
+	var yaw := atan2(-to.x, -to.z)
+	var pitch := atan2(to.y, Vector2(to.x, to.z).length())
+	var dyaw := wrapf(yaw - rotation.y, -PI, PI) * share
+	var dpitch := (pitch - head.rotation.x) * share
+	var tw := create_tween().set_parallel()
+	tw.tween_property(self, "rotation:y", rotation.y + dyaw, seconds).set_trans(Tween.TRANS_SINE)
+	tw.tween_property(head, "rotation:x", head.rotation.x + dpitch, seconds).set_trans(Tween.TRANS_SINE)
+
+
 func _physics_process(delta: float) -> void:
 	var input := _move_input()
 	var wish := (global_basis * Vector3(input.x, 0, input.y))

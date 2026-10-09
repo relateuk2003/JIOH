@@ -15,6 +15,8 @@ extends Node
 signal arrival_due(slot: ArrivalSlot)
 signal schedule_built(campaign_day: int, slots: Array[ArrivalSlot])
 signal no_show(trade_id: StringName, campaign_day: int)
+## Patience ran out with nothing handed over (live path only).
+signal gave_up(slot: ArrivalSlot)
 
 const GOLDEN := 2654435761
 ## Earliest a lets-self-in trade can be on site, minutes before Handout.
@@ -98,6 +100,7 @@ func _check(now: int) -> void:
 			continue
 		if now >= slot.patience_expiry_unix:
 			_expire(slot, today)
+			gave_up.emit(slot)
 		elif now >= slot.arrival_unix:
 			if st == "":
 				HatchOutcomes.mark(slot.trade_id, today, "arrived")
@@ -107,6 +110,18 @@ func _check(now: int) -> void:
 			pending += 1
 	if pending == 0 and not slots.is_empty() and not HatchOutcomes.is_settled(today):
 		HatchOutcomes.settle(today)
+
+
+## Arrivals standing at the hatch now, unserved and still patient. The hatch
+## asks for these when it is built, so a relaunch mid-morning finds them
+## where they were.
+func present() -> Array[ArrivalSlot]:
+	var out: Array[ArrivalSlot] = []
+	var now := WorldClock.now_unix()
+	for slot in slots:
+		if HatchOutcomes.status(slot.trade_id, today) == "arrived" and now < slot.patience_expiry_unix:
+			out.append(slot)
+	return out
 
 
 ## Handout (JIOH-30) calls this when a pack has gone across the hatch, so the

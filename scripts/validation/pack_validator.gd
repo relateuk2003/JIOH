@@ -15,6 +15,9 @@ const SEVERITY_PATH := "res://resources/validation/severity_table.tres"
 # resources to a half-built script.
 static var _matrix: PackMatrix
 static var _severity: SeverityTable
+## How many packs have been scored this session. Tests use it to prove a
+## reload mid-read does not score again.
+static var calls := 0
 
 
 ## Scores a pack for a job on its handout day. history holds earlier document
@@ -22,6 +25,7 @@ static var _severity: SeverityTable
 ## applicable failure, not just the first.
 static func score(pack: Array[DocumentInstance], job: JobRecord, day: int,
 		history: Array = []) -> PackVerdict:
+	calls += 1
 	if _matrix == null:
 		_matrix = load(MATRIX_PATH)
 		_severity = load(SEVERITY_PATH)

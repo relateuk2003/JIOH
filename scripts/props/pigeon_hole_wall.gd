@@ -8,7 +8,8 @@
 #
 # At the cutoff the flaps come down over the mouths: the wall closes, visibly,
 # rather than the game refusing an input. They stay down through wind-down
-# and the night, and go up again at the start of the next working day.
+# and the night, and go up again at Handout, when the morning's packs are
+# collected for the hatch (posting stays shut until the working day).
 class_name PigeonHoleWall
 extends Node3D
 
@@ -41,17 +42,16 @@ var _flaps_open := false
 func _ready() -> void:
 	add_to_group(&"campaign_restorable")
 	_build()
-	LodgementLedger.lodgement_opened.connect(_set_flaps.bind(true, true))
-	LodgementLedger.lodgement_closed.connect(_set_flaps.bind(false, true))
+	LodgementLedger.holes_changed.connect(_set_flaps.bind(true))
 	CampaignState.campaign_started.connect(restore_from_campaign)
-	_set_flaps(LodgementLedger.lodgement_open, false)
+	_set_flaps(LodgementLedger.holes_open, false)
 
 
 ## Called by the level once the campaign is loaded.
 func restore_from_campaign() -> void:
 	for hole in holes.values():
 		(hole as PigeonHole).restore()
-	_set_flaps(LodgementLedger.lodgement_open, false)
+	_set_flaps(LodgementLedger.holes_open, false)
 
 
 func flaps_open() -> bool:

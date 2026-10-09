@@ -35,3 +35,21 @@ static func make(c: Code, doc: DocumentInstance = null, field: StringName = &"")
 
 func code_name() -> String:
 	return Code.keys()[code]
+
+
+func to_dict() -> Dictionary:
+	return {"code": code_name(), "instance_id": String(instance_id), "other_instance_id": String(other_instance_id),
+		"field_key": String(field_key), "doc_id": String(doc_id), "blocking": blocking,
+		"spoken_line_id": String(spoken_line_id)}
+
+
+static func from_dict(d: Dictionary) -> Failure:
+	var f := Failure.new()
+	f.code = Code.keys().find(d.get("code", "MISSING_FIELD")) as Code
+	f.instance_id = StringName(d.get("instance_id", ""))
+	f.other_instance_id = StringName(d.get("other_instance_id", ""))
+	f.field_key = StringName(d.get("field_key", ""))
+	f.doc_id = StringName(d.get("doc_id", ""))
+	f.blocking = bool(d.get("blocking", false))
+	f.spoken_line_id = StringName(d.get("spoken_line_id", ""))
+	return f

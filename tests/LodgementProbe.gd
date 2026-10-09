@@ -31,19 +31,19 @@ func _ready() -> void:
 	var sparks: PigeonHole = wall.holes[&"electrician"]
 	var chippies: PigeonHole = wall.holes[&"carpenter"]
 
-	# Before the working day the flaps are down.
-	check(not wall.flaps_open() and not LodgementLedger.lodgement_open, "09:00: flaps down")
+	# At Handout the flaps are up for collection, but nothing can be posted.
+	check(wall.flaps_open() and not LodgementLedger.lodgement_open, "09:00: flaps up for collection only")
 	var early := _stack_on_desk([&"job_sheet"])
 	im.perform(early.interactable, Interactable.Verb.PICK_UP)
 	refused.clear()
 	im.perform(sparks, Interactable.Verb.INSERT, im.carried_item)
-	check(refused == ["pigeon_holes_closed"] and im.carried_item == early.interactable,
+	check(refused == ["pigeon_holes_collect_only"] and im.carried_item == early.interactable,
 		"posting before 10:00 is refused and the stack stays in hand")
 	im.perform(early.interactable, Interactable.Verb.PLACE, Vector3(9.5, 0.76, 3.5))
 
 	set_local(WED_2026_10_07, 10, 0)
 	await _physics(2)
-	check(wall.flaps_open() and LodgementLedger.lodgement_open, "10:00: the flaps go up")
+	check(wall.flaps_open() and LodgementLedger.lodgement_open, "10:00: posting opens")
 
 	# Post a two-sheet pack into the sparks' hole by looking at it and pressing use.
 	var pack := _stack_on_desk([&"job_sheet", &"permit_to_work"])
@@ -144,7 +144,7 @@ func _ready() -> void:
 	check(restored.stack != null and restored.stack.documents.map(func(d): return d.instance_id) == before,
 		"after a reload the sparks' hole holds the same sheets in the same order")
 	check((wall.holes[&"carpenter"] as PigeonHole).stack != null, "and the chippies' hole its wrong one")
-	check(not wall.flaps_open(), "and the flaps are still down before 10:00")
+	check(wall.flaps_open() and not LodgementLedger.lodgement_open, "and at 09:00 the flaps are up for collection, posting shut")
 	finish()
 
 

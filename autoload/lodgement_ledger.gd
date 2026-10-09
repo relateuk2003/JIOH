@@ -12,6 +12,11 @@ extends Node
 
 signal pack_lodged(trade: StringName, instance_ids: Array[StringName])
 signal pack_retrieved(trade: StringName, instance_ids: Array[StringName])
+## A pack taken out in the morning to be handed across the hatch (JIOH-30).
+signal pack_collected(trade: StringName, instance_ids: Array[StringName])
+## The holes open or shut, for the flaps: collection in the morning,
+## lodgement through the working day.
+signal holes_changed(open: bool)
 ## The flaps come down at the cutoff.
 signal lodgement_closed
 ## The flaps go up when the working day starts.
@@ -22,6 +27,18 @@ signal lodgement_opened
 var lodgement_open: bool:
 	get:
 		return DayPhase.phase == DayPhase.Phase.WORKING
+
+
+## Open through Handout so the player can take yesterday's packs out to the
+## hatch. Collection only: nothing can be posted in the morning.
+var collection_open: bool:
+	get:
+		return DayPhase.phase == DayPhase.Phase.HANDOUT
+
+
+var holes_open: bool:
+	get:
+		return lodgement_open or collection_open
 
 
 func _ready() -> void:
@@ -63,6 +80,22 @@ func retrieve(trade: StringName, docs: Array[DocumentInstance]) -> bool:
 	return true
 
 
+## Records a pack taken out in the morning for the hatch. Unlike retrieve, the
+## sheets keep the hole they were posted in: that provenance is what tells a
+## trade they were handed someone else's pack.
+func collect(trade: StringName, docs: Array[DocumentInstance]) -> bool:
+	if not collection_open:
+		return false
+	var ids: Array[StringName] = []
+	for doc in docs:
+		doc.location = CampaignState.Location.CLIPBOARD
+		ids.append(doc.instance_id)
+	_log(&"collected", trade, ids)
+	CampaignState.commit(&"collected")
+	pack_collected.emit(trade, ids)
+	return true
+
+
 ## What is in a hole now, in posting order, rebuilt from the log. Sheets that
 ## have since been collected (JIOH-30) are no longer LODGED and drop out.
 func contents_of(trade: StringName) -> Array[DocumentInstance]:
@@ -93,6 +126,9 @@ func _log(kind: StringName, trade: StringName, ids: Array[StringName]) -> void:
 
 
 func _on_phase_changed(from: int, to: int) -> void:
+	var was_open := from == DayPhase.Phase.WORKING or from == DayPhase.Phase.HANDOUT
+	if was_open != holes_open:
+		holes_changed.emit(holes_open)
 	if to == DayPhase.Phase.WORKING:
 		lodgement_opened.emit()
 	elif from == DayPhase.Phase.WORKING:

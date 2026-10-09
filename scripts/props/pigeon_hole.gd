@@ -25,8 +25,10 @@ func can_interact(verb: Verb, payload: Variant = null) -> String:
 	var base := super(verb, payload)
 	if base != "":
 		return base
-	if not LodgementLedger.lodgement_open:
+	if not LodgementLedger.holes_open:
 		return "pigeon_holes_closed"
+	if verb == Verb.INSERT and not LodgementLedger.lodgement_open:
+		return "pigeon_holes_collect_only"
 	if verb == Verb.PICK_UP and stack == null:
 		return "pigeon_hole_empty"
 	return ""
@@ -46,11 +48,15 @@ func interact(verb: Verb, payload: Variant = null) -> void:
 		_seat(incoming)
 
 
-## Empty hands take the whole stack back out.
+## Empty hands take the whole stack back out: second thoughts through the
+## working day, collection for the hatch in the morning.
 func lifted_by_pick_up() -> Interactable:
 	var s := stack
 	stack = null
-	LodgementLedger.retrieve(trade, s.documents)
+	if LodgementLedger.lodgement_open:
+		LodgementLedger.retrieve(trade, s.documents)
+	else:
+		LodgementLedger.collect(trade, s.documents)
 	s.visible = true
 	return s.interactable
 

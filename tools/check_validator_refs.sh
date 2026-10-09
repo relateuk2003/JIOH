@@ -3,10 +3,10 @@
 # nowhere else. Fails if PackValidator is called from more than one place in
 # game code (tests and the validator itself are exempt). Until the handout
 # system (JIOH-30) exists the allowed count is zero callers or one; once it
-# lands, set REQUIRED=1 so exactly one is enforced.
+# landed, so REQUIRED=1: the hatch is the one caller.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-REQUIRED="${REQUIRED:-0}"
+REQUIRED="${REQUIRED:-1}"
 refs=$(grep -rn --include='*.gd' 'PackValidator\.' . \
 	| grep -v '^./tests/' | grep -v '^./scripts/validation/' | grep -v '^./.godot/' || true)
 count=$(printf '%s' "$refs" | grep -c . || true)
