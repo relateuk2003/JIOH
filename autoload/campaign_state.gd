@@ -28,6 +28,9 @@ var campaign_start_utc: int = 0
 ## timezone change does not move day 1.
 var campaign_start_epoch_day: int = 0
 var campaign_start_tz_bias: int = 0
+## Seeds every per-day draw (arrivals, read jitter). Drawn once at New Game
+## and saved, so a replayed morning matches the one that was missed.
+var campaign_seed: int = 0
 var campaign_days: Array[CampaignDay] = []
 
 # The rest of the save schema (JIOH-36). Every key is present in every save.
@@ -80,6 +83,9 @@ func new_campaign() -> void:
 	campaign_start_utc = WorldClock.now_unix()
 	campaign_start_epoch_day = WorldClock.local_epoch_day(campaign_start_utc)
 	campaign_start_tz_bias = WorldClock.tz_bias_minutes()
+	var rng := RandomNumberGenerator.new()
+	rng.randomize()
+	campaign_seed = rng.randi()
 	generate_calendar(campaign_start_epoch_day)
 	for i in CAMPAIGN_LENGTH:
 		day_records.append(_new_day_record())
@@ -90,6 +96,7 @@ func clear() -> void:
 	campaign_start_utc = 0
 	campaign_start_epoch_day = 0
 	campaign_start_tz_bias = 0
+	campaign_seed = 0
 	campaign_days.clear()
 	clock_witness = {}
 	day_records.clear()
@@ -256,6 +263,7 @@ func to_dict() -> Dictionary:
 		"campaign_start_utc": campaign_start_utc,
 		"campaign_start_epoch_day": campaign_start_epoch_day,
 		"campaign_start_tz_bias": campaign_start_tz_bias,
+		"campaign_seed": campaign_seed,
 		"clock_witness": clock_witness.duplicate(true),
 		"current_day": campaign_day_for(WorldClock.now_unix()),
 		"calendar": days,
@@ -279,6 +287,7 @@ func from_dict(d: Dictionary) -> void:
 		return
 	campaign_start_epoch_day = int(d.get("campaign_start_epoch_day", 0))
 	campaign_start_tz_bias = int(d.get("campaign_start_tz_bias", 0))
+	campaign_seed = int(d.get("campaign_seed", 0))
 	generate_calendar(campaign_start_epoch_day)
 	var days: Array = d.get("calendar", [])
 	for i in mini(days.size(), campaign_days.size()):
@@ -315,4 +324,8 @@ func _new_day_record() -> Dictionary:
 		"lodgements_made": 0,
 		"attended": false,
 		"minutes_played": 0,
+		# trade_id -> "arrived" | "served" | "no_handout" | "no_show" (JIOH-28)
+		"hatch": {},
+		# Set once every arrival that day has an outcome; replay skips it.
+		"hatch_settled": false,
 	}

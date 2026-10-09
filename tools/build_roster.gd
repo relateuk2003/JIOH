@@ -155,6 +155,8 @@ func _trade(row: Array, matrix: PackMatrix) -> TradespersonData:
 	t.patience_seconds = row[5]
 	t.error_tolerance = row[6]
 	t.read_pace_seconds_per_page = row[7]
+	t.regular = id == &"cleaner"
+	t.works_saturdays = id == &"cleaner"
 	var b: Array = row[8]
 	var body := BodyProfileData.new()
 	body.body_id = id

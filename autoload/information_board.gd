@@ -59,6 +59,16 @@ func jobs_prepared_on(day: int) -> Array[JobRecord]:
 	return out
 
 
+## Every job running on a campaign day, whichever day its pack was prepared.
+func live_jobs_on(day: int) -> Array[JobRecord]:
+	var out: Array[JobRecord] = []
+	for k in _ordered():
+		for j in k.jobs_for_tomorrow:
+			if j.start_day <= day and day <= j.end_day:
+				out.append(j)
+	return out
+
+
 func fact(fact_id: StringName) -> Fact:
 	for k in days.values():
 		for f in (k as DayKnowledge).facts:

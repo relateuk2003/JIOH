@@ -20,6 +20,9 @@ extends Resource
 @export_range(0, 4) var error_tolerance: int = 2
 ## How long they spend reading each page of a handed-over pack (JIOH-30).
 @export var read_pace_seconds_per_page: float = 4.0
+## Comes every working day whether or not a job is booked (the cleaner).
+@export var regular: bool = false
+@export var works_saturdays: bool = false
 @export var voice_set: VoiceSetData
 @export var body_profile: BodyProfileData
 ## Documents their default pack must hold, mirrored from the pack matrix's
