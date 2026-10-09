@@ -19,7 +19,8 @@ const SCHEMA_VERSION := 1
 const DEBOUNCE_SECONDS := 0.75
 
 ## Where a document physically is (JIOH-36).
-enum Location { IN_TRAY, OUT_TRAY, DESK, CLIPBOARD, FILED, HANDED_OVER, LOST }
+## Append only: the values are saved as integers.
+enum Location { IN_TRAY, OUT_TRAY, DESK, CLIPBOARD, FILED, HANDED_OVER, LOST, LODGED }
 
 var slot: int = 1
 var campaign_start_utc: int = 0
@@ -36,6 +37,9 @@ var day_records: Array[Dictionary] = []
 ## Instance UUID -> DocumentInstance.
 var document_instances: Dictionary = {}
 var world_artefacts: Array = []
+## Every post into and retrieval from a pigeon hole, in order (JIOH-32).
+## Appended to, never edited: second thoughts stay on the record.
+var lodgement_log: Array[Dictionary] = []
 ## persistent_id -> object record, owned by ObjectRegistry (JIOH-54).
 var world_objects: Dictionary = {}
 var relationships: Dictionary = {}
@@ -84,6 +88,7 @@ func clear() -> void:
 	day_records.clear()
 	document_instances = {}
 	world_artefacts = []
+	lodgement_log.clear()
 	world_objects = {}
 	relationships = {}
 	story_flags = {}
@@ -231,6 +236,7 @@ func to_dict() -> Dictionary:
 		"day_records": day_records.duplicate(true),
 		"document_instances": docs,
 		"world_artefacts": world_artefacts.duplicate(true),
+		"lodgement_log": lodgement_log.duplicate(true),
 		"world_objects": world_objects.duplicate(true),
 		"relationships": relationships.duplicate(true),
 		"story_flags": story_flags.duplicate(true),
@@ -263,6 +269,8 @@ func from_dict(d: Dictionary) -> void:
 		if doc:
 			document_instances[doc.instance_id] = doc
 	world_artefacts = d.get("world_artefacts", []).duplicate(true)
+	for entry in d.get("lodgement_log", []):
+		lodgement_log.append((entry as Dictionary).duplicate(true))
 	world_objects = d.get("world_objects", {}).duplicate(true)
 	relationships = d.get("relationships", {}).duplicate(true)
 	story_flags = d.get("story_flags", {}).duplicate(true)

@@ -53,6 +53,12 @@ func can_interact(verb: Verb, _payload: Variant = null) -> String:
 	return ""
 
 
+## What PICK_UP actually lifts: this object, unless it is a container that
+## hands over what it holds (a pigeon hole gives back its stack).
+func lifted_by_pick_up() -> Interactable:
+	return self
+
+
 ## Performs the verb. Only called after can_interact() returned "".
 func interact(_verb: Verb, _payload: Variant = null) -> void:
 	pass

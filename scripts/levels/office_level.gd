@@ -13,6 +13,9 @@ func _ready() -> void:
 		CampaignState.new_campaign()
 	DayPhase.resync()
 	ObjectRegistry.restore_all(self)
+	# Props whose contents live in the campaign rather than in world_objects
+	# (the pigeon holes) rebuild themselves now.
+	get_tree().call_group(&"campaign_restorable", &"restore_from_campaign")
 	var anchor := office.get_node("PlayerDesk/Anchor") as Marker3D
 	player.global_position = anchor.global_position
 	player.rotation.y = anchor.global_rotation.y

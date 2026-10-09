@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/levels/office_level.gd" id="1_level"]
 [ext_resource type="PackedScene" path="res://scenes/office/office_blockout.tscn" id="2_office"]
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="3_player"]
 [ext_resource type="Environment" path="res://resources/environment/ps1_environment.tres" id="4_env"]
+[ext_resource type="PackedScene" path="res://scenes/props/pigeon_hole_wall.tscn" id="5_holes"]
 
 [node name="OfficeLevel" type="Node3D"]
 script = ExtResource("1_level")
@@ -12,6 +13,9 @@ script = ExtResource("1_level")
 environment = ExtResource("4_env")
 
 [node name="Office" parent="." instance=ExtResource("2_office")]
+
+[node name="PigeonHoleWall" parent="." instance=ExtResource("5_holes")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.2, 0, 0.13)
 
 [node name="Props" type="Node3D" parent="."]
 

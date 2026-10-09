@@ -114,7 +114,7 @@ func perform(item: Interactable, verb: Interactable.Verb, payload: Variant = nul
 		return false
 	match verb:
 		Interactable.Verb.PICK_UP:
-			_pick_up(item)
+			_pick_up(item.lifted_by_pick_up())
 		Interactable.Verb.PLACE:
 			_place(item, payload)
 		Interactable.Verb.INSERT:
