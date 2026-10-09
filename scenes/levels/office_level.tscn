@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene load_steps=19 format=3]
 
 [ext_resource type="Script" path="res://scripts/levels/office_level.gd" id="1_level"]
 [ext_resource type="PackedScene" path="res://scenes/office/office_blockout.tscn" id="2_office"]
@@ -12,6 +12,12 @@
 [ext_resource type="PackedScene" path="res://scenes/props/paper_box.tscn" id="10_box"]
 [ext_resource type="PackedScene" path="res://scenes/props/desk_fill.tscn" id="11_fill"]
 [ext_resource type="PackedScene" path="res://scenes/props/pen.tscn" id="12_pen"]
+[ext_resource type="PackedScene" path="res://scenes/props/wall_planner.tscn" id="13_planner"]
+[ext_resource type="PackedScene" path="res://scenes/props/key_cabinet.tscn" id="14_keys"]
+[ext_resource type="PackedScene" path="res://scenes/props/answerphone.tscn" id="15_phone"]
+[ext_resource type="PackedScene" path="res://scenes/props/crt_terminal.tscn" id="16_crt"]
+[ext_resource type="PackedScene" path="res://scenes/props/drawing_rack.tscn" id="17_rack"]
+[ext_resource type="PackedScene" path="res://scenes/props/register_book.tscn" id="18_book"]
 
 [node name="OfficeLevel" type="Node3D"]
 script = ExtResource("1_level")
@@ -27,19 +33,51 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.2, 0, 0.13)
 [node name="DeskFill" parent="." instance=ExtResource("11_fill")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 9.7, 0.752, 3.6)
 
+[node name="Sources" type="Node3D" parent="."]
+
+[node name="WallPlanner" parent="Sources" instance=ExtResource("13_planner")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.6, 1.55, 0.15)
+
+[node name="KeyCabinet" parent="Sources" instance=ExtResource("14_keys")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 15.83, 1.45, 2.5)
+
+[node name="DrawingRack" parent="Sources" instance=ExtResource("17_rack")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 15.2, 0, 1.2)
+
+[node name="Answerphone" parent="Sources" instance=ExtResource("15_phone")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 9.3, 0.75, 3.85)
+
+[node name="CrtTerminal" parent="Sources" instance=ExtResource("16_crt")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 9.33, 0.75, 3.05)
+
 [node name="Props" type="Node3D" parent="."]
 
+[node name="KeyRegister" parent="Props" instance=ExtResource("18_book")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.65, 1.565, 0.25)
+source = &"key_register"
+title = "KEY REGISTER"
+
+[node name="PermitRegister" parent="Props" instance=ExtResource("18_book")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.2, 1.565, 0.25)
+
+[node name="RamsFile" parent="Props" instance=ExtResource("18_book")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.75, 1.565, 0.25)
+source = &"file_store"
+title = "RISK ASSESSMENTS"
+layout = 1
+template_id = &"rams"
+
 [node name="Pen" parent="Props" instance=ExtResource("12_pen")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.45, 0.752, 3.85)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 0.752, 3.4)
 
 [node name="DateStamp" parent="Props" instance=ExtResource("6_stamp")]
-transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 9.62, 0.75, 3.0)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 9.75, 0.75, 4.08)
 
 [node name="InkPad" parent="Props" instance=ExtResource("7_pad")]
-transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 9.62, 0.75, 3.2)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 9.75, 0.75, 3.92)
 
 [node name="HolePunch" parent="Props" instance=ExtResource("8_punch")]
-transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 9.6, 0.75, 4.0)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 9.3, 0.75, 4.1)
 
 [node name="DotMatrixPrinter" parent="Props" instance=ExtResource("9_printer")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0.75, 0.6)

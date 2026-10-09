@@ -25,6 +25,7 @@ RenderConfig="*res://autoload/render_config.gd"
 InteractionManager="*res://autoload/interaction_manager.gd"
 ObjectRegistry="*res://autoload/object_registry.gd"
 LodgementLedger="*res://autoload/lodgement_ledger.gd"
+InformationBoard="*res://autoload/information_board.gd"
 DebugHooks="*res://autoload/debug_hooks.gd"
 
 [display]

@@ -87,7 +87,7 @@ func _test_stamp() -> void:
 	check(verdict.has(Failure.Code.WRONG_DATE_ON_STAMP), "the stale stamp is a WRONG_DATE_ON_STAMP at handout")
 
 	# Put it back down and wind the day band to today: six detents.
-	im.perform(stamp.handle, Interactable.Verb.PLACE, Vector3(9.62, 0.75, 3.0))
+	im.perform(stamp.handle, Interactable.Verb.PLACE, Vector3(9.75, 0.75, 4.08))
 	var day_band: StampBand = stamp.bands[DateStamp.Band.DAY]
 	refused.clear()
 	check(im.perform(day_band, Interactable.Verb.OPEN), "use on the day band turns it")
@@ -106,7 +106,7 @@ func _test_stamp() -> void:
 	var fresh := _stack([&"job_sheet"], Vector3(9.6, 0.76, 3.6))
 	im.perform(fresh.interactable, Interactable.Verb.INSERT, im.carried_item)
 	check(fresh.top().stamp.stamped_date == "2026-10-07", "now it stamps today")
-	im.perform(stamp.handle, Interactable.Verb.PLACE, Vector3(9.62, 0.75, 3.0))
+	im.perform(stamp.handle, Interactable.Verb.PLACE, Vector3(9.75, 0.75, 4.08))
 	# Months and days wrap; impossible dates print as they stand.
 	for i in 31:
 		while not stamp.is_ratchet_free():

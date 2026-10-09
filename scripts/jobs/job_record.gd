@@ -4,6 +4,8 @@
 class_name JobRecord
 extends Resource
 
+## Stable id, referenced by facts (JIOH-26) and the roster.
+@export var job_id: StringName = &""
 ## The job sheet number, e.g. "JS-0412".
 @export var job_number: String = ""
 @export var trade: StringName = &""
@@ -20,3 +22,7 @@ extends Resource
 ## The job number on the returned sheet from the last visit to this location,
 ## which the job sheet must quote (paperwork design doc). Empty if none.
 @export var previous_job_number: String = ""
+## The site the job is on, as the job sheet's site box wants it.
+@export var site: String = ""
+## The permit number the pack's permit to work must carry, if any.
+@export var permit_number: String = ""
