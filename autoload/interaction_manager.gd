@@ -119,7 +119,8 @@ func perform(item: Interactable, verb: Interactable.Verb, payload: Variant = nul
 			_place(item, payload)
 		Interactable.Verb.INSERT:
 			var put := payload as Interactable
-			_drop_carry()
+			if not item.keeps_inserted_in_hand(put):
+				_drop_carry()
 			item.interact(verb, put)
 			inserted.emit(put, item)
 		_:

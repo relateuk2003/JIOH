@@ -1,10 +1,15 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://scripts/levels/office_level.gd" id="1_level"]
 [ext_resource type="PackedScene" path="res://scenes/office/office_blockout.tscn" id="2_office"]
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="3_player"]
 [ext_resource type="Environment" path="res://resources/environment/ps1_environment.tres" id="4_env"]
 [ext_resource type="PackedScene" path="res://scenes/props/pigeon_hole_wall.tscn" id="5_holes"]
+[ext_resource type="PackedScene" path="res://scenes/props/date_stamp.tscn" id="6_stamp"]
+[ext_resource type="PackedScene" path="res://scenes/props/ink_pad.tscn" id="7_pad"]
+[ext_resource type="PackedScene" path="res://scenes/props/hole_punch.tscn" id="8_punch"]
+[ext_resource type="PackedScene" path="res://scenes/props/dot_matrix_printer.tscn" id="9_printer"]
+[ext_resource type="PackedScene" path="res://scenes/props/paper_box.tscn" id="10_box"]
 
 [node name="OfficeLevel" type="Node3D"]
 script = ExtResource("1_level")
@@ -18,6 +23,22 @@ environment = ExtResource("4_env")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.2, 0, 0.13)
 
 [node name="Props" type="Node3D" parent="."]
+
+[node name="DateStamp" parent="Props" instance=ExtResource("6_stamp")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 9.62, 0.75, 3.0)
+
+[node name="InkPad" parent="Props" instance=ExtResource("7_pad")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 9.62, 0.75, 3.2)
+
+[node name="HolePunch" parent="Props" instance=ExtResource("8_punch")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 9.6, 0.75, 4.0)
+
+[node name="DotMatrixPrinter" parent="Props" instance=ExtResource("9_printer")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0.75, 0.6)
+with_stand = false
+
+[node name="SparePaperBox" parent="Props" instance=ExtResource("10_box")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5, 0, 4.9)
 
 [node name="Lights" type="Node3D" parent="."]
 

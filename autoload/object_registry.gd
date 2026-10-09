@@ -94,6 +94,9 @@ func _on_performed(item: Interactable, verb: int) -> void:
 
 
 func _on_inserted(item: Interactable, receiver: InsertReceiver) -> void:
+	# A stamp pressed on a pad is still in hand; there is nothing to record.
+	if receiver.keeps_inserted_in_hand(item):
+		return
 	var obj := _persistent_of(item)
 	if obj:
 		record(obj, receiver.consume)

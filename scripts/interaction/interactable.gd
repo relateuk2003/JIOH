@@ -14,7 +14,11 @@ enum Verb { PICK_UP = 1, EXAMINE = 2, PLACE = 4, OPEN = 8, INSERT = 16 }
 const LAYER_INTERACTABLE := 4  # physics layer 3
 
 ## Bit flags over Verb.
-@export_flags("Pick up", "Examine", "Place", "Open", "Insert") var verbs: int = Verb.EXAMINE
+## Anything that can be picked up can be put down again, so PICK_UP brings
+## PLACE with it whenever verbs are set.
+@export_flags("Pick up", "Examine", "Place", "Open", "Insert") var verbs: int = Verb.EXAMINE:
+	set(value):
+		verbs = value | (Verb.PLACE if value & Verb.PICK_UP else 0)
 @export var display_name: String = ""
 ## Stable id carried by every interaction event. Defaults to the sibling
 ## PersistentObject's id when there is one (JIOH-54).
@@ -25,9 +29,6 @@ const LAYER_INTERACTABLE := 4  # physics layer 3
 
 
 func _ready() -> void:
-	# Anything that can be picked up can be put down again.
-	if has_verb(Verb.PICK_UP):
-		verbs |= Verb.PLACE
 	collision_layer = LAYER_INTERACTABLE
 	collision_mask = 0
 	monitoring = false
@@ -57,6 +58,12 @@ func can_interact(verb: Verb, _payload: Variant = null) -> String:
 ## hands over what it holds (a pigeon hole gives back its stack).
 func lifted_by_pick_up() -> Interactable:
 	return self
+
+
+## Whether an item inserted into this stays in the player's hand afterwards:
+## a stamp pressed onto a sheet, a stack pushed through the punch.
+func keeps_inserted_in_hand(_item: Interactable) -> bool:
+	return false
 
 
 ## Performs the verb. Only called after can_interact() returned "".

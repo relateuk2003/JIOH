@@ -9,7 +9,7 @@ const SHEET_THICKNESS := 0.0012
 const PS1 := preload("res://shaders/ps1_standard.gdshader")
 
 var documents: Array[DocumentInstance] = []
-var interactable: Interactable
+var interactable: PaperStackHandle
 var _mesh: MeshInstance3D
 
 
@@ -24,11 +24,8 @@ static func make(docs: Array[DocumentInstance]) -> PaperStack:
 	mat.set_shader_parameter(&"albedo", Color(0.93, 0.92, 0.86))
 	s._mesh.material_override = mat
 	s.add_child(s._mesh)
-	var it := Interactable.new()
+	var it := PaperStackHandle.new()
 	it.name = "Interactable"
-	it.verbs = Interactable.Verb.PICK_UP | Interactable.Verb.EXAMINE
-	it.tags = [&"paper_stack"]
-	it.display_name = "Paperwork"
 	var shape := CollisionShape3D.new()
 	shape.shape = BoxShape3D.new()
 	it.add_child(shape)
@@ -36,6 +33,27 @@ static func make(docs: Array[DocumentInstance]) -> PaperStack:
 	s.interactable = it
 	s.add(docs)
 	return s
+
+
+## The sheet facing up.
+func top() -> DocumentInstance:
+	return documents[0] if not documents.is_empty() else null
+
+
+## Lays another stack on top of this one; the other node goes away.
+func put_on_top(other: PaperStack) -> void:
+	var docs := other.documents.duplicate()
+	docs.append_array(documents)
+	documents.clear()
+	other.queue_free()
+	add(docs)
+
+
+## Slides the top sheet to the bottom, as you do working through a pack.
+func turn_top_under() -> void:
+	if documents.size() > 1:
+		documents.append(documents.pop_front())
+	interactable.object_id = documents[0].instance_id
 
 
 ## Puts more sheets on the bottom of the stack.

@@ -18,6 +18,10 @@ var values: Dictionary = {}
 var signature: SignatureMark = null
 var stamp: StampMark = null
 var punched: bool = false
+## Torn by an overloaded punch (JIOH-27). The sheet has to be redone.
+var torn: bool = false
+## How dark the printer's ribbon printed it, 0..1. Faint is still legible.
+var print_quality: float = 1.0
 ## Where the sheet physically is: a CampaignState.Location value.
 var location: int = 0
 ## The campaign day the pack this belongs to is for, or 0 if unassigned.
@@ -92,6 +96,8 @@ func to_dict() -> Dictionary:
 		"signature": signature.to_dict() if signature else null,
 		"stamp": stamp.to_dict() if stamp else null,
 		"punched": punched,
+		"torn": torn,
+		"print_quality": print_quality,
 		"location": location,
 		"due_day": due_day,
 		"raised_on_day": raised_on_day,
@@ -122,6 +128,8 @@ static func from_dict(d: Dictionary) -> DocumentInstance:
 	if d.get("stamp") is Dictionary:
 		doc.stamp = StampMark.from_dict(d.stamp)
 	doc.punched = bool(d.get("punched", false))
+	doc.torn = bool(d.get("torn", false))
+	doc.print_quality = float(d.get("print_quality", 1.0))
 	doc.location = int(d.get("location", 0))
 	doc.due_day = int(d.get("due_day", 0))
 	doc.raised_on_day = int(d.get("raised_on_day", 0))

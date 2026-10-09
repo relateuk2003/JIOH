@@ -13,7 +13,7 @@ func _ready() -> void:
 	check(FileAccess.file_exists(path), "the stamp writes the first save")
 	var raw: Dictionary = bytes_to_var(FileAccess.get_file_as_bytes(path))
 	var keys := ["schema_version", "campaign_start_utc", "campaign_start_tz_bias", "clock_witness",
-		"current_day", "day_records", "document_instances", "world_artefacts", "lodgement_log", "relationships",
+		"current_day", "day_records", "document_instances", "world_artefacts", "lodgement_log", "relationships", "machines",
 		"story_flags", "settings", "last_write_utc"]
 	check(keys.all(func(k): return raw.has(k)), "every schema key is present")
 	check(raw.day_records.size() == 14 and raw.schema_version == 1 and raw.campaign_start_utc != 0,

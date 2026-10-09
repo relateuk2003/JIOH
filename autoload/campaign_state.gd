@@ -20,7 +20,7 @@ const DEBOUNCE_SECONDS := 0.75
 
 ## Where a document physically is (JIOH-36).
 ## Append only: the values are saved as integers.
-enum Location { IN_TRAY, OUT_TRAY, DESK, CLIPBOARD, FILED, HANDED_OVER, LOST, LODGED }
+enum Location { IN_TRAY, OUT_TRAY, DESK, CLIPBOARD, FILED, HANDED_OVER, LOST, LODGED, PRINTER_TRAY }
 
 var slot: int = 1
 var campaign_start_utc: int = 0
@@ -43,6 +43,10 @@ var lodgement_log: Array[Dictionary] = []
 ## persistent_id -> object record, owned by ObjectRegistry (JIOH-54).
 var world_objects: Dictionary = {}
 var relationships: Dictionary = {}
+## Office machine state that is not a transform (JIOH-27): the stamp's wheel
+## and ink, paper and ribbon, the printer's state and jam seed. Each machine
+## owns its keys and fills in its defaults the first time it sees a campaign.
+var machines: Dictionary = {}
 var story_flags: Dictionary = {}
 var settings: Dictionary = {}
 var last_write_utc: int = 0
@@ -91,6 +95,7 @@ func clear() -> void:
 	lodgement_log.clear()
 	world_objects = {}
 	relationships = {}
+	machines = {}
 	story_flags = {}
 	settings = {}
 	last_write_utc = 0
@@ -239,6 +244,7 @@ func to_dict() -> Dictionary:
 		"lodgement_log": lodgement_log.duplicate(true),
 		"world_objects": world_objects.duplicate(true),
 		"relationships": relationships.duplicate(true),
+		"machines": machines.duplicate(true),
 		"story_flags": story_flags.duplicate(true),
 		"settings": settings.duplicate(true),
 		"last_write_utc": last_write_utc,
@@ -273,6 +279,7 @@ func from_dict(d: Dictionary) -> void:
 		lodgement_log.append((entry as Dictionary).duplicate(true))
 	world_objects = d.get("world_objects", {}).duplicate(true)
 	relationships = d.get("relationships", {}).duplicate(true)
+	machines = d.get("machines", {}).duplicate(true)
 	story_flags = d.get("story_flags", {}).duplicate(true)
 	settings = d.get("settings", {}).duplicate(true)
 	last_write_utc = int(d.get("last_write_utc", 0))
