@@ -15,6 +15,11 @@ run/main_scene="res://scenes/rendering/render_stack.tscn"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="res://build/default_bus_layout.tres"
+driver/mix_rate=22050
+
 [autoload]
 
 WorldClock="*res://autoload/world_clock.gd"
@@ -27,6 +32,7 @@ ObjectRegistry="*res://autoload/object_registry.gd"
 LodgementLedger="*res://autoload/lodgement_ledger.gd"
 InformationBoard="*res://autoload/information_board.gd"
 Subtitles="*res://autoload/subtitles.gd"
+EraBus="*res://autoload/era_bus.gd"
 DebugHooks="*res://autoload/debug_hooks.gd"
 
 [display]

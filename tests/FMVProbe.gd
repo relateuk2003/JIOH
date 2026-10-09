@@ -39,7 +39,7 @@ func _ready() -> void:
 	check(fmv.video.position == Vector2(0, 30) and fmv.video.size == Vector2(320, 180),
 		"letterboxed to the source aspect on whole pixels (%s %s)" % [fmv.video.position, fmv.video.size])
 	check(fmv.video.bus == &"FMV" and AudioServer.get_bus_index(&"FMV") >= 0, "its sound goes to the FMV bus")
-	check(AudioServer.get_bus_volume_db(AudioServer.get_bus_index(&"Office")) < -6.0, "the office is ducked, not silenced")
+	check(AudioServer.get_bus_volume_db(AudioServer.get_bus_index(&"Ambience")) < -6.0, "the office is ducked, not silenced")
 	check(Input.mouse_mode == Input.MOUSE_MODE_VISIBLE, "the mouse is let go")
 
 	# Inputs do nothing; the tree is not paused.
@@ -86,7 +86,7 @@ func _ready() -> void:
 	check(player.global_transform == before_t and player.head.rotation == before_head, "the player is exactly where they were, looking the same way")
 	check(not player.movement_locked and not InteractionManager.is_blocked() and Input.mouse_mode == mouse_before, "with input and mouse given back")
 	check(FMVPlayer._deferred.is_empty() and hatch.knock.playing, "the knock is heard now")
-	check(AudioServer.get_bus_volume_db(AudioServer.get_bus_index(&"Office")) == 0.0, "the office is back up")
+	check(AudioServer.get_bus_volume_db(AudioServer.get_bus_index(&"Ambience")) == 0.0, "the office is back up")
 
 	# Seen before: hold Escape for a second from the first frame.
 	check(CampaignState.has_viewed_fmv(&"wide_pattern"), "the clip is recorded as seen")

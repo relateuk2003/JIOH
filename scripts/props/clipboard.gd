@@ -68,6 +68,7 @@ func _ready() -> void:
 	anim.animation_finished.connect(func(_n): turn_finished.emit())
 	_sound = AudioStreamPlayer.new()
 	_sound.name = "PageSound"
+	_sound.bus = &"Mechanical"
 	_sound.stream = _rustle()
 	_sound.volume_db = -10.0
 	add_child(_sound)

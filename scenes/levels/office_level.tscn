@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3]
+[gd_scene load_steps=24 format=3]
 
 [ext_resource type="Script" path="res://scripts/levels/office_level.gd" id="1_level"]
 [ext_resource type="PackedScene" path="res://scenes/office/office_blockout.tscn" id="2_office"]
@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" path="res://scenes/props/hatch.tscn" id="20_hatch"]
 [ext_resource type="PackedScene" path="res://scenes/props/handover_note.tscn" id="21_note"]
 [ext_resource type="PackedScene" path="res://scenes/props/desk_drawer.tscn" id="22_drawer"]
+[ext_resource type="Script" path="res://scripts/audio/acoustic_zones.gd" id="23_zones"]
 
 [node name="OfficeLevel" type="Node3D"]
 script = ExtResource("1_level")
@@ -149,3 +150,6 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 9.6, 0.752, 3.08)
 
 [node name="DeskDrawer" parent="." instance=ExtResource("22_drawer")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 9.855, 0.62, 3.1)
+
+[node name="AcousticZones" type="Node3D" parent="."]
+script = ExtResource("23_zones")

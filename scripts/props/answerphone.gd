@@ -33,6 +33,7 @@ func _ready() -> void:
 	PropMesh.box(self, "CassetteWindow", Vector3(0.04, 0.061, -0.02), Vector3(0.09, 0.002, 0.055), Color(0.3, 0.28, 0.25))
 	player = AudioStreamPlayer3D.new()
 	player.name = "Speaker"
+	player.bus = &"Voice"
 	player.unit_size = 2.0
 	add_child(player)
 	for i in 3:

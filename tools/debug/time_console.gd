@@ -60,8 +60,14 @@ func execute(line: String) -> String:
 			return _describe_now()
 		"reset":
 			return _move_by(-WorldClock.offset_seconds)
+		"era":
+			# JIOH-66: A/B any sound against its clean source.
+			if args.size() != 1 or args[0] not in ["on", "off"]:
+				return "usage: era on|off"
+			EraBus.set_bypass(args[0] == "off")
+			return "era %s" % args[0]
 		"help":
-			return "goto <day> <phase> | skip <2h|45m|3d> | freeze | thaw | rate <n> | now | reset"
+			return "goto <day> <phase> | skip <2h|45m|3d> | freeze | thaw | rate <n> | now | reset | era on|off"
 	return "unknown command: %s" % parts[0]
 
 

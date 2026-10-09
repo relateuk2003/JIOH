@@ -43,6 +43,7 @@ func _sound(cue: StringName, style: StringName) -> void:
 func _player(n: String, stream: AudioStream, at: Vector3) -> AudioStreamPlayer3D:
 	var p := AudioStreamPlayer3D.new()
 	p.name = n
+	p.bus = &"Mechanical"
 	p.stream = stream
 	p.position = at
 	p.attenuation_model = AudioStreamPlayer3D.ATTENUATION_INVERSE_DISTANCE

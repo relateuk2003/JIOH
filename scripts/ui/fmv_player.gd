@@ -224,9 +224,9 @@ func _give_back_player() -> void:
 	Input.mouse_mode = _saved.get("mouse", Input.MOUSE_MODE_CAPTURED)
 
 
-## The office is turned down, not off, for the length of the clip.
+## The office's ambience is turned down, not off, for the length of the clip.
 func _duck(on: bool) -> void:
-	var bus := AudioServer.get_bus_index(&"Office")
+	var bus := AudioServer.get_bus_index(&"Ambience")
 	if bus < 0:
 		return
 	if on:
