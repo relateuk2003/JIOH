@@ -1,0 +1,113 @@
+[gd_resource type="Resource" script_class="DocumentTemplate" load_steps=16 format=3]
+
+[ext_resource type="Script" path="res://resources/documents/document_field.gd" id="1_v8gvj"]
+[ext_resource type="Script" path="res://resources/documents/document_template.gd" id="2_8m5fg"]
+[ext_resource type="Script" path="res://resources/documents/validation_rule.gd" id="3_awtam"]
+[ext_resource type="Script" path="res://resources/documents/rules/field_matches_job_rule.gd" id="4_8m5fg"]
+
+[sub_resource type="Resource" id="Resource_8m5fg"]
+script = ExtResource("1_v8gvj")
+key = &"job_number"
+printed_label = "Job No."
+type = 4
+required = true
+max_length = 8
+rect = Rect2(0.4, 0.17, 0.54, 0.045)
+source_hint = &"returned_sheets"
+
+[sub_resource type="Resource" id="Resource_awtam"]
+script = ExtResource("1_v8gvj")
+key = &"date"
+printed_label = "Date"
+type = 2
+required = true
+max_length = 8
+rect = Rect2(0.4, 0.227, 0.24, 0.045)
+source_hint = &"wall_planner"
+
+[sub_resource type="Resource" id="Resource_e5ffx"]
+script = ExtResource("1_v8gvj")
+key = &"site"
+printed_label = "Site"
+required = true
+max_length = 24
+rect = Rect2(0.4, 0.284, 0.54, 0.045)
+source_hint = &"wall_planner"
+
+[sub_resource type="Resource" id="Resource_yxn6y"]
+script = ExtResource("1_v8gvj")
+key = &"trade"
+printed_label = "Trade"
+required = true
+max_length = 20
+rect = Rect2(0.4, 0.341, 0.54, 0.045)
+source_hint = &"wall_planner"
+
+[sub_resource type="Resource" id="Resource_dm1l0"]
+script = ExtResource("1_v8gvj")
+key = &"description"
+printed_label = "Description of Works"
+type = 7
+required = true
+max_length = 120
+rect = Rect2(0.4, 0.398, 0.54, 0.11)
+source_hint = &"terminal_mail"
+
+[sub_resource type="Resource" id="Resource_h35gt"]
+script = ExtResource("1_v8gvj")
+key = &"area"
+printed_label = "Area / Level"
+required = true
+max_length = 16
+rect = Rect2(0.4, 0.52, 0.54, 0.045)
+source_hint = &"site_drawings"
+
+[sub_resource type="Resource" id="Resource_f43ll"]
+script = ExtResource("1_v8gvj")
+key = &"raised_by"
+printed_label = "Raised By"
+required = true
+max_length = 20
+rect = Rect2(0.4, 0.577, 0.54, 0.045)
+
+[sub_resource type="Resource" id="Resource_r67ct"]
+script = ExtResource("1_v8gvj")
+key = &"authorised_by"
+printed_label = "Authorised (sign)"
+type = 6
+required = true
+rect = Rect2(0.4, 0.634, 0.54, 0.06)
+
+[sub_resource type="Resource" id="Resource_hlgr6"]
+script = ExtResource("4_8m5fg")
+field_key = &"job_number"
+rule_id = &"job_number_matches_job_job_number"
+category = 3
+
+[sub_resource type="Resource" id="Resource_34e7j"]
+script = ExtResource("4_8m5fg")
+job_property = &"date"
+field_key = &"date"
+failure_code = 1
+rule_id = &"date_matches_job_date"
+category = 3
+
+[sub_resource type="Resource" id="Resource_j6jnh"]
+script = ExtResource("4_8m5fg")
+job_property = &"trade"
+field_key = &"trade"
+failure_code = 3
+rule_id = &"trade_matches_job_trade"
+category = 3
+
+[resource]
+script = ExtResource("2_8m5fg")
+doc_id = &"job_sheet"
+display_name = "Job Sheet"
+form_code = "JS-01"
+trades = Array[StringName]([&"electrician", &"carpenter", &"gas_engineer", &"plasterer", &"decorator", &"flooring_fitter", &"fire_alarm_engineer", &"asbestos_surveyor", &"cleaner", &"scaffolder"])
+fields = Array[ExtResource("1_v8gvj")]([SubResource("Resource_8m5fg"), SubResource("Resource_awtam"), SubResource("Resource_e5ffx"), SubResource("Resource_yxn6y"), SubResource("Resource_dm1l0"), SubResource("Resource_h35gt"), SubResource("Resource_f43ll"), SubResource("Resource_r67ct")])
+requires_signature = true
+requires_stamp = true
+validity_days = 1
+validation_rules = Array[ExtResource("3_awtam")]([SubResource("Resource_hlgr6"), SubResource("Resource_34e7j"), SubResource("Resource_j6jnh")])

@@ -1,0 +1,104 @@
+[gd_resource type="Resource" script_class="DocumentTemplate" load_steps=15 format=3]
+
+[ext_resource type="Script" path="res://resources/documents/document_field.gd" id="1_m2e58"]
+[ext_resource type="Script" path="res://resources/documents/document_template.gd" id="2_uf5gv"]
+[ext_resource type="Script" path="res://resources/documents/validation_rule.gd" id="3_xgglk"]
+
+[sub_resource type="Resource" id="Resource_m2e58"]
+script = ExtResource("1_m2e58")
+key = &"operative_name"
+printed_label = "Operative"
+required = true
+max_length = 20
+rect = Rect2(0.4, 0.17, 0.54, 0.045)
+
+[sub_resource type="Resource" id="Resource_uf5gv"]
+script = ExtResource("1_m2e58")
+key = &"week_commencing"
+printed_label = "W/C (Monday)"
+type = 2
+required = true
+max_length = 8
+rect = Rect2(0.4, 0.227, 0.24, 0.045)
+
+[sub_resource type="Resource" id="Resource_xgglk"]
+script = ExtResource("1_m2e58")
+key = &"hours_mon"
+printed_label = "Mon hrs"
+type = 1
+max_length = 4
+rect = Rect2(0.4, 0.284, 0.12, 0.045)
+
+[sub_resource type="Resource" id="Resource_xh08l"]
+script = ExtResource("1_m2e58")
+key = &"hours_tue"
+printed_label = "Tue hrs"
+type = 1
+max_length = 4
+rect = Rect2(0.4, 0.341, 0.12, 0.045)
+
+[sub_resource type="Resource" id="Resource_mwlc4"]
+script = ExtResource("1_m2e58")
+key = &"hours_wed"
+printed_label = "Wed hrs"
+type = 1
+max_length = 4
+rect = Rect2(0.4, 0.398, 0.12, 0.045)
+
+[sub_resource type="Resource" id="Resource_l1g1x"]
+script = ExtResource("1_m2e58")
+key = &"hours_thu"
+printed_label = "Thu hrs"
+type = 1
+max_length = 4
+rect = Rect2(0.4, 0.455, 0.12, 0.045)
+
+[sub_resource type="Resource" id="Resource_1b75r"]
+script = ExtResource("1_m2e58")
+key = &"hours_fri"
+printed_label = "Fri hrs"
+type = 1
+max_length = 4
+rect = Rect2(0.4, 0.512, 0.12, 0.045)
+
+[sub_resource type="Resource" id="Resource_mhhmc"]
+script = ExtResource("1_m2e58")
+key = &"job_numbers"
+printed_label = "Job Nos."
+type = 7
+max_length = 60
+rect = Rect2(0.4, 0.569, 0.54, 0.11)
+
+[sub_resource type="Resource" id="Resource_qygti"]
+script = ExtResource("1_m2e58")
+key = &"total"
+printed_label = "Total hrs"
+type = 1
+required = true
+max_length = 4
+rect = Rect2(0.4, 0.691, 0.12, 0.045)
+
+[sub_resource type="Resource" id="Resource_h55ss"]
+script = ExtResource("1_m2e58")
+key = &"operative_signature"
+printed_label = "Operative (sign)"
+type = 6
+required = true
+rect = Rect2(0.4, 0.748, 0.54, 0.06)
+
+[sub_resource type="Resource" id="Resource_enr2p"]
+script = ExtResource("1_m2e58")
+key = &"supervisor_signature"
+printed_label = "Supervisor (sign)"
+type = 6
+required = true
+rect = Rect2(0.4, 0.82, 0.54, 0.06)
+
+[resource]
+script = ExtResource("2_uf5gv")
+doc_id = &"timesheet"
+display_name = "Weekly Timesheet"
+form_code = "TS-"
+trades = Array[StringName]([&"electrician", &"carpenter", &"gas_engineer", &"plasterer", &"decorator", &"flooring_fitter", &"fire_alarm_engineer", &"asbestos_surveyor", &"cleaner", &"scaffolder"])
+fields = Array[ExtResource("1_m2e58")]([SubResource("Resource_m2e58"), SubResource("Resource_uf5gv"), SubResource("Resource_xgglk"), SubResource("Resource_xh08l"), SubResource("Resource_mwlc4"), SubResource("Resource_l1g1x"), SubResource("Resource_1b75r"), SubResource("Resource_mhhmc"), SubResource("Resource_qygti"), SubResource("Resource_h55ss"), SubResource("Resource_enr2p")])
+requires_signature = true

@@ -1,0 +1,147 @@
+[gd_resource type="Resource" script_class="DocumentTemplate" load_steps=23 format=3]
+
+[ext_resource type="Script" path="res://resources/documents/document_field.gd" id="1_1b70k"]
+[ext_resource type="Script" path="res://resources/documents/document_template.gd" id="2_1sh3y"]
+[ext_resource type="Script" path="res://resources/documents/validation_rule.gd" id="3_uoh3k"]
+[ext_resource type="Script" path="res://resources/documents/rules/field_matches_job_rule.gd" id="4_q0a7u"]
+[ext_resource type="Script" path="res://resources/documents/rules/sibling_match_rule.gd" id="5_xccyn"]
+[ext_resource type="Script" path="res://resources/documents/rules/field_date_age_rule.gd" id="6_m2ofr"]
+
+[sub_resource type="Resource" id="Resource_q0a7u"]
+script = ExtResource("1_1b70k")
+key = &"assessment_ref"
+printed_label = "Assessment Ref."
+type = 4
+required = true
+max_length = 8
+rect = Rect2(0.4, 0.17, 0.54, 0.045)
+source_hint = &"file_store"
+
+[sub_resource type="Resource" id="Resource_xccyn"]
+script = ExtResource("1_1b70k")
+key = &"revision"
+printed_label = "Rev."
+required = true
+max_length = 2
+rect = Rect2(0.4, 0.227, 0.54, 0.045)
+source_hint = &"file_store"
+
+[sub_resource type="Resource" id="Resource_m2ofr"]
+script = ExtResource("1_1b70k")
+key = &"job_number"
+printed_label = "Job No."
+type = 4
+required = true
+max_length = 8
+rect = Rect2(0.4, 0.284, 0.54, 0.045)
+source_hint = &"returned_sheets"
+
+[sub_resource type="Resource" id="Resource_2116e"]
+script = ExtResource("1_1b70k")
+key = &"haz_height"
+printed_label = "Work at height"
+type = 5
+rect = Rect2(0.12, 0.341, 0.04, 0.035)
+
+[sub_resource type="Resource" id="Resource_5mdx1"]
+script = ExtResource("1_1b70k")
+key = &"haz_electrical"
+printed_label = "Electrical"
+type = 5
+rect = Rect2(0.26, 0.341, 0.04, 0.035)
+
+[sub_resource type="Resource" id="Resource_opckj"]
+script = ExtResource("1_1b70k")
+key = &"haz_dust"
+printed_label = "Dust / fibres"
+type = 5
+rect = Rect2(0.39999998, 0.341, 0.04, 0.035)
+
+[sub_resource type="Resource" id="Resource_4jd1m"]
+script = ExtResource("1_1b70k")
+key = &"haz_manual"
+printed_label = "Manual handling"
+type = 5
+rect = Rect2(0.53999996, 0.341, 0.04, 0.035)
+
+[sub_resource type="Resource" id="Resource_nnd75"]
+script = ExtResource("1_1b70k")
+key = &"haz_hot"
+printed_label = "Hot works"
+type = 5
+rect = Rect2(0.67999995, 0.341, 0.04, 0.035)
+
+[sub_resource type="Resource" id="Resource_xueft"]
+script = ExtResource("1_1b70k")
+key = &"control_measures"
+printed_label = "Control Measures"
+type = 7
+required = true
+max_length = 160
+rect = Rect2(0.4, 0.388, 0.54, 0.11)
+source_hint = &"file_store"
+
+[sub_resource type="Resource" id="Resource_3en22"]
+script = ExtResource("1_1b70k")
+key = &"assessor"
+printed_label = "Assessor"
+required = true
+max_length = 20
+rect = Rect2(0.4, 0.51, 0.54, 0.045)
+source_hint = &"file_store"
+
+[sub_resource type="Resource" id="Resource_03lva"]
+script = ExtResource("1_1b70k")
+key = &"assessment_date"
+printed_label = "Date Assessed"
+type = 2
+required = true
+max_length = 8
+rect = Rect2(0.4, 0.567, 0.24, 0.045)
+source_hint = &"file_store"
+
+[sub_resource type="Resource" id="Resource_kx8an"]
+script = ExtResource("1_1b70k")
+key = &"review_date"
+printed_label = "Review Date"
+type = 2
+max_length = 8
+rect = Rect2(0.4, 0.624, 0.24, 0.045)
+
+[sub_resource type="Resource" id="Resource_3tjbg"]
+script = ExtResource("1_1b70k")
+key = &"sign_off"
+printed_label = "Signed Off (sign)"
+type = 6
+required = true
+rect = Rect2(0.4, 0.681, 0.54, 0.06)
+
+[sub_resource type="Resource" id="Resource_rj246"]
+script = ExtResource("4_q0a7u")
+field_key = &"job_number"
+rule_id = &"job_number_matches_job_job_number"
+category = 3
+
+[sub_resource type="Resource" id="Resource_umfaw"]
+script = ExtResource("5_xccyn")
+field_key = &"job_number"
+sibling_doc_id = &"job_sheet"
+sibling_field_key = &"job_number"
+rule_id = &"job_number_matches_job_sheet"
+category = 3
+
+[sub_resource type="Resource" id="Resource_dcstr"]
+script = ExtResource("6_m2ofr")
+rule_id = &"rams_assessment_age"
+category = 2
+
+[resource]
+script = ExtResource("2_1sh3y")
+doc_id = &"rams"
+display_name = "Risk Assessment & Method Statement"
+form_code = "RA/MS-03 Rev C"
+trades = Array[StringName]([&"electrician", &"carpenter", &"gas_engineer", &"plasterer", &"decorator", &"flooring_fitter", &"fire_alarm_engineer", &"asbestos_surveyor", &"scaffolder"])
+fields = Array[ExtResource("1_1b70k")]([SubResource("Resource_q0a7u"), SubResource("Resource_xccyn"), SubResource("Resource_m2ofr"), SubResource("Resource_2116e"), SubResource("Resource_5mdx1"), SubResource("Resource_opckj"), SubResource("Resource_4jd1m"), SubResource("Resource_nnd75"), SubResource("Resource_xueft"), SubResource("Resource_3en22"), SubResource("Resource_03lva"), SubResource("Resource_kx8an"), SubResource("Resource_3tjbg")])
+requires_signature = true
+validity_days = 7
+validation_rules = Array[ExtResource("3_uoh3k")]([SubResource("Resource_rj246"), SubResource("Resource_umfaw"), SubResource("Resource_dcstr")])

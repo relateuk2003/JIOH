@@ -1,0 +1,125 @@
+[gd_resource type="Resource" script_class="DocumentTemplate" load_steps=18 format=3]
+
+[ext_resource type="Script" path="res://resources/documents/document_field.gd" id="1_sbxga"]
+[ext_resource type="Script" path="res://resources/documents/document_template.gd" id="2_32g6f"]
+[ext_resource type="Script" path="res://resources/documents/validation_rule.gd" id="3_uao3l"]
+[ext_resource type="Script" path="res://resources/documents/rules/field_matches_job_rule.gd" id="4_32g6f"]
+[ext_resource type="Script" path="res://resources/documents/rules/sibling_match_rule.gd" id="4_ss568"]
+
+[sub_resource type="Resource" id="Resource_32g6f"]
+script = ExtResource("1_sbxga")
+key = &"permit_number"
+printed_label = "Hot Works No."
+type = 4
+required = true
+max_length = 8
+rect = Rect2(0.4, 0.17, 0.54, 0.045)
+source_hint = &"permit_register"
+
+[sub_resource type="Resource" id="Resource_uao3l"]
+script = ExtResource("1_sbxga")
+key = &"parent_permit"
+printed_label = "Permit to Work No."
+type = 4
+required = true
+max_length = 8
+rect = Rect2(0.4, 0.227, 0.54, 0.045)
+source_hint = &"permit_register"
+
+[sub_resource type="Resource" id="Resource_ss568"]
+script = ExtResource("1_sbxga")
+key = &"job_number"
+printed_label = "Assoc. Job No."
+type = 4
+required = true
+max_length = 8
+rect = Rect2(0.4, 0.284, 0.54, 0.045)
+source_hint = &"returned_sheets"
+
+[sub_resource type="Resource" id="Resource_0cq2h"]
+script = ExtResource("1_sbxga")
+key = &"location"
+printed_label = "Location of Work"
+required = true
+max_length = 24
+rect = Rect2(0.4, 0.341, 0.54, 0.045)
+source_hint = &"site_drawings"
+
+[sub_resource type="Resource" id="Resource_nu01y"]
+script = ExtResource("1_sbxga")
+key = &"fire_watch_minutes"
+printed_label = "Fire Watch            min"
+type = 1
+required = true
+max_length = 3
+rect = Rect2(0.4, 0.398, 0.12, 0.045)
+
+[sub_resource type="Resource" id="Resource_opipg"]
+script = ExtResource("1_sbxga")
+key = &"extinguisher_type"
+printed_label = "Extinguisher Type"
+required = true
+max_length = 12
+rect = Rect2(0.4, 0.455, 0.54, 0.045)
+source_hint = &"site_drawings"
+
+[sub_resource type="Resource" id="Resource_y2sh1"]
+script = ExtResource("1_sbxga")
+key = &"works_end_time"
+printed_label = "Works End (time)"
+type = 3
+required = true
+max_length = 5
+rect = Rect2(0.4, 0.512, 0.14, 0.045)
+source_hint = &"terminal_mail"
+
+[sub_resource type="Resource" id="Resource_x2aeb"]
+script = ExtResource("1_sbxga")
+key = &"watch_end_time"
+printed_label = "Fire Watch Ends (time)"
+type = 3
+required = true
+max_length = 5
+rect = Rect2(0.4, 0.569, 0.14, 0.045)
+
+[sub_resource type="Resource" id="Resource_rfs3a"]
+script = ExtResource("1_sbxga")
+key = &"issuer_signature"
+printed_label = "Issued By (sign)"
+type = 6
+required = true
+rect = Rect2(0.4, 0.626, 0.54, 0.06)
+
+[sub_resource type="Resource" id="Resource_55i3e"]
+script = ExtResource("4_32g6f")
+field_key = &"job_number"
+rule_id = &"job_number_matches_job_job_number"
+category = 3
+
+[sub_resource type="Resource" id="Resource_3v03j"]
+script = ExtResource("4_ss568")
+field_key = &"parent_permit"
+sibling_doc_id = &"permit_to_work"
+sibling_field_key = &"permit_number"
+rule_id = &"parent_permit_matches_permit_to_work"
+category = 3
+
+[sub_resource type="Resource" id="Resource_7l67d"]
+script = ExtResource("4_ss568")
+field_key = &"job_number"
+sibling_doc_id = &"job_sheet"
+sibling_field_key = &"job_number"
+rule_id = &"job_number_matches_job_sheet"
+category = 3
+
+[resource]
+script = ExtResource("2_32g6f")
+doc_id = &"hot_works_permit"
+display_name = "Hot Works Permit"
+form_code = "HW-02"
+trades = Array[StringName]([&"gas_engineer", &"carpenter", &"flooring_fitter"])
+fields = Array[ExtResource("1_sbxga")]([SubResource("Resource_32g6f"), SubResource("Resource_uao3l"), SubResource("Resource_ss568"), SubResource("Resource_0cq2h"), SubResource("Resource_nu01y"), SubResource("Resource_opipg"), SubResource("Resource_y2sh1"), SubResource("Resource_x2aeb"), SubResource("Resource_rfs3a")])
+requires_signature = true
+requires_stamp = true
+validity_days = 1
+validation_rules = Array[ExtResource("3_uao3l")]([SubResource("Resource_55i3e"), SubResource("Resource_3v03j"), SubResource("Resource_7l67d")])

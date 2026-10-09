@@ -1,0 +1,52 @@
+[gd_resource type="Resource" script_class="DocumentTemplate" load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://resources/documents/document_field.gd" id="1_5h6pm"]
+[ext_resource type="Script" path="res://resources/documents/document_template.gd" id="2_m7a3k"]
+[ext_resource type="Script" path="res://resources/documents/validation_rule.gd" id="3_amkwr"]
+
+[sub_resource type="Resource" id="Resource_5h6pm"]
+script = ExtResource("1_5h6pm")
+key = &"name"
+printed_label = "Name"
+required = true
+max_length = 20
+rect = Rect2(0.4, 0.17, 0.54, 0.045)
+
+[sub_resource type="Resource" id="Resource_m7a3k"]
+script = ExtResource("1_5h6pm")
+key = &"company"
+printed_label = "Company"
+required = true
+max_length = 20
+rect = Rect2(0.4, 0.227, 0.54, 0.045)
+
+[sub_resource type="Resource" id="Resource_amkwr"]
+script = ExtResource("1_5h6pm")
+key = &"time_in"
+printed_label = "In"
+type = 3
+required = true
+max_length = 5
+rect = Rect2(0.4, 0.284, 0.14, 0.045)
+
+[sub_resource type="Resource" id="Resource_1dtw6"]
+script = ExtResource("1_5h6pm")
+key = &"time_out"
+printed_label = "Out"
+type = 3
+max_length = 5
+rect = Rect2(0.4, 0.341, 0.14, 0.045)
+
+[sub_resource type="Resource" id="Resource_aroxp"]
+script = ExtResource("1_5h6pm")
+key = &"vehicle_reg"
+printed_label = "Vehicle Reg."
+max_length = 8
+rect = Rect2(0.4, 0.398, 0.54, 0.045)
+
+[resource]
+script = ExtResource("2_m7a3k")
+doc_id = &"sign_in_book"
+display_name = "Visitors' Book"
+trades = Array[StringName]([&"electrician", &"carpenter", &"gas_engineer", &"plasterer", &"decorator", &"flooring_fitter", &"fire_alarm_engineer", &"asbestos_surveyor", &"cleaner", &"scaffolder"])
+fields = Array[ExtResource("1_5h6pm")]([SubResource("Resource_5h6pm"), SubResource("Resource_m7a3k"), SubResource("Resource_amkwr"), SubResource("Resource_1dtw6"), SubResource("Resource_aroxp")])
