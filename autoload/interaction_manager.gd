@@ -25,6 +25,9 @@ var carried_item: Interactable = null
 var examined_item: Interactable = null
 ## Where the ray hits a placeable surface, if it does.
 var place_point: Variant = null
+## Things that take the hands away from interaction while they last (the
+## raised wristwatch, JIOH-67). Keyed by the blocker.
+var _blockers: Dictionary = {}
 var place_normal := Vector3.UP
 
 var _examine_restore: Dictionary = {}
@@ -38,6 +41,10 @@ func register_player(p: PlayerController) -> void:
 
 func _physics_process(_delta: float) -> void:
 	if ray == null or not is_instance_valid(ray):
+		return
+	if is_blocked():
+		place_point = null
+		_set_target(null)
 		return
 	ray.force_raycast_update()
 	var hit := ray.get_collider() if ray.is_colliding() else null
@@ -63,9 +70,22 @@ func _unhandled_input(event: InputEvent) -> void:
 		rotate_examined(event.relative)
 
 
+func set_blocked(by: Object, on: bool) -> void:
+	if on:
+		_blockers[by] = true
+		place_point = null
+		_set_target(null)
+	else:
+		_blockers.erase(by)
+
+
+func is_blocked() -> bool:
+	return not _blockers.is_empty()
+
+
 ## The primary verb, resolved from what is held and what is targeted.
 func use() -> void:
-	if examined_item:
+	if examined_item or is_blocked():
 		return
 	if carried_item:
 		if target and target.has_verb(Interactable.Verb.INSERT):
@@ -89,6 +109,8 @@ func use() -> void:
 
 ## Examines the carried item, else the target. Pressing again exits.
 func examine() -> void:
+	if is_blocked():
+		return
 	if examined_item:
 		_end_examine()
 		return
