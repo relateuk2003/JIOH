@@ -21,6 +21,9 @@ signal pack_taken(trade_id: StringName, pack: PaperStack)
 signal read_started(trade_id: StringName, duration: float)
 signal read_finished(trade_id: StringName, pack_score: PackVerdict)
 signal state_changed(trade_id: StringName, state: State)
+## The exchange at the counter has reached a point where the day may move on
+## (JIOH-82): phase dressing that waited for it applies now.
+signal exchange_settled
 
 const READ_MIN := 4.0
 const READ_MAX := 18.0
@@ -354,8 +357,19 @@ func _gone(t: Tradesperson) -> void:
 
 
 func _set_state(s: State) -> void:
+	var was := is_mid_exchange()
 	state = s
 	state_changed.emit(current.data.trade_id if current else &"", s)
+	if was and not is_mid_exchange():
+		exchange_settled.emit()
+
+
+## Someone is talking, reading or reacting at the counter: a phase change
+## must not cut across it (JIOH-82). Waiting for the pack is not an exchange
+## in this sense; nobody is mid-sentence.
+func is_mid_exchange() -> bool:
+	return current != null and is_instance_valid(current) \
+		and state in [State.GREETING, State.READING, State.RESOLVING]
 
 
 func _find(trade_id: StringName) -> Tradesperson:

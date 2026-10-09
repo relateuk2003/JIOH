@@ -28,6 +28,12 @@ var keyboard_ticks := false
 var _stroke := PackedVector2Array()
 
 
+func _init() -> void:
+	# Quitting mid-word keeps the word (JIOH-82): the box is written as it
+	# stands before the closing save.
+	CampaignState.closing.connect(leave)
+
+
 func stroke() -> PackedVector2Array:
 	return _stroke
 

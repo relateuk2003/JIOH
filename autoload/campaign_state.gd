@@ -13,6 +13,9 @@ extends Node
 
 signal campaign_started
 signal committed(reason: StringName)
+## The game is about to close: anything held in hand-written limbo (a box
+## half typed) writes itself into the campaign now, before the last save.
+signal closing
 
 const CAMPAIGN_LENGTH := 14
 const SCHEMA_VERSION := 1
@@ -72,6 +75,7 @@ func _process(delta: float) -> void:
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST and has_campaign():
+		closing.emit()
 		commit(&"close", true)
 
 

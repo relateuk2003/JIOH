@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3]
+[gd_scene load_steps=27 format=3]
 
 [ext_resource type="Script" path="res://scripts/levels/office_level.gd" id="1_level"]
 [ext_resource type="PackedScene" path="res://scenes/office/office_blockout.tscn" id="2_office"]
@@ -25,6 +25,7 @@
 [ext_resource type="Script" path="res://scripts/audio/acoustic_zones.gd" id="23_zones"]
 [ext_resource type="Script" path="res://scripts/audio/room_tone_rig.gd" id="24_tone"]
 [ext_resource type="Script" path="res://scripts/ui/pause_screen.gd" id="25_pause"]
+[ext_resource type="Script" path="res://scripts/slice/phase_dressing.gd" id="26_dressing"]
 
 [node name="OfficeLevel" type="Node3D"]
 script = ExtResource("1_level")
@@ -161,3 +162,6 @@ script = ExtResource("24_tone")
 
 [node name="PauseScreen" type="CanvasLayer" parent="."]
 script = ExtResource("25_pause")
+
+[node name="PhaseDressing" type="Node" parent="."]
+script = ExtResource("26_dressing")

@@ -8,9 +8,13 @@ extends Node3D
 
 func _ready() -> void:
 	# Until the front end and consent screen exist (JIOH-48), launching the
-	# office resumes slot 1 or stamps a new campaign.
+	# office resumes slot 1 or stamps a new campaign. The slice (JIOH-82)
+	# stamps one already on day 3.
 	if not CampaignState.has_campaign() and not CampaignState.resume():
-		CampaignState.new_campaign()
+		if SliceBootstrap.enabled():
+			SliceBootstrap.seed()
+		else:
+			CampaignState.new_campaign()
 	DayPhase.resync()
 	ObjectRegistry.restore_all(self)
 	# Props whose contents live in the campaign rather than in world_objects

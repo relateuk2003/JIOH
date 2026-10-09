@@ -72,7 +72,8 @@ func _ready() -> void:
 	check(crt.selected == 0, "keys pressed while it draws are lost")
 	await _frames(int(CrtTerminal.DRAW_SECONDS * 60) + 2)
 	var listing := crt.screen_text()
-	check(crt.inbox.size() == 3 and listing.count("\n") == 3, "three mails in the list:\n%s" % listing)
+	# Day 3's three, and day 2's two for the slice's morning (JIOH-82).
+	check(crt.inbox.size() == 5 and listing.count("\n") == 5, "five mails in the list:\n%s" % listing)
 	var moyes := crt.inbox.map(func(m): return m.message_id).find(&"mail_moyes")
 	for i in moyes:
 		_press(KEY_DOWN)
@@ -89,8 +90,8 @@ func _ready() -> void:
 	# The drawing rack: both revisions of B-201, nothing to tell them apart but the letter.
 	var rack: DrawingRack = level.get_node("Sources/DrawingRack")
 	var names := rack.sheets.map(func(s): return String(s.name))
-	check(names.size() == 3 and "Drawing_B-201_A" in names and "Drawing_B-201_B" in names, "both revisions hang in the rack %s" % [names])
-	var rev_a: DrawingProp = rack.sheets.filter(func(s): return s.drawing.revision == "A")[0]
+	check(names.size() == 5 and "Drawing_B-201_A" in names and "Drawing_B-201_B" in names, "both revisions hang in the rack %s" % [names])
+	var rev_a: DrawingProp = rack.sheets.filter(func(s): return s.drawing.revision == "A" and s.drawing.drawing_no == "B-201")[0]
 	var rev_b: DrawingProp = rack.sheets.filter(func(s): return s.drawing.revision == "B" and s.drawing.drawing_no == "B-201")[0]
 	var ia: Interactable = rev_a.get_node("Interactable")
 	var ib: Interactable = rev_b.get_node("Interactable")

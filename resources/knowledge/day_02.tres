@@ -1,0 +1,309 @@
+[gd_resource type="Resource" script_class="DayKnowledge" load_steps=42 format=3]
+
+[ext_resource type="Script" path="res://resources/knowledge/contradiction_pair.gd" id="1_2v3mi"]
+[ext_resource type="Script" path="res://resources/knowledge/drawing_sheet.gd" id="2_qgk3d"]
+[ext_resource type="Script" path="res://resources/knowledge/fact.gd" id="3_0jrbt"]
+[ext_resource type="Script" path="res://scripts/jobs/job_record.gd" id="4_4x8pc"]
+[ext_resource type="Script" path="res://resources/knowledge/mail_message.gd" id="5_amra3"]
+[ext_resource type="Script" path="res://resources/knowledge/phone_message.gd" id="6_yof2h"]
+[ext_resource type="Script" path="res://resources/knowledge/day_knowledge.gd" id="7_b1y1j"]
+
+[sub_resource type="Resource" id="Resource_2v3mi"]
+script = ExtResource("2_qgk3d")
+drawing_no = "A-100"
+title = "Block A level 1 general arrangement"
+spaces = PackedStringArray("Corridor 1.10")
+fact_ids = Array[StringName]([&"d3_decorating_location"])
+
+[sub_resource type="Resource" id="Resource_qgk3d"]
+script = ExtResource("2_qgk3d")
+drawing_no = "A-101"
+title = "Block A level 1 general arrangement"
+spaces = PackedStringArray("Room 1.07")
+fact_ids = Array[StringName]([&"d3_plastering_location"])
+
+[sub_resource type="Resource" id="Resource_0jrbt"]
+script = ExtResource("3_0jrbt")
+fact_id = &"d3_decorating_trade"
+subject_id = &"d3_decorating"
+key = &"trade"
+value = "Decorator"
+sources = Array[StringName]([&"wall_planner"])
+
+[sub_resource type="Resource" id="Resource_4x8pc"]
+script = ExtResource("3_0jrbt")
+fact_id = &"d3_decorating_site"
+subject_id = &"d3_decorating"
+key = &"site"
+value = "Block A"
+sources = Array[StringName]([&"wall_planner"])
+
+[sub_resource type="Resource" id="Resource_amra3"]
+script = ExtResource("3_0jrbt")
+fact_id = &"d3_decorating_date"
+subject_id = &"d3_decorating"
+key = &"date"
+also_answers = Array[StringName]([&"valid_from_date", &"valid_to_date"])
+value = "day:3"
+sources = Array[StringName]([&"wall_planner"])
+
+[sub_resource type="Resource" id="Resource_yof2h"]
+script = ExtResource("3_0jrbt")
+fact_id = &"d3_decorating_job_number"
+subject_id = &"d3_decorating"
+key = &"job_number"
+value = "J2196"
+sources = Array[StringName]([&"terminal_mail"])
+
+[sub_resource type="Resource" id="Resource_b1y1j"]
+script = ExtResource("3_0jrbt")
+fact_id = &"d3_decorating_description"
+subject_id = &"d3_decorating"
+key = &"description"
+also_answers = Array[StringName]([&"works_description"])
+value = "Make good and paint the corridor walls after the cable works"
+sources = Array[StringName]([&"terminal_mail"])
+
+[sub_resource type="Resource" id="Resource_d3ucw"]
+script = ExtResource("3_0jrbt")
+fact_id = &"d3_decorating_location"
+subject_id = &"d3_decorating"
+key = &"location"
+also_answers = Array[StringName]([&"area"])
+value = "Corridor 1.10"
+sources = Array[StringName]([&"site_drawings"])
+
+[sub_resource type="Resource" id="Resource_qf0rx"]
+script = ExtResource("3_0jrbt")
+fact_id = &"d3_decorating_assessment_ref"
+subject_id = &"d3_decorating"
+key = &"assessment_ref"
+value = "RA-114"
+sources = Array[StringName]([&"file_store"])
+
+[sub_resource type="Resource" id="Resource_dwdmy"]
+script = ExtResource("3_0jrbt")
+fact_id = &"d3_decorating_revision"
+subject_id = &"d3_decorating"
+key = &"revision"
+value = "C"
+sources = Array[StringName]([&"file_store"])
+
+[sub_resource type="Resource" id="Resource_5utl4"]
+script = ExtResource("3_0jrbt")
+fact_id = &"d3_decorating_control_measures"
+subject_id = &"d3_decorating"
+key = &"control_measures"
+value = "Dust sheets, low-odour paint, corridor kept open one side"
+sources = Array[StringName]([&"file_store"])
+
+[sub_resource type="Resource" id="Resource_yfp4l"]
+script = ExtResource("3_0jrbt")
+fact_id = &"d3_decorating_assessor"
+subject_id = &"d3_decorating"
+key = &"assessor"
+value = "D. Hale"
+sources = Array[StringName]([&"file_store"])
+
+[sub_resource type="Resource" id="Resource_tahhx"]
+script = ExtResource("3_0jrbt")
+fact_id = &"d3_decorating_assessment_date"
+subject_id = &"d3_decorating"
+key = &"assessment_date"
+value = "day:1"
+sources = Array[StringName]([&"file_store"])
+
+[sub_resource type="Resource" id="Resource_epjo3"]
+script = ExtResource("3_0jrbt")
+fact_id = &"d3_decorating_key_number"
+subject_id = &"d3_decorating"
+key = &"key_number"
+value = "K09"
+sources = Array[StringName]([&"key_register"])
+
+[sub_resource type="Resource" id="Resource_3iom6"]
+script = ExtResource("3_0jrbt")
+fact_id = &"d3_decorating_cabinet_position"
+subject_id = &"d3_decorating"
+key = &"cabinet_position"
+value = "Row 1, hook 9"
+sources = Array[StringName]([&"key_cabinet"])
+
+[sub_resource type="Resource" id="Resource_walbu"]
+script = ExtResource("3_0jrbt")
+fact_id = &"d3_decorating_issued_to"
+subject_id = &"d3_decorating"
+key = &"issued_to"
+value = "Hale & Sons"
+sources = Array[StringName]([&"wall_planner"])
+
+[sub_resource type="Resource" id="Resource_tb4fc"]
+script = ExtResource("3_0jrbt")
+fact_id = &"d3_plastering_trade"
+subject_id = &"d3_plastering"
+key = &"trade"
+value = "Plasterer"
+sources = Array[StringName]([&"wall_planner"])
+
+[sub_resource type="Resource" id="Resource_irbjq"]
+script = ExtResource("3_0jrbt")
+fact_id = &"d3_plastering_site"
+subject_id = &"d3_plastering"
+key = &"site"
+value = "Block A"
+sources = Array[StringName]([&"wall_planner"])
+
+[sub_resource type="Resource" id="Resource_1h5vt"]
+script = ExtResource("3_0jrbt")
+fact_id = &"d3_plastering_date"
+subject_id = &"d3_plastering"
+key = &"date"
+also_answers = Array[StringName]([&"valid_from_date", &"valid_to_date"])
+value = "day:3"
+sources = Array[StringName]([&"wall_planner"])
+
+[sub_resource type="Resource" id="Resource_jputi"]
+script = ExtResource("3_0jrbt")
+fact_id = &"d3_plastering_job_number"
+subject_id = &"d3_plastering"
+key = &"job_number"
+value = "J2199"
+sources = Array[StringName]([&"terminal_mail"])
+
+[sub_resource type="Resource" id="Resource_71jor"]
+script = ExtResource("3_0jrbt")
+fact_id = &"d3_plastering_description"
+subject_id = &"d3_plastering"
+key = &"description"
+also_answers = Array[StringName]([&"works_description"])
+value = "Patch and skim the ceiling where the leak came through"
+sources = Array[StringName]([&"terminal_mail"])
+
+[sub_resource type="Resource" id="Resource_6pbvw"]
+script = ExtResource("3_0jrbt")
+fact_id = &"d3_plastering_location"
+subject_id = &"d3_plastering"
+key = &"location"
+also_answers = Array[StringName]([&"area"])
+value = "Room 1.07"
+sources = Array[StringName]([&"site_drawings"])
+
+[sub_resource type="Resource" id="Resource_073os"]
+script = ExtResource("3_0jrbt")
+fact_id = &"d3_plastering_assessment_ref"
+subject_id = &"d3_plastering"
+key = &"assessment_ref"
+value = "RA-087"
+sources = Array[StringName]([&"file_store"])
+
+[sub_resource type="Resource" id="Resource_kwnyr"]
+script = ExtResource("3_0jrbt")
+fact_id = &"d3_plastering_revision"
+subject_id = &"d3_plastering"
+key = &"revision"
+value = "B"
+sources = Array[StringName]([&"file_store"])
+
+[sub_resource type="Resource" id="Resource_hr2pt"]
+script = ExtResource("3_0jrbt")
+fact_id = &"d3_plastering_control_measures"
+subject_id = &"d3_plastering"
+key = &"control_measures"
+value = "Mobile tower, edge protection, area taped off"
+sources = Array[StringName]([&"file_store"])
+
+[sub_resource type="Resource" id="Resource_b8pl6"]
+script = ExtResource("3_0jrbt")
+fact_id = &"d3_plastering_assessor"
+subject_id = &"d3_plastering"
+key = &"assessor"
+value = "M. Coyle"
+sources = Array[StringName]([&"file_store"])
+
+[sub_resource type="Resource" id="Resource_gr8lo"]
+script = ExtResource("3_0jrbt")
+fact_id = &"d3_plastering_assessment_date"
+subject_id = &"d3_plastering"
+key = &"assessment_date"
+value = "day:1"
+sources = Array[StringName]([&"file_store"])
+
+[sub_resource type="Resource" id="Resource_uhexu"]
+script = ExtResource("3_0jrbt")
+fact_id = &"d3_plastering_key_number"
+subject_id = &"d3_plastering"
+key = &"key_number"
+value = "K11"
+sources = Array[StringName]([&"key_register"])
+
+[sub_resource type="Resource" id="Resource_xly4m"]
+script = ExtResource("3_0jrbt")
+fact_id = &"d3_plastering_cabinet_position"
+subject_id = &"d3_plastering"
+key = &"cabinet_position"
+value = "Row 2, hook 3"
+sources = Array[StringName]([&"key_cabinet"])
+
+[sub_resource type="Resource" id="Resource_7ivnh"]
+script = ExtResource("3_0jrbt")
+fact_id = &"d3_plastering_issued_to"
+subject_id = &"d3_plastering"
+key = &"issued_to"
+value = "Coyle Plastering"
+sources = Array[StringName]([&"wall_planner"])
+
+[sub_resource type="Resource" id="Resource_t0jyt"]
+script = ExtResource("4_4x8pc")
+job_id = &"d3_decorating"
+job_number = "J2196"
+trade = &"decorator"
+location = "Corridor 1.10"
+scope = "Make good and paint the corridor walls after the cable works"
+start_day = 3
+end_day = 3
+key_number = "K09"
+site = "Block A"
+
+[sub_resource type="Resource" id="Resource_vawkk"]
+script = ExtResource("4_4x8pc")
+job_id = &"d3_plastering"
+job_number = "J2199"
+trade = &"plasterer"
+location = "Room 1.07"
+scope = "Patch and skim the ceiling where the leak came through"
+start_day = 3
+end_day = 3
+key_number = "K11"
+site = "Block A"
+
+[sub_resource type="Resource" id="Resource_jhga5"]
+script = ExtResource("5_amra3")
+message_id = &"mail_decorator"
+sender = "Hale & Sons <office@halesons.co.uk>"
+subject = "Corridor 1.10, Block A"
+body = "Hi,
+
+Booked in {day:3}, Corridor 1.10. Job: Make good and paint the corridor walls after the cable works. Our ref is J2196.
+
+Thanks"
+fact_ids = Array[StringName]([&"d3_decorating_job_number", &"d3_decorating_description"])
+
+[sub_resource type="Resource" id="Resource_dhq5d"]
+script = ExtResource("5_amra3")
+message_id = &"mail_plasterer"
+sender = "Coyle Plastering <office@coyleplastering.co.uk>"
+subject = "Room 1.07, Block A"
+body = "Hi,
+
+Booked in {day:3}, Room 1.07. Job: Patch and skim the ceiling where the leak came through. Our ref is J2199.
+
+Thanks"
+fact_ids = Array[StringName]([&"d3_plastering_job_number", &"d3_plastering_description"])
+
+[resource]
+script = ExtResource("7_b1y1j")
+day = 2
+jobs_for_tomorrow = Array[ExtResource("4_4x8pc")]([SubResource("Resource_t0jyt"), SubResource("Resource_vawkk")])
+facts = Array[ExtResource("3_0jrbt")]([SubResource("Resource_0jrbt"), SubResource("Resource_4x8pc"), SubResource("Resource_amra3"), SubResource("Resource_yof2h"), SubResource("Resource_b1y1j"), SubResource("Resource_d3ucw"), SubResource("Resource_qf0rx"), SubResource("Resource_dwdmy"), SubResource("Resource_5utl4"), SubResource("Resource_yfp4l"), SubResource("Resource_tahhx"), SubResource("Resource_epjo3"), SubResource("Resource_3iom6"), SubResource("Resource_walbu"), SubResource("Resource_tb4fc"), SubResource("Resource_irbjq"), SubResource("Resource_1h5vt"), SubResource("Resource_jputi"), SubResource("Resource_71jor"), SubResource("Resource_6pbvw"), SubResource("Resource_073os"), SubResource("Resource_kwnyr"), SubResource("Resource_hr2pt"), SubResource("Resource_b8pl6"), SubResource("Resource_gr8lo"), SubResource("Resource_uhexu"), SubResource("Resource_xly4m"), SubResource("Resource_7ivnh")])
+mail = Array[ExtResource("5_amra3")]([SubResource("Resource_jhga5"), SubResource("Resource_dhq5d")])
+drawings = Array[ExtResource("2_qgk3d")]([SubResource("Resource_2v3mi"), SubResource("Resource_qgk3d")])
