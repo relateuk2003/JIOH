@@ -18,6 +18,10 @@ var values: Dictionary = {}
 var signature: SignatureMark = null
 var stamp: StampMark = null
 var punched: bool = false
+## Where the sheet physically is: a CampaignState.Location value.
+var location: int = 0
+## The campaign day the pack this belongs to is for, or 0 if unassigned.
+var due_day: int = 0
 
 # Provenance, stamped from WorldClock.
 var raised_on_day: int = 0
@@ -88,6 +92,8 @@ func to_dict() -> Dictionary:
 		"signature": signature.to_dict() if signature else null,
 		"stamp": stamp.to_dict() if stamp else null,
 		"punched": punched,
+		"location": location,
+		"due_day": due_day,
 		"raised_on_day": raised_on_day,
 		"printed_at_unix": printed_at_unix,
 		"copied_from_instance_id": String(copied_from_instance_id),
@@ -116,6 +122,8 @@ static func from_dict(d: Dictionary) -> DocumentInstance:
 	if d.get("stamp") is Dictionary:
 		doc.stamp = StampMark.from_dict(d.stamp)
 	doc.punched = bool(d.get("punched", false))
+	doc.location = int(d.get("location", 0))
+	doc.due_day = int(d.get("due_day", 0))
 	doc.raised_on_day = int(d.get("raised_on_day", 0))
 	doc.printed_at_unix = int(d.get("printed_at_unix", 0))
 	doc.copied_from_instance_id = StringName(d.get("copied_from_instance_id", ""))

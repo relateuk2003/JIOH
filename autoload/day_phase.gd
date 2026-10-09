@@ -103,6 +103,8 @@ func _advance_to(t: int) -> void:
 	if next != phase:
 		var prev := phase
 		phase = next
+		# The save is written before any phase-driven world change (JIOH-36).
+		CampaignState.commit(&"phase", true)
 		phase_changed.emit(prev, next)
 
 

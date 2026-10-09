@@ -59,6 +59,7 @@ func _run() -> void:
 	var campaign := root.get_node("CampaignState")
 	var phases := root.get_node("DayPhase")
 
+	campaign.slot = 98  # never a real player slot
 	clock.set_time_zone_bias_override(0)
 	_fake_real = START_EPOCH_DAY * 86400 + 9 * 3600
 	clock.set_time_source(func() -> float: return _fake_real)
@@ -156,4 +157,8 @@ func _fail(what: String, where: String) -> bool:
 
 func _finish(code: int) -> void:
 	root.get_node("WorldClock").set_time_source(Callable())
+	var dir := ProjectSettings.globalize_path(root.get_node("CampaignState").save_dir())
+	for f in DirAccess.get_files_at(dir):
+		DirAccess.remove_absolute(dir.path_join(f))
+	DirAccess.remove_absolute(dir)
 	quit(code)

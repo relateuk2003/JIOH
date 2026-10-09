@@ -1,38 +1,95 @@
-# autoload/campaign_state.gd — JIOH-15: the fortnight laid over the player's
-# real calendar.
+# autoload/campaign_state.gd — the fortnight laid over the player's real
+# calendar (JIOH-15), and the one owner of the save file (JIOH-36).
 #
 # New Game stamps today's date and generates fourteen consecutive days from
 # it, flagged working or weekend by weekday. The campaign day is always a date
 # difference from the stamp, never a stored counter, so it cannot drift.
+#
+# Saving is autosave only. There is no public save(): systems call
+# commit(reason) whenever something meaningful changes, writes are debounced
+# to one per 750 ms with a trailing write, and every write is atomic (temp
+# file, flush, rename). No other script writes to disk.
 extends Node
 
 signal campaign_started
+signal committed(reason: StringName)
 
 const CAMPAIGN_LENGTH := 14
+const SCHEMA_VERSION := 1
+const DEBOUNCE_SECONDS := 0.75
 
+## Where a document physically is (JIOH-36).
+enum Location { IN_TRAY, OUT_TRAY, DESK, CLIPBOARD, FILED, HANDED_OVER, LOST }
+
+var slot: int = 1
 var campaign_start_utc: int = 0
 ## Local epoch day of the stamp. Kept alongside the UTC instant so a later
 ## timezone change does not move day 1.
 var campaign_start_epoch_day: int = 0
+var campaign_start_tz_bias: int = 0
 var campaign_days: Array[CampaignDay] = []
+
+# The rest of the save schema (JIOH-36). Every key is present in every save.
+var clock_witness: Dictionary = {}
+## Fourteen entries, allocated at the stamp. Never appended to or removed from.
+var day_records: Array[Dictionary] = []
+## Instance UUID -> DocumentInstance.
+var document_instances: Dictionary = {}
+var world_artefacts: Array = []
+## persistent_id -> object record, owned by ObjectRegistry (JIOH-54).
+var world_objects: Dictionary = {}
+var relationships: Dictionary = {}
+var story_flags: Dictionary = {}
+var settings: Dictionary = {}
+var last_write_utc: int = 0
+
+var _pending := false
+var _since_write := DEBOUNCE_SECONDS
+
+
+func _process(delta: float) -> void:
+	_since_write += delta
+	if _pending and _since_write >= DEBOUNCE_SECONDS:
+		_write_to_disk()
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST and has_campaign():
+		commit(&"close", true)
 
 
 func has_campaign() -> bool:
 	return campaign_start_utc != 0
 
 
-## Stamps a new campaign at the current WorldClock time.
+## Stamps a new campaign at the current WorldClock time and writes the first
+## save.
 func new_campaign() -> void:
+	clear()
 	campaign_start_utc = WorldClock.now_unix()
 	campaign_start_epoch_day = WorldClock.local_epoch_day(campaign_start_utc)
+	campaign_start_tz_bias = WorldClock.tz_bias_minutes()
 	generate_calendar(campaign_start_epoch_day)
+	for i in CAMPAIGN_LENGTH:
+		day_records.append(_new_day_record())
 	campaign_started.emit()
 
 
 func clear() -> void:
 	campaign_start_utc = 0
 	campaign_start_epoch_day = 0
+	campaign_start_tz_bias = 0
 	campaign_days.clear()
+	clock_witness = {}
+	day_records.clear()
+	document_instances = {}
+	world_artefacts = []
+	world_objects = {}
+	relationships = {}
+	story_flags = {}
+	settings = {}
+	last_write_utc = 0
+	_pending = false
 
 
 ## Fourteen consecutive dates from start_epoch_day. Bank holidays are ignored
@@ -85,7 +142,78 @@ func day_for_working_ordinal(ordinal: int) -> CampaignDay:
 	return null
 
 
+## Today's record in day_records, or an empty dictionary outside the fortnight.
+func today_record() -> Dictionary:
+	var day := WorldClock.get_campaign_day()
+	return day_records[day - 1] if day >= 1 and day <= day_records.size() else {}
+
+
+func add_document(doc: DocumentInstance) -> void:
+	document_instances[doc.instance_id] = doc
+
+
+# --- Autosave ------------------------------------------------------------------
+
+## Records that something meaningful changed. Writes at most once per
+## debounce window, with a trailing write guaranteed. immediate bypasses the
+## debounce (phase boundaries, quitting).
+func commit(reason: StringName, immediate := false) -> void:
+	if not has_campaign():
+		return
+	_pending = true
+	if immediate or _since_write >= DEBOUNCE_SECONDS:
+		_write_to_disk()
+	committed.emit(reason)
+
+
+## Loads the slot's save if there is one. Returns false if there is none.
+func resume() -> bool:
+	var path := save_path()
+	if not FileAccess.file_exists(path):
+		return false
+	var bytes := FileAccess.get_file_as_bytes(path)
+	var data: Variant = bytes_to_var(bytes)
+	if not data is Dictionary:
+		push_error("CampaignState: %s is not a save" % path)
+		return false
+	from_dict(data)
+	return has_campaign()
+
+
+func save_dir() -> String:
+	return "user://saves/slot_%d" % slot
+
+
+func save_path() -> String:
+	return save_dir().path_join("campaign.sav")
+
+
+func _write_to_disk() -> void:
+	_pending = false
+	_since_write = 0.0
+	last_write_utc = WorldClock.now_unix()
+	DirAccess.make_dir_recursive_absolute(save_dir())
+	var path := save_path()
+	var tmp := path + ".tmp"
+	var file := FileAccess.open(tmp, FileAccess.WRITE)
+	if file == null:
+		push_error("CampaignState: cannot write %s (%s)" % [tmp, error_string(FileAccess.get_open_error())])
+		return
+	file.store_buffer(var_to_bytes(to_dict()))
+	file.flush()
+	file.close()
+	# The rename is the only operation that makes a new save visible.
+	var err := DirAccess.rename_absolute(tmp, path)
+	if err != OK:
+		push_error("CampaignState: rename to %s failed (%s)" % [path, error_string(err)])
+
+
+# --- Serialisation ---------------------------------------------------------------
+
 func to_dict() -> Dictionary:
+	var docs := {}
+	for id in document_instances:
+		docs[String(id)] = (document_instances[id] as DocumentInstance).to_dict()
 	var days := []
 	for day in campaign_days:
 		days.append({
@@ -93,9 +221,21 @@ func to_dict() -> Dictionary:
 			"story_beat_id": String(day.story_beat_id),
 		})
 	return {
+		"schema_version": SCHEMA_VERSION,
 		"campaign_start_utc": campaign_start_utc,
 		"campaign_start_epoch_day": campaign_start_epoch_day,
-		"days": days,
+		"campaign_start_tz_bias": campaign_start_tz_bias,
+		"clock_witness": clock_witness.duplicate(true),
+		"current_day": campaign_day_for(WorldClock.now_unix()),
+		"calendar": days,
+		"day_records": day_records.duplicate(true),
+		"document_instances": docs,
+		"world_artefacts": world_artefacts.duplicate(true),
+		"world_objects": world_objects.duplicate(true),
+		"relationships": relationships.duplicate(true),
+		"story_flags": story_flags.duplicate(true),
+		"settings": settings.duplicate(true),
+		"last_write_utc": last_write_utc,
 	}
 
 
@@ -105,8 +245,9 @@ func from_dict(d: Dictionary) -> void:
 	if not has_campaign():
 		return
 	campaign_start_epoch_day = int(d.get("campaign_start_epoch_day", 0))
+	campaign_start_tz_bias = int(d.get("campaign_start_tz_bias", 0))
 	generate_calendar(campaign_start_epoch_day)
-	var days: Array = d.get("days", [])
+	var days: Array = d.get("calendar", [])
 	for i in mini(days.size(), campaign_days.size()):
 		var src: Dictionary = days[i]
 		var trades: Array[StringName] = []
@@ -114,3 +255,28 @@ func from_dict(d: Dictionary) -> void:
 			trades.append(StringName(t))
 		campaign_days[i].scheduled_trades = trades
 		campaign_days[i].story_beat_id = StringName(src.get("story_beat_id", ""))
+	clock_witness = d.get("clock_witness", {}).duplicate(true)
+	for record in d.get("day_records", []):
+		day_records.append((record as Dictionary).duplicate(true))
+	for id in d.get("document_instances", {}):
+		var doc := DocumentInstance.from_dict(d.document_instances[id])
+		if doc:
+			document_instances[doc.instance_id] = doc
+	world_artefacts = d.get("world_artefacts", []).duplicate(true)
+	world_objects = d.get("world_objects", {}).duplicate(true)
+	relationships = d.get("relationships", {}).duplicate(true)
+	story_flags = d.get("story_flags", {}).duplicate(true)
+	settings = d.get("settings", {}).duplicate(true)
+	last_write_utc = int(d.get("last_write_utc", 0))
+
+
+func _new_day_record() -> Dictionary:
+	return {
+		"phase_outcomes": {},
+		"packs_prepared": 0,
+		"packs_collected": 0,
+		"packs_failed": 0,
+		"lodgements_made": 0,
+		"attended": false,
+		"minutes_played": 0,
+	}
