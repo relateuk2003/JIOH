@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="VoiceSetData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/voice_set_data.gd" id="1_8oyea"]
+
+[resource]
+script = ExtResource("1_8oyea")
+voice_id = &"decorator"
+pitch = 0.85
+words_per_minute = 120.0
+lines = {
+"accepted": ["Champion."],
+"greeting": ["Morning, love. Faulkner. Not late, am I?", "Hello hello."],
+"queried": ["Doesn't matter, I'll sort it with the site lad."],
+"refused": ["Fair enough. I'll have a cuppa and come back."],
+"waiting": ["Take your time.", "Lovely day for it."],
+"walked": ["I'll pop back after dinner."]
+}

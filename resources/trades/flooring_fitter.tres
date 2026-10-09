@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="TradespersonData" load_steps=6 format=3]
+
+[ext_resource type="Resource" path="res://resources/trades/bodies/flooring_fitter.tres" id="1_slod1"]
+[ext_resource type="Script" path="res://scripts/data/punctuality_profile.gd" id="2_7v32p"]
+[ext_resource type="Script" path="res://scripts/data/tradesperson_data.gd" id="3_1us8t"]
+[ext_resource type="Resource" path="res://resources/trades/voices/flooring_fitter.tres" id="4_nomgr"]
+
+[sub_resource type="Resource" id="Resource_ffo15"]
+script = ExtResource("2_7v32p")
+window_start_minutes = 30.0
+window_end_minutes = 60.0
+variance_minutes = 10.0
+drift_per_campaign_day = 6.0
+
+[resource]
+script = ExtResource("3_1us8t")
+trade_id = &"flooring_fitter"
+display_name = "Shaun Ellery"
+surname = "Ellery"
+company = "Ellery Floors"
+punctuality = SubResource("Resource_ffo15")
+read_pace_seconds_per_page = 5.0
+voice_set = ExtResource("4_nomgr")
+body_profile = ExtResource("1_slod1")
+required_document_types = Array[StringName]([&"job_sheet"])

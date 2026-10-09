@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="TradespersonData" load_steps=6 format=3]
+
+[ext_resource type="Resource" path="res://resources/trades/bodies/cleaner.tres" id="1_6omim"]
+[ext_resource type="Script" path="res://scripts/data/punctuality_profile.gd" id="2_syc68"]
+[ext_resource type="Script" path="res://scripts/data/tradesperson_data.gd" id="3_fcglm"]
+[ext_resource type="Resource" path="res://resources/trades/voices/cleaner.tres" id="4_jt14u"]
+
+[sub_resource type="Resource" id="Resource_lhkn2"]
+script = ExtResource("2_syc68")
+window_start_minutes = -25.0
+window_end_minutes = -10.0
+variance_minutes = 3.0
+lets_self_in = true
+
+[resource]
+script = ExtResource("3_fcglm")
+trade_id = &"cleaner"
+display_name = "Maureen Healy"
+surname = "Healy"
+company = "Brightwell Cleaning"
+punctuality = SubResource("Resource_lhkn2")
+patience_seconds = 600.0
+error_tolerance = 3
+read_pace_seconds_per_page = 1.5
+voice_set = ExtResource("4_jt14u")
+body_profile = ExtResource("1_6omim")
+required_document_types = Array[StringName]([&"access_key_docket"])

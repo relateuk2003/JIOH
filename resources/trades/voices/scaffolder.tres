@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="VoiceSetData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/voice_set_data.gd" id="1_qxgc0"]
+
+[resource]
+script = ExtResource("1_qxgc0")
+voice_id = &"scaffolder"
+pitch = 0.8
+words_per_minute = 200.0
+lines = {
+"accepted": ["Ta."],
+"greeting": ["Brennan. Scaffold. Pack."],
+"queried": ["Whatever. Where do I sign."],
+"refused": ["Not standing about for this."],
+"waiting": ["Come on, pal.", "Lads are waiting."],
+"walked": ["We're off. Ring Dave."]
+}

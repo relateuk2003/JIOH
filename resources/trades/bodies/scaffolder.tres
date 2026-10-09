@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BodyProfileData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/body_profile_data.gd" id="1_0ygo6"]
+
+[resource]
+script = ExtResource("1_0ygo6")
+body_id = &"scaffolder"
+height_m = 1.88
+build = 3
+gait_speed = 1.6
+kit_colour = Color(1, 0.55, 0.05, 1)
+kit_notes = "Orange hi-vis, harness still on, gloves in his back pocket. Already looking at his watch."
+waiting_pose = &"fidget"

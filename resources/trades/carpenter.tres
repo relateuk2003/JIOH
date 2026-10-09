@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="TradespersonData" load_steps=6 format=3]
+
+[ext_resource type="Resource" path="res://resources/trades/bodies/carpenter.tres" id="1_syl4d"]
+[ext_resource type="Script" path="res://scripts/data/punctuality_profile.gd" id="2_a23p2"]
+[ext_resource type="Script" path="res://scripts/data/tradesperson_data.gd" id="3_pw5go"]
+[ext_resource type="Resource" path="res://resources/trades/voices/carpenter.tres" id="4_qmlaa"]
+
+[sub_resource type="Resource" id="Resource_shi6o"]
+script = ExtResource("2_a23p2")
+window_start_minutes = 20.0
+window_end_minutes = 45.0
+variance_minutes = 8.0
+drift_per_campaign_day = 5.0
+
+[resource]
+script = ExtResource("3_pw5go")
+trade_id = &"carpenter"
+display_name = "Kev Moyes"
+surname = "Moyes"
+company = "Moyes Joinery"
+punctuality = SubResource("Resource_shi6o")
+patience_seconds = 240.0
+error_tolerance = 3
+read_pace_seconds_per_page = 3.0
+voice_set = ExtResource("4_qmlaa")
+body_profile = ExtResource("1_syl4d")
+required_document_types = Array[StringName]([&"job_sheet"])

@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="TradespersonData" load_steps=6 format=3]
+
+[ext_resource type="Resource" path="res://resources/trades/bodies/asbestos_surveyor.tres" id="1_e5xqq"]
+[ext_resource type="Script" path="res://scripts/data/punctuality_profile.gd" id="2_3vvp6"]
+[ext_resource type="Script" path="res://scripts/data/tradesperson_data.gd" id="3_3vjtm"]
+[ext_resource type="Resource" path="res://resources/trades/voices/asbestos_surveyor.tres" id="4_osj2h"]
+
+[sub_resource type="Resource" id="Resource_yavbg"]
+script = ExtResource("2_3vvp6")
+window_start_minutes = 45.0
+window_end_minutes = 60.0
+drift_per_campaign_day = 2.0
+
+[resource]
+script = ExtResource("3_3vjtm")
+trade_id = &"asbestos_surveyor"
+display_name = "Gillian Marsh"
+surname = "Marsh"
+company = "Marsh Environmental"
+punctuality = SubResource("Resource_yavbg")
+patience_seconds = 480.0
+error_tolerance = 1
+read_pace_seconds_per_page = 16.0
+voice_set = ExtResource("4_osj2h")
+body_profile = ExtResource("1_e5xqq")
+required_document_types = Array[StringName]([&"job_sheet", &"permit_to_work", &"rams", &"access_key_docket"])

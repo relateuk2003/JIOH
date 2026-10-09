@@ -43,6 +43,9 @@ var lodgement_log: Array[Dictionary] = []
 ## persistent_id -> object record, owned by ObjectRegistry (JIOH-54).
 var world_objects: Dictionary = {}
 var relationships: Dictionary = {}
+# trade_id -> RelationshipState handed out by get_relationship(); folded back
+# into relationships whenever the campaign is serialised.
+var _relationship_states: Dictionary = {}
 ## Office machine state that is not a transform (JIOH-27): the stamp's wheel
 ## and ink, paper and ribbon, the printer's state and jam seed. Each machine
 ## owns its keys and fills in its defaults the first time it sees a campaign.
@@ -95,6 +98,7 @@ func clear() -> void:
 	lodgement_log.clear()
 	world_objects = {}
 	relationships = {}
+	_relationship_states = {}
 	machines = {}
 	story_flags = {}
 	settings = {}
@@ -220,6 +224,23 @@ func _write_to_disk() -> void:
 
 # --- Serialisation ---------------------------------------------------------------
 
+## The campaign's standing with a trade (JIOH-21). Created at defaults on
+## first request; never null. Mutate the returned object and commit().
+func get_relationship(trade_id: StringName) -> RelationshipState:
+	var key := String(trade_id)
+	if not _relationship_states.has(key):
+		var raw: Variant = relationships.get(key)
+		_relationship_states[key] = RelationshipState.from_dict(raw if raw is Dictionary else {})
+	return _relationship_states[key]
+
+
+func _relationships_dict() -> Dictionary:
+	var out := relationships.duplicate(true)
+	for key in _relationship_states:
+		out[key] = (_relationship_states[key] as RelationshipState).to_dict()
+	return out
+
+
 func to_dict() -> Dictionary:
 	var docs := {}
 	for id in document_instances:
@@ -243,7 +264,7 @@ func to_dict() -> Dictionary:
 		"world_artefacts": world_artefacts.duplicate(true),
 		"lodgement_log": lodgement_log.duplicate(true),
 		"world_objects": world_objects.duplicate(true),
-		"relationships": relationships.duplicate(true),
+		"relationships": _relationships_dict(),
 		"machines": machines.duplicate(true),
 		"story_flags": story_flags.duplicate(true),
 		"settings": settings.duplicate(true),

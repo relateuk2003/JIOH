@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="VoiceSetData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/voice_set_data.gd" id="1_khpl2"]
+
+[resource]
+script = ExtResource("1_khpl2")
+voice_id = &"cleaner"
+pitch = 1.2
+words_per_minute = 185.0
+lines = {
+"accepted": ["You're a star."],
+"greeting": ["Only me! Just need me key docket, love."],
+"queried": ["Ooh, that's not my key, that."],
+"refused": ["Well I can't get in the plant room, can I."],
+"waiting": ["You're alright, I'll do the bins."],
+"walked": ["I'll leave the second floor then."]
+}

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="TradeRoster" load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/trade_roster.gd" id="1_s1w0y"]
+[ext_resource type="Script" path="res://scripts/data/tradesperson_data.gd" id="2_etf3x"]
+[ext_resource type="Resource" path="res://resources/trades/electrician.tres" id="3_8k4bf"]
+[ext_resource type="Resource" path="res://resources/trades/carpenter.tres" id="4_wq4tf"]
+[ext_resource type="Resource" path="res://resources/trades/gas_engineer.tres" id="5_uvyg0"]
+[ext_resource type="Resource" path="res://resources/trades/plasterer.tres" id="6_srxfj"]
+[ext_resource type="Resource" path="res://resources/trades/decorator.tres" id="7_56n6l"]
+[ext_resource type="Resource" path="res://resources/trades/flooring_fitter.tres" id="8_xudb6"]
+[ext_resource type="Resource" path="res://resources/trades/fire_alarm_engineer.tres" id="9_p2ny3"]
+[ext_resource type="Resource" path="res://resources/trades/asbestos_surveyor.tres" id="10_f7vuk"]
+[ext_resource type="Resource" path="res://resources/trades/cleaner.tres" id="11_q6n12"]
+[ext_resource type="Resource" path="res://resources/trades/scaffolder.tres" id="12_nklaf"]
+
+[resource]
+script = ExtResource("1_s1w0y")
+trades = Array[ExtResource("2_etf3x")]([ExtResource("3_8k4bf"), ExtResource("4_wq4tf"), ExtResource("5_uvyg0"), ExtResource("6_srxfj"), ExtResource("7_56n6l"), ExtResource("8_xudb6"), ExtResource("9_p2ny3"), ExtResource("10_f7vuk"), ExtResource("11_q6n12"), ExtResource("12_nklaf")])

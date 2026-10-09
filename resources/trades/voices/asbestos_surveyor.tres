@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="VoiceSetData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/voice_set_data.gd" id="1_567wo"]
+
+[resource]
+script = ExtResource("1_567wo")
+voice_id = &"asbestos_surveyor"
+pitch = 0.9
+words_per_minute = 130.0
+lines = {
+"accepted": ["Thank you. Very clear."],
+"greeting": ["Good morning. Gillian Marsh. Survey, Block B."],
+"queried": ["The register reference isn't on this. I'll need it."],
+"refused": ["I'm afraid I can't enter without the correct permit."],
+"waiting": ["That's quite all right."],
+"walked": ["I'll write to your manager."]
+}

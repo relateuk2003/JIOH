@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="VoiceSetData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/voice_set_data.gd" id="1_k8oym"]
+
+[resource]
+script = ExtResource("1_k8oym")
+voice_id = &"fire_alarm_engineer"
+pitch = 1.15
+words_per_minute = 165.0
+lines = {
+"accepted": ["Great, thank you."],
+"greeting": ["Hi. Nandra, Northgate. Here for the panel."],
+"queried": ["The permit's for yesterday. Can you reissue it?", "Which zone is this?"],
+"refused": ["I can't isolate a panel on this. I'll have to log it."],
+"waiting": ["Is there someone else I can ask?"],
+"walked": ["I'll have to rebook. It'll be next week."]
+}
