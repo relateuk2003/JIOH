@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """tools/fonts/build_fonts.py — JIOH-63: builds the three bitmap faces.
 
-Every face comes from the one hand-drawn glyph set in glyphs_5x9.txt, so the
+Every face comes from the one hand-drawn glyph set in resources/fonts/glyphs_5x9.txt, so the
 game has one letterform at three sizes and nothing else:
 
   jioh_body_6px     document text, proportional, 1x (caps 7px, 10px line)
@@ -17,7 +17,7 @@ from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
-SRC = ROOT / "tools/fonts/glyphs_5x9.txt"
+SRC = ROOT / "resources/fonts/glyphs_5x9.txt"
 OUT = ROOT / "resources/fonts"
 ROWS = 9
 BASE = 7

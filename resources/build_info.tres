@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="BuildStamp" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/build/build_stamp.gd" id="1_stamp"]
+
+[resource]
+script = ExtResource("1_stamp")
+version = "dev"
+channel = "dev"

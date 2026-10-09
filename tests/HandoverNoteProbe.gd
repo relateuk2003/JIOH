@@ -118,7 +118,9 @@ func _has_overlay(n: Node) -> bool:
 	for c in n.get_children():
 		if c is SubViewport:
 			continue  # faces and pages drawn onto props, not the screen
-		if c is CanvasLayer or c is Control:
+		if c is CanvasLayer and not c.visible:
+			continue  # the pause screen, down while playing
+		if c is CanvasLayer or (c is Control and c.is_visible_in_tree()):
 			return true
 		if _has_overlay(c):
 			return true

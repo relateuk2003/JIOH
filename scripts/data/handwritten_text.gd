@@ -10,7 +10,7 @@
 class_name HandwrittenText
 extends Resource
 
-const GLYPHS := "res://tools/fonts/glyphs_5x9.txt"
+const GLYPHS := "res://resources/fonts/glyphs_5x9.txt"
 const PAGE := Vector2i(120, 170)
 const LEFT := 7
 const TOP := 9

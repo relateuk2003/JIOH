@@ -294,6 +294,7 @@ func to_dict() -> Dictionary:
 		"fmv_viewed": fmv_viewed.duplicate(true),
 		"settings": settings.duplicate(true),
 		"last_write_utc": last_write_utc,
+		"written_by_build": BuildInfo.version,
 	}
 
 

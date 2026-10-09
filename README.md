@@ -26,6 +26,16 @@ Tickets live in Jira under the JIOH project. Commits and PRs name the ticket the
 | `tools/debug/` | Time console and fortnight soak. Debug builds only; excluded from release exports. |
 | `addons/document_inspector/` | Editor dock listing every template and its fields. Enable it in Project Settings → Plugins. |
 
+## Building
+
+`build/build.sh` exports Windows and Linux (the gates) and macOS into
+`build/out/janice-<version>-<platform>.zip`, with the version from
+`git describe` baked into the game (shown on the pause screen; `janice -- --print-build`
+prints it). `build/build.sh --release` refuses a dirty tree and appends
+`build/CHANGELOG.md`. Set `GODOT` to the Godot 4.5.1 binary; the 4.5.1 export
+templates must be installed. `tests/build/run_build_tests.sh` checks the whole
+pipeline (slow, so not in `tests/run_all.sh`). JIOH-60.
+
 ## Controls
 
 WASD or arrows to walk, mouse to look, left click or E to use (pick up, place, insert, open), right click or Q to examine, Ctrl to crouch, Esc to free the mouse. There is no sprint.

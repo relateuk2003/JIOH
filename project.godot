@@ -17,11 +17,12 @@ config/icon="res://icon.svg"
 
 [audio]
 
-buses/default_bus_layout="res://build/default_bus_layout.tres"
+buses/default_bus_layout="res://resources/audio/default_bus_layout.tres"
 driver/mix_rate=22050
 
 [autoload]
 
+BuildInfo="*res://autoload/build_info.gd"
 WorldClock="*res://autoload/world_clock.gd"
 CampaignState="*res://autoload/campaign_state.gd"
 DayPhase="*res://autoload/day_phase.gd"
@@ -130,6 +131,7 @@ release_mouse={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
 
 [shader_globals]
 

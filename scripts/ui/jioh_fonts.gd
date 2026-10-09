@@ -1,5 +1,5 @@
 # scripts/ui/jioh_fonts.gd — JIOH-63: the three faces, and the only way code
-# asks for a font. Every face is a bitmap built from tools/fonts/glyphs_5x9.txt;
+# asks for a font. Every face is a bitmap built from resources/fonts/glyphs_5x9.txt;
 # sizes are whole multiples of the native size, never fractional.
 class_name JiohFonts
 extends RefCounted
