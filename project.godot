@@ -13,6 +13,7 @@ config_version=5
 config/name="Janice Is On Holiday"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
+run/main_scene="res://scenes/rendering/render_stack.tscn"
 
 [autoload]
 
@@ -20,9 +21,48 @@ WorldClock="*res://autoload/world_clock.gd"
 CampaignState="*res://autoload/campaign_state.gd"
 DayPhase="*res://autoload/day_phase.gd"
 DocumentRegistry="*res://autoload/document_registry.gd"
+RenderConfig="*res://autoload/render_config.gd"
 DebugHooks="*res://autoload/debug_hooks.gd"
 
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=960
+window/stretch/mode="disabled"
+window/stretch/aspect="ignore"
+
+[input]
+
+debug_render_panel={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":4194334,"physical_keycode":0,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+
+[shader_globals]
+
+ps1_snap_enabled={
+"type": "bool",
+"value": true
+}
+ps1_snap_resolution={
+"type": "vec2",
+"value": Vector2(160, 120)
+}
+ps1_affine_enabled={
+"type": "bool",
+"value": true
+}
+ps1_dither_enabled={
+"type": "bool",
+"value": true
+}
+ps1_colour_levels={
+"type": "float",
+"value": 32.0
+}

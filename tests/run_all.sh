@@ -16,6 +16,25 @@ for scene in tests/*Probe.tscn; do
 		status=1
 	fi
 done
+# GPU probes render real pixels; they need a display, so use Xvfb when there
+# is none.
+for scene in tests/gpu/*Probe.tscn; do
+	if [[ -n "${DISPLAY:-}" ]]; then
+		out=$(timeout 180 "$GODOT" --path . --rendering-driver opengl3 "res://$scene" 2>&1)
+	elif command -v xvfb-run >/dev/null; then
+		out=$(timeout 180 xvfb-run -a -s "-screen 0 3440x1440x24" "$GODOT" --path . --rendering-driver opengl3 "res://$scene" 2>&1)
+	else
+		echo "SKIPPED (no display): $scene"
+		continue
+	fi
+	code=$?
+	echo "$out" | grep -E "PROBE FAIL|PASSED|FAILED|SCRIPT ERROR" || true
+	if [[ $code -ne 0 ]] || echo "$out" | grep -q "SCRIPT ERROR"; then
+		echo "FAILED: $scene" >&2
+		status=1
+	fi
+done
+
 soak=$(timeout 300 "$GODOT" --headless --path . --script res://tools/debug/soak_fortnight.gd 2>&1)
 code=$?
 echo "$soak" | grep -E "SOAK|SCRIPT ERROR" || true

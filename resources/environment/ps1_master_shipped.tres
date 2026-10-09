@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PS1Master" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/rendering/ps1_master.gd" id="1_master"]
+
+[resource]
+script = ExtResource("1_master")
+snap_enabled = true
+snap_resolution = Vector2(160, 120)
+affine_enabled = true
+dither_enabled = true
+colour_levels = 32.0
+fog_enabled = true
+fog_colour = Color(0.09, 0.09, 0.08, 1)
+fog_density = 0.12
+internal_mode = 0
+letterbox_colour = Color(0, 0, 0, 1)
