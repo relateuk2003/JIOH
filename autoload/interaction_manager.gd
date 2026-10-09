@@ -117,6 +117,9 @@ func examine() -> void:
 	var item := carried_item if carried_item else target
 	if item == null:
 		return
+	# Held paper is on the clipboard; HeldDocumentView raises and lowers it.
+	if item == carried_item and &"paper_stack" in item.tags:
+		return
 	var reason := item.can_interact(Interactable.Verb.EXAMINE)
 	if reason != "":
 		_refuse(item, reason)

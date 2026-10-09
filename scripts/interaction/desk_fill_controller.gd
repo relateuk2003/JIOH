@@ -29,14 +29,18 @@ var state: State = State.IDLE
 ## The stack lying in the slot, and the sheet on top of it.
 var stack: PaperStack = null
 var sheet: SheetView = null
-var active_field: DocumentField = null
-var buffer: String = ""
+var writer := FieldWriter.new()
+var active_field: DocumentField:
+	get:
+		return writer.active_field
+var buffer: String:
+	get:
+		return writer.buffer
 
 var slot: DeskSlot
 var paper_slot: Node3D
 var corner: Interactable
 var _targets: Array[FieldTarget] = []
-var _stroke := PackedVector2Array()
 
 
 func _ready() -> void:
@@ -54,6 +58,9 @@ func _ready() -> void:
 	slot.object_id = &"desk_paper_slot"
 	slot.display_name = "Desk"
 	InteractionManager.carry_changed.connect(_on_carry_changed)
+	writer.changed.connect(_on_writer_changed)
+	writer.committed.connect(_on_writer_committed)
+	writer.signed.connect(_on_writer_signed)
 
 
 func document() -> DocumentInstance:
@@ -110,6 +117,7 @@ func turn_page() -> void:
 func _show_top() -> void:
 	_clear_sheet()
 	var doc := document()
+	writer.doc = doc
 	sheet = SheetView.make(doc)
 	paper_slot.add_child(sheet)
 	sheet.position = Vector3(0, stack.height() + 0.001, 0)
@@ -142,182 +150,84 @@ func _clear_sheet() -> void:
 
 # --- Writing -----------------------------------------------------------------------
 
-## The pen touches a box. Tickboxes toggle there and then; signature boxes
-## wait for a stroke; everything else opens for typing.
+## The pen touches a box (FieldWriter does the writing).
 func activate(f: DocumentField) -> void:
 	if state == State.IDLE or state == State.DOCUMENT_PLACED:
 		return
-	_leave_field()
-	match f.type:
-		FieldType.TICKBOX:
-			var doc := document()
-			doc.set_value(f.key, not bool(doc.get_value(f.key, false)))
-			_commit(f, doc.get_value(f.key))
-			sheet.refresh()
-		FieldType.SIGNATURE:
-			active_field = f
-			_set_state(State.SIGNING)
-		_:
-			active_field = f
-			buffer = _stored_text(f)
-			_set_state(State.FIELD_ACTIVE)
+	writer.activate(f)
+	_sync_state()
 
 
-## One printable character from the keyboard.
 func type_char(ch: String) -> void:
-	if state != State.FIELD_ACTIVE or active_field == null:
-		return
-	if active_field.type == FieldType.DATE:
-		if buffer.length() >= 6:
-			return
-		buffer += ch
-		_write_live()
-		if buffer.length() == 6:
-			move_focus(1)  # the third box filled: on to the next field
-		return
-	if active_field.max_length > 0 and buffer.length() >= active_field.max_length:
-		return  # the box has run out of room
-	buffer += ch
-	_write_live()
+	if state == State.FIELD_ACTIVE:
+		writer.type_char(ch)
 
 
 func backspace() -> void:
-	if state != State.FIELD_ACTIVE or buffer.is_empty():
-		return
-	buffer = buffer.left(-1)
-	_write_live()
+	if state == State.FIELD_ACTIVE:
+		writer.backspace()
 
 
-## Tab (+1) and Shift+Tab (-1) through the printed order, wrapping.
 func move_focus(step: int) -> void:
-	if active_field == null:
-		return
-	var fields := document().template.fields
-	var i := fields.find(active_field)
-	_leave_field()
-	var next := fields[posmod(i + step, fields.size())]
-	if next.type == FieldType.TICKBOX or next.type == FieldType.SIGNATURE:
-		# Focus rests there; ticking and signing still need the pen.
-		active_field = next
-		buffer = ""
-		_set_state(State.FIELD_ACTIVE)
-	else:
-		activate(next)
+	writer.move_focus(step)
+	_sync_state()
 
 
-## A signature stroke, in the box's own 0..1 space. Any shape is accepted.
 func begin_stroke(at: Vector2) -> void:
-	if state == State.SIGNING:
-		_stroke = PackedVector2Array([at])
+	writer.begin_stroke(at)
 
 
 func add_stroke_point(at: Vector2) -> void:
-	if state == State.SIGNING and not _stroke.is_empty():
-		_stroke.append(at.clamp(Vector2.ZERO, Vector2.ONE))
-		sheet.refresh(active_field.key, {"points": _stroke})
+	writer.add_stroke_point(at)
 
 
 func end_stroke() -> void:
-	if state != State.SIGNING or _stroke.is_empty():
-		return
-	var doc := document()
-	var f := active_field
-	doc.set_value(f.key, {"by": "player", "points": _stroke})
-	if doc.signature == null:
-		doc.sign(&"player")
-	_stroke = PackedVector2Array()
-	active_field = null
-	_commit(f, doc.get_value(f.key))
-	sheet.refresh()
-	document_signed.emit(doc.instance_id)
-	_set_state(State.PEN_HELD if pen_in_hand() else State.DOCUMENT_PLACED)
+	writer.end_stroke()
 
 
 func _input(event: InputEvent) -> void:
 	if state == State.SIGNING:
-		_signing_input(event)
+		if writer.handle_signing_input(event):
+			get_viewport().set_input_as_handled()
 		return
 	if state != State.FIELD_ACTIVE or not event is InputEventKey:
 		return
 	get_viewport().set_input_as_handled()
-	if not event.pressed:
-		return
-	# No clipboard, no undo: these keys simply do nothing.
-	for a in [&"ui_paste", &"ui_copy", &"ui_cut", &"ui_undo", &"ui_redo"]:
-		if event.is_action_pressed(a):
-			return
-	if event.is_action_pressed(&"ui_focus_prev"):
-		move_focus(-1)
-	elif event.is_action_pressed(&"ui_focus_next"):
-		move_focus(1)
-	elif event.is_action_pressed(&"ui_text_backspace", true):
-		backspace()
-	elif event.is_action_pressed(&"release_mouse"):
+	if event.is_action_pressed(&"release_mouse"):
 		_leave_field()
 		_set_state(State.PEN_HELD if pen_in_hand() else State.DOCUMENT_PLACED)
-	elif event.unicode >= 32 and not event.ctrl_pressed and not event.meta_pressed \
-			and active_field.type not in [FieldType.TICKBOX, FieldType.SIGNATURE]:
-		type_char(String.chr(event.unicode))
+	else:
+		writer.handle_key(event)
 
 
-# Holding the use button draws; mouse motion moves the nib across the box.
-func _signing_input(event: InputEvent) -> void:
-	if event.is_action_pressed(&"use"):
-		begin_stroke(Vector2(0.05, 0.6))
-		get_viewport().set_input_as_handled()
-	elif event.is_action_released(&"use"):
-		end_stroke()
-		get_viewport().set_input_as_handled()
-	elif event is InputEventMouseMotion and not _stroke.is_empty():
-		var last := _stroke[_stroke.size() - 1]
-		add_stroke_point(last + event.relative * Vector2(0.004, 0.012))
-		get_viewport().set_input_as_handled()
-
-
-func _write_live() -> void:
-	document().set_value(active_field.key, _value_of_buffer())
-	sheet.refresh()
-
-
-func _value_of_buffer() -> String:
-	if active_field.type != FieldType.DATE:
-		return buffer
-	if buffer.is_empty():
-		return ""
-	return "%s/%s/%s" % [buffer.substr(0, 2), buffer.substr(2, 2), buffer.substr(4, 2)]
-
-
-func _stored_text(f: DocumentField) -> String:
-	var v: Variant = document().get_value(f.key)
-	if v == null:
-		return ""
-	return str(v).replace("/", "") if f.type == FieldType.DATE else str(v)
-
-
-## Leaves the active box, committing what it holds, empty included.
 func _leave_field() -> void:
-	if active_field == null:
-		return
-	var f := active_field
-	if f.type == FieldType.TICKBOX or f.type == FieldType.SIGNATURE:
-		active_field = null
-		buffer = ""
-		return
-	var stored := _value_of_buffer()
-	active_field = null
-	buffer = ""
-	document().set_value(f.key, stored)
-	_commit(f, stored)
-	sheet.refresh()
+	writer.leave()
 
 
-func _commit(f: DocumentField, value: Variant) -> void:
-	var doc := document()
-	# Read once per commit, so ambient systems can feel time passing.
-	WorldClock.poll()
-	CampaignState.add_document(doc)
-	CampaignState.commit(&"field")
+func _on_writer_changed() -> void:
+	if sheet == null:
+		return
+	if writer.signing:
+		sheet.refresh(writer.active_field.key, writer.live_value())
+	else:
+		sheet.refresh()
+
+
+func _on_writer_committed(doc: DocumentInstance, f: DocumentField, value: Variant) -> void:
 	field_committed.emit(doc.instance_id, f.key, value)
+
+
+func _on_writer_signed(doc: DocumentInstance) -> void:
+	document_signed.emit(doc.instance_id)
+	_set_state(State.PEN_HELD if pen_in_hand() else State.DOCUMENT_PLACED)
+
+
+## The state that matches what the writer is doing.
+func _sync_state() -> void:
+	if writer.signing:
+		_set_state(State.SIGNING)
+	elif writer.active_field:
+		_set_state(State.FIELD_ACTIVE)
 
 
 func _set_state(next: State) -> void:
@@ -340,7 +250,6 @@ func _on_carry_changed(_item: Interactable) -> void:
 		_set_state(State.PEN_HELD)
 	elif not pen and state != State.DOCUMENT_PLACED:
 		_leave_field()
-		_stroke = PackedVector2Array()
 		_set_state(State.DOCUMENT_PLACED)
 
 

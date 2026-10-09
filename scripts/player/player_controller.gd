@@ -17,6 +17,8 @@ signal footstep(surface: StringName)
 @onready var eye: Camera3D = $Head/Eye
 
 var movement_locked := false
+## Scales walking speed: reading a held document shuffles (JIOH-71).
+var speed_scale := 1.0
 ## Distance walked, in metres. Drives the bob phase.
 var stride_distance := 0.0
 ## When set, overrides keyboard input. Tests and cutscenes drive the body
@@ -78,7 +80,7 @@ func _physics_process(delta: float) -> void:
 	wish.y = 0
 	if wish.length() > 1.0:
 		wish = wish.normalized()
-	var target := wish * profile.walk_speed
+	var target := wish * profile.walk_speed * speed_scale
 	var horizontal := Vector3(velocity.x, 0, velocity.z)
 	var rate := profile.acceleration if target.length() > 0.0 else profile.friction
 	horizontal = horizontal.move_toward(target, rate * delta)

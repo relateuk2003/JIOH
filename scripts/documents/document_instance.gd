@@ -35,6 +35,8 @@ var lodged_in_hole: StringName = &""
 var lodged_at_unix: int = 0
 var returned_on_day: int = -1
 var closed_out: bool = false
+## The page a held pack was left open at, kept on its first sheet (JIOH-71).
+var open_page: int = 0
 
 
 ## Prints a fresh sheet of the given template now.
@@ -107,6 +109,7 @@ func to_dict() -> Dictionary:
 		"lodged_at_unix": lodged_at_unix,
 		"returned_on_day": returned_on_day,
 		"closed_out": closed_out,
+		"open_page": open_page,
 	}
 
 
@@ -139,4 +142,5 @@ static func from_dict(d: Dictionary) -> DocumentInstance:
 	doc.lodged_at_unix = int(d.get("lodged_at_unix", 0))
 	doc.returned_on_day = int(d.get("returned_on_day", -1))
 	doc.closed_out = bool(d.get("closed_out", false))
+	doc.open_page = int(d.get("open_page", 0))
 	return doc

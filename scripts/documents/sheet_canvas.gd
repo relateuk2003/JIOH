@@ -26,12 +26,22 @@ func _draw() -> void:
 	var font := JiohFonts.font(JiohFonts.Face.BODY)
 	var ink := clampf(doc.print_quality, 0.0, 1.0)
 	var print_col := Color(PRINT, ink)
-	var display := JiohFonts.font(JiohFonts.Face.DISPLAY)
-	draw_string(display, _at(size.x * 0.06, size.y * 0.07), tpl.display_name.to_upper(),
-		HORIZONTAL_ALIGNMENT_LEFT, -1, JiohFonts.size(JiohFonts.Face.DISPLAY, JiohFonts.scale_for(size.y * 0.032, JiohFonts.Face.DISPLAY)), print_col)
-	draw_string(font, _at(size.x * 0.06, size.y * 0.11), tpl.form_code,
+	var title_px := size.y * 0.032
+	if title_px >= JiohFonts.NATIVE[JiohFonts.Face.DISPLAY] * 0.75:
+		var display := JiohFonts.font(JiohFonts.Face.DISPLAY)
+		draw_string(display, _at(size.x * 0.06, size.y * 0.07), tpl.display_name.to_upper(),
+			HORIZONTAL_ALIGNMENT_LEFT, -1, JiohFonts.size(JiohFonts.Face.DISPLAY, JiohFonts.scale_for(title_px, JiohFonts.Face.DISPLAY)), print_col)
+	else:
+		# A page drawn at screen size: the display face would not fit the
+		# header, so the title is set in the body face, capitals.
+		draw_string(font, _at(size.x * 0.06, size.y * 0.07), tpl.display_name.to_upper(),
+			HORIZONTAL_ALIGNMENT_LEFT, -1, _fs(title_px), print_col)
+	# Whole lines apart even on a page drawn at screen size.
+	var code_y := maxf(size.y * 0.11, size.y * 0.07 + 10.0)
+	draw_string(font, _at(size.x * 0.06, code_y), tpl.form_code,
 		HORIZONTAL_ALIGNMENT_LEFT, -1, _fs(size.y * 0.02), print_col)
-	draw_line(Vector2(size.x * 0.05, size.y * 0.135), Vector2(size.x * 0.95, size.y * 0.135), print_col, 2.0)
+	var rule_y := roundf(maxf(size.y * 0.135, code_y + 3.0))
+	draw_line(Vector2(size.x * 0.05, rule_y), Vector2(size.x * 0.95, rule_y), print_col, 2.0)
 	var prev_y := -1.0
 	for f in tpl.fields:
 		var r := Rect2(f.rect.position * size, f.rect.size * size)
@@ -109,7 +119,9 @@ func _hand(text: String, r: Rect2, font: Font, seed_key: StringName) -> void:
 		var h := hash([seed_key, i, ch])
 		# Whole-pixel nudges only: no tilt, no fractional placement (JIOH-63).
 		var jitter := Vector2i(posmod(h, 3) - 1, posmod(h >> 8, 3) - 1)
-		var base := Vector2i(roundi(x), roundi(r.position.y + px * 1.05 + line * px * 1.25)) + jitter
+		# Small boxes (a page drawn at screen size) keep the baseline inside.
+		var drop := minf(px * 1.05, r.size.y - 1.0) if lines == 1 else px * 1.05
+		var base := Vector2i(roundi(x), roundi(r.position.y + drop + line * px * 1.25)) + jitter
 		draw_char(font, Vector2(base), ch, px, BIRO)
 		x += adv
 

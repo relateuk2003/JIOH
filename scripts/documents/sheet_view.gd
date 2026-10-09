@@ -10,25 +10,28 @@ const PIXELS := Vector2i(420, 594)
 const READABLE := preload("res://resources/materials/ps1_readable_material.tres")
 
 var doc: DocumentInstance
+## Texture size; held pages use a size that lands one texel per screen pixel.
+var pixels := PIXELS
 var canvas: SheetCanvas
 var _viewport: SubViewport
 
 
-static func make(d: DocumentInstance) -> SheetView:
+static func make(d: DocumentInstance, px: Vector2i = PIXELS) -> SheetView:
 	var v := SheetView.new()
 	v.name = "Sheet"
 	v.doc = d
+	v.pixels = px
 	return v
 
 
 func _ready() -> void:
 	_viewport = SubViewport.new()
-	_viewport.size = PIXELS
+	_viewport.size = pixels
 	_viewport.transparent_bg = false
 	_viewport.render_target_update_mode = SubViewport.UPDATE_ONCE
 	add_child(_viewport)
 	canvas = SheetCanvas.new()
-	canvas.size = Vector2(PIXELS)
+	canvas.size = Vector2(pixels)
 	canvas.doc = doc
 	_viewport.add_child(canvas)
 	var mesh := MeshInstance3D.new()
@@ -39,6 +42,14 @@ func _ready() -> void:
 	mat.set_shader_parameter(&"albedo_texture", _viewport.get_texture())
 	mesh.material_override = mat
 	add_child(mesh)
+
+
+## Shows another sheet on the same paper (the clipboard's pages).
+func show_document(d: DocumentInstance) -> void:
+	doc = d
+	if canvas:
+		canvas.doc = d
+	refresh()
 
 
 ## Redraws the face after anything was written, stamped or punched.
