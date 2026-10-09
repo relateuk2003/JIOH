@@ -54,6 +54,9 @@ var _relationship_states: Dictionary = {}
 ## owns its keys and fills in its defaults the first time it sees a campaign.
 var machines: Dictionary = {}
 var story_flags: Dictionary = {}
+## FMV clips seen, id -> unix time first started (JIOH-52). A seen clip is
+## skippable ever after.
+var fmv_viewed: Dictionary = {}
 var settings: Dictionary = {}
 var last_write_utc: int = 0
 
@@ -108,6 +111,7 @@ func clear() -> void:
 	_relationship_states = {}
 	machines = {}
 	story_flags = {}
+	fmv_viewed = {}
 	settings = {}
 	last_write_utc = 0
 	_pending = false
@@ -167,6 +171,18 @@ func day_for_working_ordinal(ordinal: int) -> CampaignDay:
 func today_record() -> Dictionary:
 	var day := WorldClock.get_campaign_day()
 	return day_records[day - 1] if day >= 1 and day <= day_records.size() else {}
+
+
+func has_viewed_fmv(id: StringName) -> bool:
+	return fmv_viewed.has(String(id))
+
+
+## Recorded as the clip starts, so a crash mid-way never means watching it
+## through again.
+func mark_fmv_viewed(id: StringName) -> void:
+	if not has_viewed_fmv(id):
+		fmv_viewed[String(id)] = WorldClock.now_unix()
+		commit(&"fmv", true)
 
 
 func add_document(doc: DocumentInstance) -> void:
@@ -275,6 +291,7 @@ func to_dict() -> Dictionary:
 		"relationships": _relationships_dict(),
 		"machines": machines.duplicate(true),
 		"story_flags": story_flags.duplicate(true),
+		"fmv_viewed": fmv_viewed.duplicate(true),
 		"settings": settings.duplicate(true),
 		"last_write_utc": last_write_utc,
 	}
@@ -311,6 +328,7 @@ func from_dict(d: Dictionary) -> void:
 	relationships = d.get("relationships", {}).duplicate(true)
 	machines = d.get("machines", {}).duplicate(true)
 	story_flags = d.get("story_flags", {}).duplicate(true)
+	fmv_viewed = d.get("fmv_viewed", {}).duplicate(true)
 	settings = d.get("settings", {}).duplicate(true)
 	last_write_utc = int(d.get("last_write_utc", 0))
 

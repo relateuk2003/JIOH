@@ -24,6 +24,11 @@ func _ready() -> void:
 
 func play(cue: StringName, style: StringName) -> void:
 	played.append([cue, style])
+	# During a cutscene the knock is heard when the video has gone.
+	FMVPlayer.defer(_sound.bind(cue, style))
+
+
+func _sound(cue: StringName, style: StringName) -> void:
 	match cue:
 		&"knock":
 			knock.volume_db = -4.0 if style == &"bang" else (-14.0 if style in [&"tap", &"polite"] else -8.0)
