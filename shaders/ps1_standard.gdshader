@@ -21,6 +21,12 @@ uniform float snap_disable_distance = 0.0;
 
 group_uniforms affine;
 uniform float affine_strength : hint_range(0.0, 1.0) = 1.0;
+group_uniforms;
+
+// JIOH-50: set per object while it is the interaction target. A fixed
+// brightness lift, not an outline or a glow.
+instance uniform float highlight = 0.0;
+const float HIGHLIGHT_LIFT = 0.12;
 
 void vertex() {
 	UV *= uv_scale;
@@ -37,5 +43,5 @@ void vertex() {
 
 void fragment() {
 	vec2 uv = ps1_affine_uv(UV, ps1_affine_uvw, affine_strength);
-	ALBEDO = albedo.rgb * texture(albedo_texture, uv).rgb;
+	ALBEDO = albedo.rgb * texture(albedo_texture, uv).rgb + highlight * HIGHLIGHT_LIFT;
 }
