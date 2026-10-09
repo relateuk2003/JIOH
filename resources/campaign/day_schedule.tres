@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="DaySchedule" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://resources/campaign/day_schedule.gd" id="1_sched"]
+
+[resource]
+script = ExtResource("1_sched")
+pre_open_minute = 390
+handout_minute = 450
+working_minute = 600
+cutoff_minute = 930
+wind_down_minute = 990
+closed_minute = 1080
