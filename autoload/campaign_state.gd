@@ -20,7 +20,7 @@ const DEBOUNCE_SECONDS := 0.75
 
 ## Where a document physically is (JIOH-36).
 ## Append only: the values are saved as integers.
-enum Location { IN_TRAY, OUT_TRAY, DESK, CLIPBOARD, FILED, HANDED_OVER, LOST, LODGED, PRINTER_TRAY }
+enum Location { IN_TRAY, OUT_TRAY, DESK, CLIPBOARD, FILED, HANDED_OVER, LOST, LODGED, PRINTER_TRAY, DRAWER }
 
 var slot: int = 1
 var campaign_start_utc: int = 0

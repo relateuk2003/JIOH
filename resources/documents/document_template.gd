@@ -18,6 +18,9 @@ extends Resource
 ## -1 for no expiry.
 @export var validity_days: int = -1
 @export var paper_scene: PackedScene
+## A handwritten sheet (Janice's note) instead of a printed form: no boxes,
+## the instance's "sheet" value says which page of the writing it is.
+@export var handwriting: HandwrittenText
 @export var validation_rules: Array[ValidationRule] = []
 
 

@@ -24,6 +24,9 @@ func _draw() -> void:
 		return
 	var tpl := doc.template
 	var font := JiohFonts.font(JiohFonts.Face.BODY)
+	if tpl.handwriting:
+		_draw_handwriting(tpl.handwriting, int(doc.get_value(&"sheet", 0)), font)
+		return
 	var ink := clampf(doc.print_quality, 0.0, 1.0)
 	var print_col := Color(PRINT, ink)
 	var title_px := size.y * 0.032
@@ -143,6 +146,23 @@ func _draw_stamp(font: Font) -> void:
 	draw_string(font, _at(box.position.x + 4, box.position.y + box.size.y * 0.85), text,
 		HORIZONTAL_ALIGNMENT_CENTER, box.size.x - 8, _fs(size.y * 0.024), col)
 	draw_set_transform(Vector2.ZERO)
+
+
+## A page of someone's handwriting on lined pad paper. With the accessible
+## text setting (JIOH-11) the same lines are set in the body face instead.
+func _draw_handwriting(hw: HandwrittenText, page: int, font: Font) -> void:
+	var k := size.y / float(HandwrittenText.PAGE.y)
+	for li in HandwrittenText.lines_per_page():
+		var y := roundf((HandwrittenText.TOP + li * HandwrittenText.PITCH + 8) * k)
+		draw_line(Vector2(0, y), Vector2(size.x, y), Color(0.72, 0.8, 0.9), maxf(1.0, roundf(k)))
+	if bool(CampaignState.settings.get("accessible_text", false)):
+		var lines := hw.page_lines(page)
+		for li in lines.size():
+			draw_string(font, _at(HandwrittenText.LEFT * k, (HandwrittenText.TOP + li * HandwrittenText.PITCH + 7) * k),
+				lines[li], HORIZONTAL_ALIGNMENT_LEFT, -1, _fs(10 * k), PRINT)
+	elif hw.texture:
+		var src := Rect2(page * HandwrittenText.PAGE.x, 0, HandwrittenText.PAGE.x, HandwrittenText.PAGE.y)
+		draw_texture_rect_region(hw.texture, Rect2(Vector2.ZERO, size), src)
 
 
 ## A body-face size at the nearest whole scale for a line height in pixels.

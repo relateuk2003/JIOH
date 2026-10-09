@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="HandwrittenText" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/handwritten_text.gd" id="1_hw"]
+[ext_resource type="Texture2D" path="res://resources/textures/props/note_handover_albedo.png" id="2_cwoko"]
+
+[resource]
+script = ExtResource("1_hw")
+text = "Hiya love,
+
+Thanks for covering. It's easy once you're in the swing of it.
+
+The trades come to the hatch from half seven to collect their packs. Take each one's pack out of their pigeon hole and hand it over. They read it there and then, and they'll soon tell you if it's wrong. Hatch shuts at ten.
+
+The rest of the day is for tomorrow's packs. Who's in and what for is on the planner. The rest is in the emails, the drawings and the permit book. Print the forms, fill them in, sign and stamp them.
+
+Each pack goes in that trade's pigeon hole. The holes close at half three (15:30) and anything not in by then has missed it.
+
+Don't let Kev talk you into anything.
+
+Back Monday 19th,
+Janice x"
+texture = ExtResource("2_cwoko")
+page_count = 4

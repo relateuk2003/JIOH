@@ -32,6 +32,7 @@ func _ready() -> void:
 	add_child(_viewport)
 	canvas = SheetCanvas.new()
 	canvas.size = Vector2(pixels)
+	canvas.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	canvas.doc = doc
 	_viewport.add_child(canvas)
 	var mesh := MeshInstance3D.new()
