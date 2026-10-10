@@ -6,17 +6,19 @@
 # instant the hatch says the exchange has settled. A player mid-sentence is
 # never cut off by the building changing around them.
 #
-# For the slice the dressing is the lights: off overnight, on from pre-open,
-# the back rooms off again at wind-down, someone having been round. Every
-# light's daytime energy is what the scene authored.
+# For the slice the dressing is the lighting (JIOH-84): six states from
+# resources/render/phase_lighting.tres, crossfaded, so the time can be read
+# from the light alone. Fluorescent levels are fractions of each light's
+# authored energy; the "Ambient" light is the daylight through the windows.
 class_name PhaseDressing
 extends Node
 
 signal dressing_applied(phase: int)
 
 const Phase := DayPhase.Phase
-## Lights that stay on at wind-down: the front of the building.
-const FRONT := [&"ReceptionLight", &"ReceptionLight2", &"LobbyLight", &"Ambient"]
+const FRONT := [&"ReceptionLight", &"ReceptionLight2", &"LobbyLight"]
+const CORRIDOR := [&"CorridorLight", &"CorridorLight2"]
+const SUN := &"Ambient"
 
 @export var lights_path: NodePath = ^"../Lights"
 @export var hatch_path: NodePath = ^"../Hatch"
@@ -29,9 +31,12 @@ var history: Array[int] = []
 var _waiting: int = -1
 var _authored: Dictionary = {}  # light name -> energy
 var _hatch: HandoutInteraction
+var lighting: PhaseLighting
+var _tween: Tween
 
 
 func _ready() -> void:
+	lighting = PhaseLighting.shipped()
 	var lights := get_node_or_null(lights_path)
 	if lights:
 		for l in lights.get_children():
@@ -42,7 +47,7 @@ func _ready() -> void:
 		_hatch.exchange_settled.connect(_on_settled)
 	DayPhase.phase_changed.connect(_on_phase_changed)
 	# A relaunch is dressed for now at once: there is no exchange to wait on.
-	_apply(DayPhase.phase)
+	_apply(DayPhase.phase, 0.0)
 
 
 func pending() -> bool:
@@ -53,31 +58,57 @@ func _on_phase_changed(_from: int, to: int) -> void:
 	if _hatch and _hatch.is_mid_exchange():
 		_waiting = to
 		return
-	_apply(to)
+	_apply(to, lighting.crossfade_seconds)
 
 
 func _on_settled() -> void:
 	if _waiting != -1:
 		var to := _waiting
 		_waiting = -1
-		_apply(to)
+		_apply(to, lighting.crossfade_seconds)
 
 
-func _apply(phase: int) -> void:
+func _apply(phase: int, seconds: float) -> void:
 	applied = phase
 	history.append(phase)
 	var lights := get_node_or_null(lights_path)
+	if _tween:
+		_tween.kill()
+		_tween = null
 	if lights:
+		var st := lighting.state(phase)
+		if seconds > 0.0:
+			_tween = create_tween().set_parallel(true)
 		for l in lights.get_children():
-			if l is Light3D and _authored.has(l.name):
-				(l as Light3D).light_energy = _authored[l.name] * _level(l.name, phase)
+			if not (l is Light3D and _authored.has(l.name)):
+				continue
+			var light := l as Light3D
+			var energy: float = _authored[l.name] * _level(l.name, st)
+			if l.name == SUN:
+				var basis := Basis.from_euler(Vector3(deg_to_rad(st.sun_pitch), deg_to_rad(-150.0), 0.0))
+				_put(light, "light_color", st.sun_color, seconds)
+				_put(light, "basis", basis, seconds)
+				energy = st.sun_energy
+			_put(light, "light_energy", energy, seconds)
+		# The fill light is lighting, not render configuration: RenderConfig
+		# owns the environment's fog and background, this owns its ambient.
+		var env := RenderConfig.environment
+		if env:
+			_put(env, "ambient_light_energy", st.ambient_energy, seconds)
+			_put(env, "ambient_light_color", st.ambient_color, seconds)
 	dressing_applied.emit(phase)
 
 
-func _level(light: StringName, phase: int) -> float:
-	match phase:
-		Phase.CLOSED:
-			return 0.35 if light == &"Ambient" else 0.0
-		Phase.WIND_DOWN:
-			return 1.0 if light in FRONT else 0.0
-	return 1.0
+func _put(target: Object, prop: String, value: Variant, seconds: float) -> void:
+	if seconds > 0.0 and _tween:
+		_tween.tween_property(target, prop, value, seconds)
+	else:
+		target.set(prop, value)
+
+
+func _level(light: StringName, st: Dictionary) -> float:
+	if light in FRONT:
+		return st.front
+	if light in CORRIDOR:
+		return st.corridor
+	return st.back
