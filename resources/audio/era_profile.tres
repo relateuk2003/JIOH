@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EraProfile" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/audio/era_profile.gd" id="1_era"]
+
+[resource]
+script = ExtResource("1_era")
+lowpass_hz = 11000.0
+lowpass_resonance = 0.5
+bit_depth = 8
+limiter_ceiling_db = -0.3
+limiter_release = 0.1

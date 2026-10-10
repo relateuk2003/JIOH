@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="VoiceSetData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/voice_set_data.gd" id="1_oia2e"]
+
+[resource]
+script = ExtResource("1_oia2e")
+voice_id = &"plasterer"
+words_per_minute = 190.0
+lines = {
+"accepted": ["Sound."],
+"greeting": ["Doherty. Quick as you like.", "Yeah, plastering, what've you got."],
+"queried": ["What's this bit? Never mind, what's it say?"],
+"refused": ["I'm not standing here all day for a bit of paper."],
+"waiting": ["Come on.", "Mix is going off, this."],
+"walked": ["Forget it. Tomorrow."]
+}

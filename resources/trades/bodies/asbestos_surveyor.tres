@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BodyProfileData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/body_profile_data.gd" id="1_ovgb1"]
+
+[resource]
+script = ExtResource("1_ovgb1")
+body_id = &"asbestos_surveyor"
+height_m = 1.68
+gait_speed = 1.0
+kit_colour = Color(0.95, 0.75, 0.1, 1)
+kit_notes = "Disposable coveralls folded under one arm. Sample bags. Reads every line twice."

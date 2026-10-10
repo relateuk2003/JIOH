@@ -1,0 +1,11 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3]
+
+[ext_resource type="FontFile" path="res://resources/fonts/jioh_body_6px.fnt" id="1_body"]
+
+[resource]
+font = ExtResource("1_body")
+font_size = 10
+font_color = Color(0.1, 0.1, 0.1, 1)
+line_spacing = 0.0
+outline_size = 0
+shadow_size = 0

@@ -1,0 +1,189 @@
+[gd_resource type="Resource" script_class="DocumentTemplate" load_steps=29 format=3]
+
+[ext_resource type="Script" path="res://resources/documents/document_field.gd" id="1_bixpc"]
+[ext_resource type="Script" path="res://resources/documents/document_template.gd" id="2_ic3bk"]
+[ext_resource type="Script" path="res://resources/documents/validation_rule.gd" id="3_goi5g"]
+[ext_resource type="Script" path="res://resources/documents/rules/field_matches_job_rule.gd" id="4_h0y25"]
+[ext_resource type="Script" path="res://resources/documents/rules/date_range_rule.gd" id="5_2nx2w"]
+[ext_resource type="Script" path="res://resources/documents/rules/sibling_match_rule.gd" id="6_jfjyk"]
+[ext_resource type="Script" path="res://resources/documents/rules/unclosed_predecessor_rule.gd" id="7_dwwor"]
+
+[sub_resource type="Resource" id="Resource_h0y25"]
+script = ExtResource("1_bixpc")
+key = &"permit_number"
+printed_label = "Permit No."
+type = 4
+required = true
+max_length = 8
+rect = Rect2(0.4, 0.17, 0.54, 0.045)
+source_hint = &"permit_register"
+
+[sub_resource type="Resource" id="Resource_2nx2w"]
+script = ExtResource("1_bixpc")
+key = &"job_number"
+printed_label = "Assoc. Job No."
+type = 4
+required = true
+max_length = 8
+rect = Rect2(0.4, 0.227, 0.54, 0.045)
+source_hint = &"returned_sheets"
+
+[sub_resource type="Resource" id="Resource_jfjyk"]
+script = ExtResource("1_bixpc")
+key = &"location"
+printed_label = "Location of Work"
+required = true
+max_length = 24
+rect = Rect2(0.4, 0.284, 0.54, 0.045)
+source_hint = &"site_drawings"
+
+[sub_resource type="Resource" id="Resource_dwwor"]
+script = ExtResource("1_bixpc")
+key = &"valid_from_date"
+printed_label = "Valid From (date)"
+type = 2
+required = true
+max_length = 8
+rect = Rect2(0.4, 0.341, 0.24, 0.045)
+source_hint = &"wall_planner"
+
+[sub_resource type="Resource" id="Resource_0r6q0"]
+script = ExtResource("1_bixpc")
+key = &"valid_from_time"
+printed_label = "Valid From (time)"
+type = 3
+required = true
+max_length = 5
+rect = Rect2(0.7, 0.341, 0.14, 0.045)
+
+[sub_resource type="Resource" id="Resource_r6pia"]
+script = ExtResource("1_bixpc")
+key = &"valid_to_date"
+printed_label = "Valid To (date)"
+type = 2
+required = true
+max_length = 8
+rect = Rect2(0.4, 0.398, 0.24, 0.045)
+source_hint = &"wall_planner"
+
+[sub_resource type="Resource" id="Resource_wwk0l"]
+script = ExtResource("1_bixpc")
+key = &"valid_to_time"
+printed_label = "Valid To (time)"
+type = 3
+required = true
+max_length = 5
+rect = Rect2(0.7, 0.398, 0.14, 0.045)
+
+[sub_resource type="Resource" id="Resource_g6r6l"]
+script = ExtResource("1_bixpc")
+key = &"works_description"
+printed_label = "Works Description"
+type = 7
+required = true
+max_length = 120
+rect = Rect2(0.4, 0.455, 0.54, 0.11)
+source_hint = &"terminal_mail"
+
+[sub_resource type="Resource" id="Resource_p72vk"]
+script = ExtResource("1_bixpc")
+key = &"prec_isolation"
+printed_label = "Isolation in place"
+type = 5
+rect = Rect2(0.12, 0.577, 0.04, 0.035)
+
+[sub_resource type="Resource" id="Resource_jmu8t"]
+script = ExtResource("1_bixpc")
+key = &"prec_barriers"
+printed_label = "Barriers / signage"
+type = 5
+rect = Rect2(0.26, 0.577, 0.04, 0.035)
+
+[sub_resource type="Resource" id="Resource_kdlu7"]
+script = ExtResource("1_bixpc")
+key = &"prec_ppe"
+printed_label = "PPE as RAMS"
+type = 5
+rect = Rect2(0.39999998, 0.577, 0.04, 0.035)
+
+[sub_resource type="Resource" id="Resource_43too"]
+script = ExtResource("1_bixpc")
+key = &"prec_fire"
+printed_label = "Fire precautions"
+type = 5
+rect = Rect2(0.53999996, 0.577, 0.04, 0.035)
+
+[sub_resource type="Resource" id="Resource_talqr"]
+script = ExtResource("1_bixpc")
+key = &"isolation_serial"
+printed_label = "Isolation Cert. Serial"
+type = 4
+max_length = 8
+rect = Rect2(0.4, 0.624, 0.54, 0.045)
+source_hint = &"isolation_register"
+
+[sub_resource type="Resource" id="Resource_swlox"]
+script = ExtResource("1_bixpc")
+key = &"issuer_signature"
+printed_label = "Issued By (sign)"
+type = 6
+required = true
+rect = Rect2(0.4, 0.681, 0.54, 0.06)
+
+[sub_resource type="Resource" id="Resource_q6dxu"]
+script = ExtResource("1_bixpc")
+key = &"acceptor_signature"
+printed_label = "Accepted By (sign)"
+type = 6
+rect = Rect2(0.4, 0.753, 0.54, 0.06)
+
+[sub_resource type="Resource" id="Resource_wlne7"]
+script = ExtResource("1_bixpc")
+key = &"close_out"
+printed_label = "Close Out (sign)"
+type = 6
+rect = Rect2(0.4, 0.825, 0.54, 0.06)
+
+[sub_resource type="Resource" id="Resource_gimja"]
+script = ExtResource("4_h0y25")
+field_key = &"job_number"
+rule_id = &"job_number_matches_job_job_number"
+category = 3
+
+[sub_resource type="Resource" id="Resource_03dhs"]
+script = ExtResource("5_2nx2w")
+rule_id = &"ptw_covers_job"
+category = 2
+
+[sub_resource type="Resource" id="Resource_vd1us"]
+script = ExtResource("6_jfjyk")
+field_key = &"job_number"
+sibling_doc_id = &"job_sheet"
+sibling_field_key = &"job_number"
+rule_id = &"job_number_matches_job_sheet"
+category = 3
+
+[sub_resource type="Resource" id="Resource_4qv8x"]
+script = ExtResource("6_jfjyk")
+field_key = &"isolation_serial"
+sibling_doc_id = &"isolation_certificate"
+sibling_field_key = &"isolation_serial"
+rule_id = &"isolation_serial_matches_isolation_certificate"
+category = 3
+
+[sub_resource type="Resource" id="Resource_7kl46"]
+script = ExtResource("7_dwwor")
+rule_id = &"ptw_unclosed_predecessor"
+category = 4
+
+[resource]
+script = ExtResource("2_ic3bk")
+doc_id = &"permit_to_work"
+display_name = "Permit to Work"
+form_code = "PTW-04/B"
+trades = Array[StringName]([&"electrician", &"carpenter", &"gas_engineer", &"fire_alarm_engineer", &"asbestos_surveyor", &"scaffolder"])
+fields = Array[ExtResource("1_bixpc")]([SubResource("Resource_h0y25"), SubResource("Resource_2nx2w"), SubResource("Resource_jfjyk"), SubResource("Resource_dwwor"), SubResource("Resource_0r6q0"), SubResource("Resource_r6pia"), SubResource("Resource_wwk0l"), SubResource("Resource_g6r6l"), SubResource("Resource_p72vk"), SubResource("Resource_jmu8t"), SubResource("Resource_kdlu7"), SubResource("Resource_43too"), SubResource("Resource_talqr"), SubResource("Resource_swlox"), SubResource("Resource_q6dxu"), SubResource("Resource_wlne7")])
+requires_signature = true
+requires_stamp = true
+validity_days = 1
+validation_rules = Array[ExtResource("3_goi5g")]([SubResource("Resource_gimja"), SubResource("Resource_03dhs"), SubResource("Resource_vd1us"), SubResource("Resource_4qv8x"), SubResource("Resource_7kl46")])

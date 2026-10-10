@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BodyProfileData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/body_profile_data.gd" id="1_tfwa4"]
+
+[resource]
+script = ExtResource("1_tfwa4")
+body_id = &"flooring_fitter"
+height_m = 1.77
+build = 0
+kit_colour = Color(0.2, 0.25, 0.2, 1)
+kit_notes = "Knee pads on, always. Stanley knife holster. Quiet."

@@ -1,0 +1,905 @@
+[gd_scene load_steps=68 format=3]
+
+[ext_resource type="Shader" path="res://shaders/ps1_standard.gdshader" id="1_efr2g"]
+[ext_resource type="Script" path="res://scripts/interaction/refuse_interactable.gd" id="2_fm17a"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_osda7"]
+render_priority = 0
+shader = ExtResource("1_efr2g")
+shader_parameter/albedo = Color(0.42, 0.41, 0.38, 1)
+shader_parameter/uv_scale = null
+shader_parameter/snap_enabled = null
+shader_parameter/snap_strength = null
+shader_parameter/snap_disable_distance = null
+shader_parameter/affine_strength = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tvpja"]
+render_priority = 0
+shader = ExtResource("1_efr2g")
+shader_parameter/albedo = Color(0.62, 0.62, 0.6, 1)
+shader_parameter/uv_scale = null
+shader_parameter/snap_enabled = null
+shader_parameter/snap_strength = null
+shader_parameter/snap_disable_distance = null
+shader_parameter/affine_strength = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6kdqd"]
+render_priority = 0
+shader = ExtResource("1_efr2g")
+shader_parameter/albedo = Color(0.78, 0.76, 0.7, 1)
+shader_parameter/uv_scale = null
+shader_parameter/snap_enabled = null
+shader_parameter/snap_strength = null
+shader_parameter/snap_disable_distance = null
+shader_parameter/affine_strength = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k0ovb"]
+render_priority = 0
+shader = ExtResource("1_efr2g")
+shader_parameter/albedo = Color(0.36, 0.27, 0.18, 1)
+shader_parameter/uv_scale = null
+shader_parameter/snap_enabled = null
+shader_parameter/snap_strength = null
+shader_parameter/snap_disable_distance = null
+shader_parameter/affine_strength = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_56s0m"]
+render_priority = 0
+shader = ExtResource("1_efr2g")
+shader_parameter/albedo = Color(0.55, 0.46, 0.34, 1)
+shader_parameter/uv_scale = null
+shader_parameter/snap_enabled = null
+shader_parameter/snap_strength = null
+shader_parameter/snap_disable_distance = null
+shader_parameter/affine_strength = null
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_inwcc"]
+size = Vector3(4, 0.2, 8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r5itr"]
+size = Vector3(10, 0.2, 8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_v3bop"]
+size = Vector3(4, 0.2, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_aohym"]
+size = Vector3(6, 0.2, 5.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4reb8"]
+size = Vector3(6, 0.2, 5.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dbsps"]
+size = Vector3(2, 0.2, 1.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_53sdf"]
+size = Vector3(10, 0.2, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sr6w8"]
+size = Vector3(2, 0.2, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4a2qu"]
+size = Vector3(18, 0.2, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j8bce"]
+size = Vector3(2, 0.2, 12.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ovqrb"]
+size = Vector3(0.25, 2.4, 8.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gactm"]
+size = Vector3(0.25, 2.4, 3.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dkj5l"]
+size = Vector3(0.25, 2.4, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lap68"]
+size = Vector3(0.25, 2.4, 10.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1087o"]
+size = Vector3(0.25, 2.4, 1.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7ola6"]
+size = Vector3(0.25, 2.4, 4.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x7k2p"]
+size = Vector3(0.25, 2.4, 5.75)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sppk1"]
+size = Vector3(0.25, 2.4, 1.75)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3uvvl"]
+size = Vector3(0.25, 2.4, 5.75)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ts48e"]
+size = Vector3(0.25, 2.4, 12.75)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_smf5l"]
+size = Vector3(0.25, 2.4, 5.75)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3fyju"]
+size = Vector3(0.25, 2.4, 12.75)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xv8ho"]
+size = Vector3(0.25, 2.4, 5.75)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pcr2y"]
+size = Vector3(0.25, 2.4, 1.75)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wo5vd"]
+size = Vector3(0.25, 2.4, 5.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nrhky"]
+size = Vector3(0.25, 2.4, 5.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_l0r8i"]
+size = Vector3(0.25, 2.4, 2.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ifwtu"]
+size = Vector3(11.75, 2.4, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6kj4i"]
+size = Vector3(1.75, 2.4, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wgy07"]
+size = Vector3(6.25, 2.4, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_80d7h"]
+size = Vector3(6.25, 2.4, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0mrx3"]
+size = Vector3(14.25, 2.4, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xu2cn"]
+size = Vector3(4.25, 2.4, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d6tus"]
+size = Vector3(3.75, 2.4, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h3qhw"]
+size = Vector3(6.75, 2.4, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ywehe"]
+size = Vector3(8.25, 2.4, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b8q43"]
+size = Vector3(2.25, 2.4, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ib5bt"]
+size = Vector3(4.75, 2.4, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_er3hq"]
+size = Vector3(4.75, 2.4, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tnaso"]
+size = Vector3(10.25, 2.4, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lqcvu"]
+size = Vector3(2.25, 2.4, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qouti"]
+size = Vector3(4.25, 2.4, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rt3mu"]
+size = Vector3(10.25, 2.4, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7q0w2"]
+size = Vector3(0.25, 0.95, 1.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_scnux"]
+size = Vector3(0.7, 0.75, 1.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_78hlb"]
+size = Vector3(2.5, 1, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rutyy"]
+size = Vector3(0.25, 1, 2.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e00uv"]
+size = Vector3(2.5, 1, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6qasc"]
+size = Vector3(1.4, 0.75, 0.7)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f1nln"]
+size = Vector3(1.2, 2, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xojv3"]
+size = Vector3(1.2, 2, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6g1h3"]
+size = Vector3(1.2, 2, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kt5qq"]
+size = Vector3(1.4, 0.75, 0.7)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7a2s7"]
+size = Vector3(1.4, 0.75, 0.7)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y31tq"]
+size = Vector3(1.5, 0.9, 0.8)
+
+[sub_resource type="Curve3D" id="Curve3D_yfuar"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 10.25, 0, 3.6, 0, 0, 0, 0, 0, 0, 10.25, 0, 2.4, 0, 0, 0, 0, 0, 0, 6.6, 0, 2.4, 0, 0, 0, 0, 0, 0, 6.6, 0, 3.6),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
+
+[sub_resource type="Curve3D" id="Curve3D_hxyp0"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 10.25, 0, 3.6, 0, 0, 0, 0, 0, 0, 11, 0, 6.5, 0, 0, 0, 0, 0, 0, 20, 0, 6.5, 0, 0, 0, 0, 0, 0, 20, 0, 3.5),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
+
+[sub_resource type="Curve3D" id="Curve3D_mg6kj"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 10.25, 0, 3.6, 0, 0, 0, 0, 0, 0, 11, 0, 6.5, 0, 0, 0, 0, 0, 0, 27.5, 0, 6.5, 0, 0, 0, 0, 0, 0, 27.5, 0, 3.5),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
+
+[sub_resource type="Curve3D" id="Curve3D_x2umy"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 10.25, 0, 3.6, 0, 0, 0, 0, 0, 0, 11, 0, 6.5, 0, 0, 0, 0, 0, 0, 25, 0, 6.5, 0, 0, 0, 0, 0, 0, 25, 0, 22.5),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
+
+[sub_resource type="Curve3D" id="Curve3D_jrraf"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 35, 0, 6.5, 0, 0, 0, 0, 0, 0, 11, 0, 6.5, 0, 0, 0, 0, 0, 0, 8.7, 0, 4.6, 0, 0, 0, 0, 0, 0, 8.7, 0, 3.6, 0, 0, 0, 0, 0, 0, 6.6, 0, 3.6),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[node name="Office" type="Node3D"]
+
+[node name="Blockout" type="Node3D" parent="."]
+metadata/delete_when_dressed = true
+
+[node name="Floor_Hatch" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -0.1, 4)
+size = Vector3(4, 0.2, 8)
+material = SubResource("ShaderMaterial_osda7")
+
+[node name="Ceiling_Hatch" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2.5, 4)
+size = Vector3(4, 0.2, 8)
+material = SubResource("ShaderMaterial_tvpja")
+
+[node name="Floor_Reception" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, -0.1, 4)
+size = Vector3(10, 0.2, 8)
+material = SubResource("ShaderMaterial_osda7")
+
+[node name="Ceiling_Reception" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 2.5, 4)
+size = Vector3(10, 0.2, 8)
+material = SubResource("ShaderMaterial_tvpja")
+
+[node name="Floor_Stairwell" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, -0.1, -2)
+size = Vector3(4, 0.2, 4)
+material = SubResource("ShaderMaterial_osda7")
+
+[node name="Ceiling_Stairwell" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 2.5, -2)
+size = Vector3(4, 0.2, 4)
+material = SubResource("ShaderMaterial_tvpja")
+
+[node name="Floor_FileStore" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, -0.1, 2.75)
+size = Vector3(6, 0.2, 5.5)
+material = SubResource("ShaderMaterial_osda7")
+
+[node name="Ceiling_FileStore" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 2.5, 2.75)
+size = Vector3(6, 0.2, 5.5)
+material = SubResource("ShaderMaterial_tvpja")
+
+[node name="Floor_PrintRoom" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, -0.1, 2.75)
+size = Vector3(6, 0.2, 5.5)
+material = SubResource("ShaderMaterial_osda7")
+
+[node name="Ceiling_PrintRoom" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 2.5, 2.75)
+size = Vector3(6, 0.2, 5.5)
+material = SubResource("ShaderMaterial_tvpja")
+
+[node name="Floor_KeyCabinet" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, -0.1, 8.25)
+size = Vector3(2, 0.2, 1.5)
+material = SubResource("ShaderMaterial_osda7")
+
+[node name="Ceiling_KeyCabinet" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 2.5, 8.25)
+size = Vector3(2, 0.2, 1.5)
+material = SubResource("ShaderMaterial_tvpja")
+
+[node name="Floor_Kitchen" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -0.1, 22.5)
+size = Vector3(10, 0.2, 5)
+material = SubResource("ShaderMaterial_osda7")
+
+[node name="Ceiling_Kitchen" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 2.5, 22.5)
+size = Vector3(10, 0.2, 5)
+material = SubResource("ShaderMaterial_tvpja")
+
+[node name="Floor_YardDoor" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, -0.1, 6.5)
+size = Vector3(2, 0.2, 2)
+material = SubResource("ShaderMaterial_osda7")
+
+[node name="Ceiling_YardDoor" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 2.5, 6.5)
+size = Vector3(2, 0.2, 2)
+material = SubResource("ShaderMaterial_tvpja")
+
+[node name="Floor_Corridor" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -0.1, 6.5)
+size = Vector3(18, 0.2, 2)
+material = SubResource("ShaderMaterial_osda7")
+
+[node name="Ceiling_Corridor" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 2.5, 6.5)
+size = Vector3(18, 0.2, 2)
+material = SubResource("ShaderMaterial_tvpja")
+
+[node name="Floor_CorridorSouth" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -0.1, 13.75)
+size = Vector3(2, 0.2, 12.5)
+material = SubResource("ShaderMaterial_osda7")
+
+[node name="Ceiling_CorridorSouth" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 2.5, 13.75)
+size = Vector3(2, 0.2, 12.5)
+material = SubResource("ShaderMaterial_tvpja")
+
+[node name="Wall_1" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.2, 4)
+size = Vector3(0.25, 2.4, 8.25)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_2" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.2, 1.5)
+size = Vector3(0.25, 2.4, 3.25)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_3" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.2, 6.125)
+size = Vector3(0.25, 2.4, 4)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_4" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 1.2, 1)
+size = Vector3(0.25, 2.4, 10.25)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_5" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 1.2, 7.5)
+size = Vector3(0.25, 2.4, 1.25)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_6" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.2, -2)
+size = Vector3(0.25, 2.4, 4.25)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_7" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.2, 2.75)
+size = Vector3(0.25, 2.4, 5.75)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_8" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.2, 8.25)
+size = Vector3(0.25, 2.4, 1.75)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_9" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.2, 2.75)
+size = Vector3(0.25, 2.4, 5.75)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_10" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.2, 13.75)
+size = Vector3(0.25, 2.4, 12.75)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_11" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 1.2, 2.75)
+size = Vector3(0.25, 2.4, 5.75)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_12" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 1.2, 13.75)
+size = Vector3(0.25, 2.4, 12.75)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_13" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 1.2, 2.75)
+size = Vector3(0.25, 2.4, 5.75)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_14" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.2, 8.25)
+size = Vector3(0.25, 2.4, 1.75)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_15" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.2, 22.5)
+size = Vector3(0.25, 2.4, 5.25)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_16" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.2, 22.5)
+size = Vector3(0.25, 2.4, 5.25)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_17" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.2, 6.5)
+size = Vector3(0.25, 2.4, 2.25)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_18" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.75, 1.2, 0)
+size = Vector3(11.75, 2.4, 0.25)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_19" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.25, 1.2, 0)
+size = Vector3(1.75, 2.4, 0.25)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_20" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 1.2, 0)
+size = Vector3(6.25, 2.4, 0.25)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_21" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 1.2, 0)
+size = Vector3(6.25, 2.4, 0.25)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_22" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1.2, 8)
+size = Vector3(14.25, 2.4, 0.25)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_23" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 1.2, -4)
+size = Vector3(4.25, 2.4, 0.25)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_24" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.75, 1.2, 5.5)
+size = Vector3(3.75, 2.4, 0.25)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_25" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.75, 1.2, 5.5)
+size = Vector3(6.75, 2.4, 0.25)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_26" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 1.2, 5.5)
+size = Vector3(8.25, 2.4, 0.25)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_27" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 1.2, 9)
+size = Vector3(2.25, 2.4, 0.25)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_28" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.25, 1.2, 20)
+size = Vector3(4.75, 2.4, 0.25)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_29" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.75, 1.2, 20)
+size = Vector3(4.75, 2.4, 0.25)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_30" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 1.2, 25)
+size = Vector3(10.25, 2.4, 0.25)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_31" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 1.2, 7.5)
+size = Vector3(2.25, 2.4, 0.25)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_32" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 1.2, 7.5)
+size = Vector3(4.25, 2.4, 0.25)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="Wall_33" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31, 1.2, 7.5)
+size = Vector3(10.25, 2.4, 0.25)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="HatchSill_34" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.475, 3.625)
+size = Vector3(0.25, 0.95, 1.5)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="HatchHead_34" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 2.2, 3.625)
+size = Vector3(0.25, 0.4, 1.5)
+material = SubResource("ShaderMaterial_6kdqd")
+
+[node name="FrontDoor" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1, 8)
+size = Vector3(1, 2, 0.3)
+material = SubResource("ShaderMaterial_k0ovb")
+
+[node name="YardDoorPanel" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1, 6.5)
+size = Vector3(0.3, 2, 1)
+material = SubResource("ShaderMaterial_k0ovb")
+
+[node name="HatchCounter" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.95, 3.625)
+size = Vector3(0.7, 0.05, 1.25)
+material = SubResource("ShaderMaterial_56s0m")
+
+[node name="PlayerDeskTop" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 0.375, 3.5)
+size = Vector3(0.7, 0.75, 1.4)
+material = SubResource("ShaderMaterial_56s0m")
+
+[node name="JanicesDeskTop" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.375, 5.5)
+size = Vector3(1.4, 0.75, 0.7)
+material = SubResource("ShaderMaterial_56s0m")
+
+[node name="JanicePenNorth" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.125, 0.5, 4.5)
+size = Vector3(2.5, 1, 0.25)
+material = SubResource("ShaderMaterial_56s0m")
+
+[node name="JanicePenEast" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.25, 0.5, 5.625)
+size = Vector3(0.25, 1, 2.5)
+material = SubResource("ShaderMaterial_56s0m")
+
+[node name="JanicePenSouth" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.125, 0.5, 6.75)
+size = Vector3(2.5, 1, 0.25)
+material = SubResource("ShaderMaterial_56s0m")
+
+[node name="PrinterBench" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0.375, 0.6)
+size = Vector3(1.4, 0.75, 0.7)
+material = SubResource("ShaderMaterial_56s0m")
+
+[node name="Cabinet" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 1.4, 8.85)
+size = Vector3(0.8, 0.8, 0.2)
+material = SubResource("ShaderMaterial_56s0m")
+
+[node name="Shelf_0" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 1, 1)
+size = Vector3(1.2, 2, 0.5)
+material = SubResource("ShaderMaterial_56s0m")
+
+[node name="Shelf_1" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 1, 1)
+size = Vector3(1.2, 2, 0.5)
+material = SubResource("ShaderMaterial_56s0m")
+
+[node name="Shelf_2" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 1, 1)
+size = Vector3(1.2, 2, 0.5)
+material = SubResource("ShaderMaterial_56s0m")
+
+[node name="Worktop" type="CSGBox3D" parent="Blockout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0.375, 24.4)
+size = Vector3(1.4, 0.75, 0.7)
+material = SubResource("ShaderMaterial_56s0m")
+
+[node name="Collision" type="StaticBody3D" parent="."]
+metadata/surface = "vinyl"
+
+[node name="Shape" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -0.1, 4)
+shape = SubResource("BoxShape3D_inwcc")
+
+[node name="Shape2" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, -0.1, 4)
+shape = SubResource("BoxShape3D_r5itr")
+
+[node name="Shape3" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, -0.1, -2)
+shape = SubResource("BoxShape3D_v3bop")
+
+[node name="Shape4" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, -0.1, 2.75)
+shape = SubResource("BoxShape3D_aohym")
+
+[node name="Shape5" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, -0.1, 2.75)
+shape = SubResource("BoxShape3D_4reb8")
+
+[node name="Shape6" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, -0.1, 8.25)
+shape = SubResource("BoxShape3D_dbsps")
+
+[node name="Shape7" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -0.1, 22.5)
+shape = SubResource("BoxShape3D_53sdf")
+
+[node name="Shape8" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, -0.1, 6.5)
+shape = SubResource("BoxShape3D_sr6w8")
+
+[node name="Shape9" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -0.1, 6.5)
+shape = SubResource("BoxShape3D_4a2qu")
+
+[node name="Shape10" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -0.1, 13.75)
+shape = SubResource("BoxShape3D_j8bce")
+
+[node name="Shape11" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.2, 4)
+shape = SubResource("BoxShape3D_ovqrb")
+
+[node name="Shape12" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.2, 1.5)
+shape = SubResource("BoxShape3D_gactm")
+
+[node name="Shape13" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.2, 6.125)
+shape = SubResource("BoxShape3D_dkj5l")
+
+[node name="Shape14" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 1.2, 1)
+shape = SubResource("BoxShape3D_lap68")
+
+[node name="Shape15" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 1.2, 7.5)
+shape = SubResource("BoxShape3D_1087o")
+
+[node name="Shape16" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.2, -2)
+shape = SubResource("BoxShape3D_7ola6")
+
+[node name="Shape17" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.2, 2.75)
+shape = SubResource("BoxShape3D_x7k2p")
+
+[node name="Shape18" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.2, 8.25)
+shape = SubResource("BoxShape3D_sppk1")
+
+[node name="Shape19" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.2, 2.75)
+shape = SubResource("BoxShape3D_3uvvl")
+
+[node name="Shape20" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.2, 13.75)
+shape = SubResource("BoxShape3D_ts48e")
+
+[node name="Shape21" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 1.2, 2.75)
+shape = SubResource("BoxShape3D_smf5l")
+
+[node name="Shape22" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 1.2, 13.75)
+shape = SubResource("BoxShape3D_3fyju")
+
+[node name="Shape23" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 1.2, 2.75)
+shape = SubResource("BoxShape3D_xv8ho")
+
+[node name="Shape24" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.2, 8.25)
+shape = SubResource("BoxShape3D_pcr2y")
+
+[node name="Shape25" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.2, 22.5)
+shape = SubResource("BoxShape3D_wo5vd")
+
+[node name="Shape26" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1.2, 22.5)
+shape = SubResource("BoxShape3D_nrhky")
+
+[node name="Shape27" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1.2, 6.5)
+shape = SubResource("BoxShape3D_l0r8i")
+
+[node name="Shape28" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.75, 1.2, 0)
+shape = SubResource("BoxShape3D_ifwtu")
+
+[node name="Shape29" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.25, 1.2, 0)
+shape = SubResource("BoxShape3D_6kj4i")
+
+[node name="Shape30" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 1.2, 0)
+shape = SubResource("BoxShape3D_wgy07")
+
+[node name="Shape31" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 1.2, 0)
+shape = SubResource("BoxShape3D_80d7h")
+
+[node name="Shape32" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1.2, 8)
+shape = SubResource("BoxShape3D_0mrx3")
+
+[node name="Shape33" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 1.2, -4)
+shape = SubResource("BoxShape3D_xu2cn")
+
+[node name="Shape34" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.75, 1.2, 5.5)
+shape = SubResource("BoxShape3D_d6tus")
+
+[node name="Shape35" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.75, 1.2, 5.5)
+shape = SubResource("BoxShape3D_h3qhw")
+
+[node name="Shape36" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 1.2, 5.5)
+shape = SubResource("BoxShape3D_ywehe")
+
+[node name="Shape37" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 1.2, 9)
+shape = SubResource("BoxShape3D_b8q43")
+
+[node name="Shape38" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.25, 1.2, 20)
+shape = SubResource("BoxShape3D_ib5bt")
+
+[node name="Shape39" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.75, 1.2, 20)
+shape = SubResource("BoxShape3D_er3hq")
+
+[node name="Shape40" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 1.2, 25)
+shape = SubResource("BoxShape3D_tnaso")
+
+[node name="Shape41" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 1.2, 7.5)
+shape = SubResource("BoxShape3D_lqcvu")
+
+[node name="Shape42" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 1.2, 7.5)
+shape = SubResource("BoxShape3D_qouti")
+
+[node name="Shape43" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31, 1.2, 7.5)
+shape = SubResource("BoxShape3D_rt3mu")
+
+[node name="Shape44" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.475, 3.625)
+shape = SubResource("BoxShape3D_7q0w2")
+
+[node name="Shape45" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 0.375, 3.5)
+shape = SubResource("BoxShape3D_scnux")
+
+[node name="Shape46" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.125, 0.5, 4.5)
+shape = SubResource("BoxShape3D_78hlb")
+
+[node name="Shape47" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.25, 0.5, 5.625)
+shape = SubResource("BoxShape3D_rutyy")
+
+[node name="Shape48" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.125, 0.5, 6.75)
+shape = SubResource("BoxShape3D_e00uv")
+
+[node name="Shape49" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0.375, 0.6)
+shape = SubResource("BoxShape3D_6qasc")
+
+[node name="Shape50" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 1, 1)
+shape = SubResource("BoxShape3D_f1nln")
+
+[node name="Shape51" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 1, 1)
+shape = SubResource("BoxShape3D_xojv3")
+
+[node name="Shape52" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 1, 1)
+shape = SubResource("BoxShape3D_6g1h3")
+
+[node name="Shape53" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0.375, 24.4)
+shape = SubResource("BoxShape3D_kt5qq")
+
+[node name="Reception" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 4)
+
+[node name="Anchor" type="Marker3D" parent="Reception"]
+
+[node name="Hatch" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 3.6)
+
+[node name="Anchor" type="Marker3D" parent="Hatch"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+
+[node name="PlayerDesk" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.25, 0, 3.6)
+
+[node name="Anchor" type="Marker3D" parent="PlayerDesk"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+
+[node name="JanicesDesk" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 5.5)
+
+[node name="Anchor" type="Marker3D" parent="JanicesDesk"]
+
+[node name="Desk" type="StaticBody3D" parent="JanicesDesk"]
+
+[node name="Shape" type="CollisionShape3D" parent="JanicesDesk/Desk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.375, 0)
+shape = SubResource("BoxShape3D_7a2s7")
+
+[node name="Interactable" type="Area3D" parent="JanicesDesk"]
+script = ExtResource("2_fm17a")
+reason = "janices_desk_not_yours"
+verbs = 27
+display_name = "Janice's desk"
+object_id = &"janices_desk"
+
+[node name="Shape" type="CollisionShape3D" parent="JanicesDesk/Interactable"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+shape = SubResource("BoxShape3D_y31tq")
+
+[node name="PrintRoom" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0, 2.75)
+
+[node name="Anchor" type="Marker3D" parent="PrintRoom"]
+
+[node name="KeyCabinet" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, 8.25)
+
+[node name="Anchor" type="Marker3D" parent="KeyCabinet"]
+
+[node name="FileStore" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 0, 2.75)
+
+[node name="Anchor" type="Marker3D" parent="FileStore"]
+
+[node name="Kitchen" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, 22.5)
+
+[node name="Anchor" type="Marker3D" parent="Kitchen"]
+
+[node name="Stairwell" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -2)
+
+[node name="Anchor" type="Marker3D" parent="Stairwell"]
+
+[node name="YardDoor" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0, 6.5)
+
+[node name="Anchor" type="Marker3D" parent="YardDoor"]
+
+[node name="Routes" type="Node3D" parent="."]
+
+[node name="DeskToHatch" type="Path3D" parent="Routes"]
+curve = SubResource("Curve3D_yfuar")
+
+[node name="DeskToFileStore" type="Path3D" parent="Routes"]
+curve = SubResource("Curve3D_hxyp0")
+
+[node name="DeskToPrintRoom" type="Path3D" parent="Routes"]
+curve = SubResource("Curve3D_mg6kj")
+
+[node name="DeskToKitchen" type="Path3D" parent="Routes"]
+curve = SubResource("Curve3D_x2umy")
+
+[node name="YardToHatch" type="Path3D" parent="Routes"]
+curve = SubResource("Curve3D_jrraf")

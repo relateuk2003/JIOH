@@ -1,0 +1,110 @@
+[gd_resource type="AudioBusLayout" load_steps=8 format=3]
+
+[ext_resource type="AudioEffectReverb" path="res://resources/audio/reverb_presets/room_small.tres" id="1_small"]
+[ext_resource type="AudioEffectReverb" path="res://resources/audio/reverb_presets/room_hall.tres" id="2_hall"]
+[ext_resource type="AudioEffectReverb" path="res://resources/audio/reverb_presets/room_dead.tres" id="3_dead"]
+
+[sub_resource type="AudioEffectLowPassFilter" id="lowpass"]
+resource_name = "LowPassFilter"
+cutoff_hz = 11000.0
+resonance = 0.5
+
+[sub_resource type="AudioEffectDistortion" id="crush"]
+resource_name = "BitCrush"
+mode = 2
+pre_gain = 0.0
+keep_hf_hz = 20000.0
+drive = 0.642857
+post_gain = 0.0
+
+[sub_resource type="AudioEffectHardLimiter" id="limiter"]
+resource_name = "HardLimiter"
+pre_gain_db = 0.0
+ceiling_db = -0.3
+release = 0.1
+
+[sub_resource type="AudioEffectCapture" id="monitor"]
+resource_name = "Capture"
+buffer_length = 0.5
+
+[resource]
+bus/1/name = &"Era"
+bus/1/solo = false
+bus/1/mute = false
+bus/1/bypass_fx = false
+bus/1/volume_db = 0.0
+bus/1/send = &"EraOut"
+bus/1/effect/0/effect = SubResource("lowpass")
+bus/1/effect/0/enabled = true
+bus/1/effect/1/effect = SubResource("crush")
+bus/1/effect/1/enabled = true
+bus/2/name = &"EraOut"
+bus/2/solo = false
+bus/2/mute = false
+bus/2/bypass_fx = false
+bus/2/volume_db = 0.0
+bus/2/send = &"Master"
+bus/2/effect/0/effect = SubResource("limiter")
+bus/2/effect/0/enabled = true
+bus/3/name = &"Ambience"
+bus/3/solo = false
+bus/3/mute = false
+bus/3/bypass_fx = false
+bus/3/volume_db = 0.0
+bus/3/send = &"Era"
+bus/4/name = &"Mechanical"
+bus/4/solo = false
+bus/4/mute = false
+bus/4/bypass_fx = false
+bus/4/volume_db = 0.0
+bus/4/send = &"Era"
+bus/5/name = &"Voice"
+bus/5/solo = false
+bus/5/mute = false
+bus/5/bypass_fx = false
+bus/5/volume_db = 0.0
+bus/5/send = &"Era"
+bus/6/name = &"Interface"
+bus/6/solo = false
+bus/6/mute = false
+bus/6/bypass_fx = false
+bus/6/volume_db = 0.0
+bus/6/send = &"Era"
+bus/7/name = &"FMV"
+bus/7/solo = false
+bus/7/mute = false
+bus/7/bypass_fx = false
+bus/7/volume_db = 0.0
+bus/7/send = &"Era"
+bus/8/name = &"Space_small"
+bus/8/solo = false
+bus/8/mute = false
+bus/8/bypass_fx = false
+bus/8/volume_db = 0.0
+bus/8/send = &"Era"
+bus/8/effect/0/effect = ExtResource("1_small")
+bus/8/effect/0/enabled = true
+bus/9/name = &"Space_hall"
+bus/9/solo = false
+bus/9/mute = false
+bus/9/bypass_fx = false
+bus/9/volume_db = 0.0
+bus/9/send = &"Era"
+bus/9/effect/0/effect = ExtResource("2_hall")
+bus/9/effect/0/enabled = true
+bus/10/name = &"Space_dead"
+bus/10/solo = false
+bus/10/mute = false
+bus/10/bypass_fx = false
+bus/10/volume_db = 0.0
+bus/10/send = &"Era"
+bus/10/effect/0/effect = ExtResource("3_dead")
+bus/10/effect/0/enabled = true
+bus/11/name = &"Monitor"
+bus/11/solo = false
+bus/11/mute = false
+bus/11/bypass_fx = false
+bus/11/volume_db = 0.0
+bus/11/send = &"Master"
+bus/11/effect/0/effect = SubResource("monitor")
+bus/11/effect/0/enabled = false

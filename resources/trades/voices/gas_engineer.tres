@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="VoiceSetData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/voice_set_data.gd" id="1_as5tu"]
+
+[resource]
+script = ExtResource("1_as5tu")
+voice_id = &"gas_engineer"
+pitch = 0.95
+words_per_minute = 125.0
+lines = {
+"accepted": ["Thank you. That's all in order."],
+"greeting": ["Good morning. Pryce, Gas Safe. I'll need the full pack, please."],
+"queried": ["The isolation reference doesn't match. I can't start on that.", "There's no hot works on this."],
+"refused": ["I'm sorry. My registration's on the line. I won't sign for this."],
+"waiting": ["I'll wait."],
+"walked": ["I've waited as long as I can. I'll call the office."]
+}

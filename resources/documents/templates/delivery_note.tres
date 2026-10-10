@@ -1,0 +1,77 @@
+[gd_resource type="Resource" script_class="DocumentTemplate" load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://resources/documents/document_field.gd" id="1_n2gbt"]
+[ext_resource type="Script" path="res://resources/documents/document_template.gd" id="2_5w277"]
+[ext_resource type="Script" path="res://resources/documents/validation_rule.gd" id="3_nvd7f"]
+
+[sub_resource type="Resource" id="Resource_n2gbt"]
+script = ExtResource("1_n2gbt")
+key = &"supplier"
+printed_label = "Supplier"
+required = true
+max_length = 24
+rect = Rect2(0.4, 0.17, 0.54, 0.045)
+source_hint = &"terminal_mail"
+
+[sub_resource type="Resource" id="Resource_5w277"]
+script = ExtResource("1_n2gbt")
+key = &"order_number"
+printed_label = "Order No."
+type = 4
+required = true
+max_length = 10
+rect = Rect2(0.4, 0.227, 0.54, 0.045)
+source_hint = &"terminal_mail"
+
+[sub_resource type="Resource" id="Resource_nvd7f"]
+script = ExtResource("1_n2gbt")
+key = &"items"
+printed_label = "Items"
+type = 7
+required = true
+max_length = 160
+rect = Rect2(0.4, 0.284, 0.54, 0.11)
+
+[sub_resource type="Resource" id="Resource_fiadm"]
+script = ExtResource("1_n2gbt")
+key = &"quantity"
+printed_label = "Qty"
+type = 1
+required = true
+max_length = 4
+rect = Rect2(0.4, 0.406, 0.12, 0.045)
+
+[sub_resource type="Resource" id="Resource_kbvep"]
+script = ExtResource("1_n2gbt")
+key = &"received_by"
+printed_label = "Received By (sign)"
+type = 6
+required = true
+rect = Rect2(0.4, 0.463, 0.54, 0.06)
+
+[sub_resource type="Resource" id="Resource_xfc1g"]
+script = ExtResource("1_n2gbt")
+key = &"date_received"
+printed_label = "Date Received"
+type = 2
+required = true
+max_length = 8
+rect = Rect2(0.4, 0.535, 0.24, 0.045)
+
+[sub_resource type="Resource" id="Resource_xhyj5"]
+script = ExtResource("1_n2gbt")
+key = &"discrepancy"
+printed_label = "Discrepancies"
+type = 7
+max_length = 120
+rect = Rect2(0.4, 0.592, 0.54, 0.11)
+
+[resource]
+script = ExtResource("2_5w277")
+doc_id = &"delivery_note"
+display_name = "Delivery Note"
+form_code = "DN-"
+fields = Array[ExtResource("1_n2gbt")]([SubResource("Resource_n2gbt"), SubResource("Resource_5w277"), SubResource("Resource_nvd7f"), SubResource("Resource_fiadm"), SubResource("Resource_kbvep"), SubResource("Resource_xfc1g"), SubResource("Resource_xhyj5")])
+requires_signature = true
+requires_stamp = true
+requires_punch = true

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="VoiceSetData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/voice_set_data.gd" id="1_ecwni"]
+
+[resource]
+script = ExtResource("1_ecwni")
+voice_id = &"carpenter"
+pitch = 0.9
+words_per_minute = 140.0
+lines = {
+"accepted": ["Smashing.", "That'll do."],
+"greeting": ["Alright. Moyes, for the fire door.", "Morning, morning."],
+"queried": ["This says Thursday, I thought it was Wednesday?", "Is that the right room, that?"],
+"refused": ["Can't go in on that, can I. Sort it and I'll come back."],
+"waiting": ["No rush, mate.", "Kettle on back there?"],
+"walked": ["I'll be in the van. Give us a shout."]
+}

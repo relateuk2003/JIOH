@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/interaction/handout_interaction.gd" id="1_h"]
+[ext_resource type="Script" path="res://scripts/interaction/hatch_handover_zone.gd" id="2_z"]
+[ext_resource type="Script" path="res://scripts/systems/reaction_resolver.gd" id="3_r"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_zone"]
+size = Vector3(0.45, 0.5, 1.2)
+
+[node name="Hatch" type="Node3D" node_paths=PackedStringArray("handover_point", "zone")]
+script = ExtResource("1_h")
+handover_point = NodePath("HandoverPoint")
+zone = NodePath("HatchHandoverZone")
+
+[node name="HatchHandoverZone" type="Area3D" parent="."]
+script = ExtResource("2_z")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HatchHandoverZone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 1.2, 0)
+shape = SubResource("BoxShape3D_zone")
+
+[node name="HandoverPoint" type="Marker3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.55, 0, 0)
+
+[node name="ReactionResolver" type="Node" parent="."]
+script = ExtResource("3_r")

@@ -1,0 +1,111 @@
+[gd_scene load_steps=14 format=3]
+
+[ext_resource type="Script" path="res://tools/affine_test_room.gd" id="1_room"]
+[ext_resource type="Shader" path="res://shaders/ps1_standard.gdshader" id="2_ps1"]
+[ext_resource type="Texture2D" path="res://assets/textures/dev/affine_checker.png" id="3_checker"]
+[ext_resource type="Texture2D" path="res://assets/textures/dev/wall_magnolia.png" id="4_wall"]
+[ext_resource type="Environment" path="res://resources/environment/ps1_environment.tres" id="5_env"]
+
+[sub_resource type="ShaderMaterial" id="Mat_floor"]
+shader = ExtResource("2_ps1")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/albedo_texture = ExtResource("3_checker")
+shader_parameter/uv_scale = Vector2(2, 12)
+shader_parameter/snap_enabled = true
+shader_parameter/snap_strength = 1.0
+shader_parameter/snap_disable_distance = 0.0
+shader_parameter/affine_strength = 1.0
+
+[sub_resource type="ShaderMaterial" id="Mat_wall"]
+shader = ExtResource("2_ps1")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/albedo_texture = ExtResource("4_wall")
+shader_parameter/uv_scale = Vector2(4, 1)
+shader_parameter/snap_enabled = true
+shader_parameter/snap_strength = 1.0
+shader_parameter/snap_disable_distance = 0.0
+shader_parameter/affine_strength = 1.0
+
+[sub_resource type="PlaneMesh" id="Floor_2tri"]
+material = SubResource("Mat_floor")
+size = Vector2(2, 12)
+
+[sub_resource type="PlaneMesh" id="Floor_4x4"]
+material = SubResource("Mat_floor")
+size = Vector2(2, 12)
+subdivide_width = 3
+subdivide_depth = 3
+
+[sub_resource type="PlaneMesh" id="Floor_16x16"]
+material = SubResource("Mat_floor")
+size = Vector2(2, 12)
+subdivide_width = 15
+subdivide_depth = 15
+
+[sub_resource type="BoxMesh" id="Wall_side"]
+material = SubResource("Mat_wall")
+size = Vector3(0.2, 2.6, 12)
+subdivide_height = 2
+subdivide_depth = 12
+
+[sub_resource type="BoxMesh" id="Wall_back"]
+material = SubResource("Mat_wall")
+size = Vector3(7.2, 2.6, 0.2)
+subdivide_width = 7
+subdivide_height = 2
+
+[sub_resource type="BoxMesh" id="Divider"]
+material = SubResource("Mat_wall")
+size = Vector3(0.2, 0.3, 12)
+subdivide_depth = 12
+
+[node name="AffineTestRoom" type="Node3D"]
+script = ExtResource("1_room")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("5_env")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866, -0.25, 0.433, 0, 0.866, 0.5, -0.5, -0.433, 0.75, 0, 3, 0)
+light_energy = 0.6
+
+[node name="Lamp" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, -3)
+light_energy = 1.4
+omni_range = 9.0
+
+[node name="FloorTwoTriangles" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4, 0, -6)
+mesh = SubResource("Floor_2tri")
+
+[node name="Floor4x4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+mesh = SubResource("Floor_4x4")
+
+[node name="Floor16x16" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4, 0, -6)
+mesh = SubResource("Floor_16x16")
+
+[node name="DividerLeft" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2, 0.15, -6)
+mesh = SubResource("Divider")
+
+[node name="DividerRight" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2, 0.15, -6)
+mesh = SubResource("Divider")
+
+[node name="WallLeft" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 1.3, -6)
+mesh = SubResource("Wall_side")
+
+[node name="WallRight" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 1.3, -6)
+mesh = SubResource("Wall_side")
+
+[node name="WallBack" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, -12)
+mesh = SubResource("Wall_back")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.9689, 0.2474, 0, -0.2474, 0.9689, 0, 1.6, 0.8)
+fov = 60.0

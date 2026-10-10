@@ -1,0 +1,78 @@
+[gd_resource type="Resource" script_class="PackMatrix" load_steps=16 format=3]
+
+[ext_resource type="Script" path="res://resources/documents/pack_requirement.gd" id="1_l17ks"]
+[ext_resource type="Script" path="res://resources/documents/conditional_doc.gd" id="2_588be"]
+[ext_resource type="Script" path="res://resources/documents/pack_matrix.gd" id="3_5rb8x"]
+
+[sub_resource type="Resource" id="Resource_7fpu4"]
+script = ExtResource("1_l17ks")
+trade = &"electrician"
+required_docs = Array[StringName]([&"job_sheet", &"permit_to_work", &"rams", &"isolation_certificate"])
+expected_docs = Array[StringName]([&"access_key_docket"])
+
+[sub_resource type="Resource" id="Resource_mmlxw"]
+script = ExtResource("2_588be")
+doc_id = &"hot_works_permit"
+when_job_kind_in = Array[StringName]([&"cutting"])
+
+[sub_resource type="Resource" id="Resource_7yu58"]
+script = ExtResource("1_l17ks")
+trade = &"carpenter"
+required_docs = Array[StringName]([&"job_sheet"])
+expected_docs = Array[StringName]([&"permit_to_work", &"rams", &"access_key_docket"])
+conditional_docs = Array[ExtResource("2_588be")]([SubResource("Resource_mmlxw")])
+
+[sub_resource type="Resource" id="Resource_f33ul"]
+script = ExtResource("1_l17ks")
+trade = &"gas_engineer"
+required_docs = Array[StringName]([&"job_sheet", &"permit_to_work", &"hot_works_permit", &"rams", &"isolation_certificate"])
+expected_docs = Array[StringName]([&"access_key_docket"])
+
+[sub_resource type="Resource" id="Resource_1reuw"]
+script = ExtResource("1_l17ks")
+trade = &"plasterer"
+required_docs = Array[StringName]([&"job_sheet"])
+expected_docs = Array[StringName]([&"rams", &"access_key_docket"])
+
+[sub_resource type="Resource" id="Resource_1gxx6"]
+script = ExtResource("1_l17ks")
+trade = &"decorator"
+required_docs = Array[StringName]([&"job_sheet"])
+expected_docs = Array[StringName]([&"rams", &"access_key_docket"])
+
+[sub_resource type="Resource" id="Resource_8derh"]
+script = ExtResource("2_588be")
+doc_id = &"hot_works_permit"
+when_job_kind_in = Array[StringName]([&"hot_bonding"])
+
+[sub_resource type="Resource" id="Resource_os6gx"]
+script = ExtResource("1_l17ks")
+trade = &"flooring_fitter"
+required_docs = Array[StringName]([&"job_sheet"])
+expected_docs = Array[StringName]([&"rams", &"access_key_docket"])
+conditional_docs = Array[ExtResource("2_588be")]([SubResource("Resource_8derh")])
+
+[sub_resource type="Resource" id="Resource_x8gtx"]
+script = ExtResource("1_l17ks")
+trade = &"fire_alarm_engineer"
+required_docs = Array[StringName]([&"job_sheet", &"permit_to_work", &"rams", &"access_key_docket", &"isolation_certificate"])
+
+[sub_resource type="Resource" id="Resource_jl5ln"]
+script = ExtResource("1_l17ks")
+trade = &"asbestos_surveyor"
+required_docs = Array[StringName]([&"job_sheet", &"permit_to_work", &"rams", &"access_key_docket"])
+
+[sub_resource type="Resource" id="Resource_fy2ij"]
+script = ExtResource("1_l17ks")
+trade = &"cleaner"
+required_docs = Array[StringName]([&"access_key_docket"])
+expected_docs = Array[StringName]([&"job_sheet"])
+
+[sub_resource type="Resource" id="Resource_hmcmt"]
+script = ExtResource("1_l17ks")
+trade = &"scaffolder"
+required_docs = Array[StringName]([&"job_sheet", &"permit_to_work", &"rams"])
+
+[resource]
+script = ExtResource("3_5rb8x")
+rows = Array[ExtResource("1_l17ks")]([SubResource("Resource_7fpu4"), SubResource("Resource_7yu58"), SubResource("Resource_f33ul"), SubResource("Resource_1reuw"), SubResource("Resource_1gxx6"), SubResource("Resource_os6gx"), SubResource("Resource_x8gtx"), SubResource("Resource_jl5ln"), SubResource("Resource_fy2ij"), SubResource("Resource_hmcmt")])

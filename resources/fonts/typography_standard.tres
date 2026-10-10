@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="TypographyStandard" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/typography_standard.gd" id="1_ts"]
+
+[resource]
+script = ExtResource("1_ts")
+page_pixels = Vector2i(128, 96)
+margin_px = 4
+line_gap_px = 1
+words_per_page = 60
+terminal_pixels = Vector2i(96, 64)

@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="TradespersonData" load_steps=8 format=3]
+
+[ext_resource type="Resource" path="res://resources/trades/bodies/plasterer.tres" id="1_453i5"]
+[ext_resource type="Script" path="res://scripts/data/punctuality_profile.gd" id="2_8pogp"]
+[ext_resource type="Script" path="res://scripts/data/tradesperson_data.gd" id="3_5l8u4"]
+[ext_resource type="Resource" path="res://resources/trades/voices/plasterer.tres" id="4_yyscg"]
+[ext_resource type="Script" path="res://scripts/data/waiting_profile.gd" id="5_wlhks"]
+
+[sub_resource type="Resource" id="Resource_t256k"]
+script = ExtResource("2_8pogp")
+window_start_minutes = 10.0
+variance_minutes = 6.0
+drift_per_campaign_day = 8.0
+
+[sub_resource type="Resource" id="Resource_6pily"]
+script = ExtResource("5_wlhks")
+knock_style = &"bang"
+leaves_note = false
+uses_phone = false
+mutters = true
+
+[resource]
+script = ExtResource("3_5l8u4")
+trade_id = &"plasterer"
+display_name = "Wayne Doherty"
+surname = "Doherty"
+company = "Doherty Plastering"
+punctuality = SubResource("Resource_t256k")
+patience_seconds = 120.0
+waiting = SubResource("Resource_6pily")
+read_pace_seconds_per_page = 2.0
+voice_set = ExtResource("4_yyscg")
+body_profile = ExtResource("1_453i5")
+required_document_types = Array[StringName]([&"job_sheet"])

@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="HatchLines" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://resources/dialogue/hatch_lines.gd" id="1_lines"]
+
+[resource]
+script = ExtResource("1_lines")
+lines = {
+&"hatch_contradicts_sibling": PackedStringArray("These two don't agree with each other. Which one's right?", "Your numbers don't match, love. One of these is wrong."),
+&"hatch_expired": PackedStringArray("This is last week's, love.", "That's run out. I can't work off that."),
+&"hatch_missing_document": PackedStringArray("Where's the rest of it?", "There's a sheet missing here. I'm not starting without it."),
+&"hatch_missing_field": PackedStringArray("You've left a box blank here.", "Half of this isn't filled in."),
+&"hatch_surplus_document": PackedStringArray("What's this one for? It's not mine.", "You've given me someone else's bit as well."),
+&"hatch_unclosed_predecessor": PackedStringArray("Somebody never closed the last one out on this. I can't open another.", "There's still a live permit on that from before. Not touching it."),
+&"hatch_unpunched": PackedStringArray("This wants punching before it goes in the file.", "No holes in it. Never mind."),
+&"hatch_unsigned": PackedStringArray("Nobody's signed this.", "It's not signed. I'm not allowed to take it unsigned."),
+&"hatch_unstamped": PackedStringArray("No stamp on it. They'll moan, but go on.", "Not stamped. Fine."),
+&"hatch_wrong_date_in_field": PackedStringArray("That's not today's date.", "The date's wrong on this."),
+&"hatch_wrong_date_on_stamp": PackedStringArray("Your stamp's wrong. Says the wrong day.", "Somebody wants to wind that stamp on."),
+&"hatch_wrong_job_number": PackedStringArray("That's not my job number.", "This number's for a different job."),
+&"hatch_wrong_pigeon_hole": PackedStringArray("This was in my hole, but it's not my pack.", "I think this one's somebody else's."),
+&"hatch_wrong_trade": PackedStringArray("This is made out for a different trade.", "I'm not the electrician, love.")
+}

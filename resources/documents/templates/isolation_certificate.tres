@@ -1,0 +1,114 @@
+[gd_resource type="Resource" script_class="DocumentTemplate" load_steps=16 format=3]
+
+[ext_resource type="Script" path="res://resources/documents/document_field.gd" id="1_6h02j"]
+[ext_resource type="Script" path="res://resources/documents/document_template.gd" id="2_lasnp"]
+[ext_resource type="Script" path="res://resources/documents/validation_rule.gd" id="3_bk4rm"]
+[ext_resource type="Script" path="res://resources/documents/rules/field_matches_job_rule.gd" id="4_lasnp"]
+
+[sub_resource type="Resource" id="Resource_lasnp"]
+script = ExtResource("1_6h02j")
+key = &"isolation_serial"
+printed_label = "Isolation Serial"
+type = 4
+required = true
+max_length = 8
+rect = Rect2(0.4, 0.17, 0.54, 0.045)
+source_hint = &"isolation_register"
+
+[sub_resource type="Resource" id="Resource_bk4rm"]
+script = ExtResource("1_6h02j")
+key = &"system_isolated"
+printed_label = "System Isolated"
+required = true
+max_length = 24
+rect = Rect2(0.4, 0.227, 0.54, 0.045)
+source_hint = &"site_drawings"
+
+[sub_resource type="Resource" id="Resource_s8odk"]
+script = ExtResource("1_6h02j")
+key = &"isolation_points"
+printed_label = "Points of Isolation"
+type = 7
+required = true
+max_length = 120
+rect = Rect2(0.4, 0.284, 0.54, 0.11)
+source_hint = &"site_drawings"
+
+[sub_resource type="Resource" id="Resource_rh1p2"]
+script = ExtResource("1_6h02j")
+key = &"lock_number"
+printed_label = "Lock No."
+type = 4
+required = true
+max_length = 6
+rect = Rect2(0.4, 0.406, 0.54, 0.045)
+source_hint = &"key_cabinet"
+
+[sub_resource type="Resource" id="Resource_mk576"]
+script = ExtResource("1_6h02j")
+key = &"tag_number"
+printed_label = "Tag No."
+type = 4
+required = true
+max_length = 6
+rect = Rect2(0.4, 0.463, 0.54, 0.045)
+source_hint = &"key_cabinet"
+
+[sub_resource type="Resource" id="Resource_11k74"]
+script = ExtResource("1_6h02j")
+key = &"isolated_by"
+printed_label = "Isolated By (sign)"
+type = 6
+required = true
+rect = Rect2(0.4, 0.52, 0.54, 0.06)
+
+[sub_resource type="Resource" id="Resource_qehsq"]
+script = ExtResource("1_6h02j")
+key = &"isolated_date"
+printed_label = "Date Isolated"
+type = 2
+required = true
+max_length = 8
+rect = Rect2(0.4, 0.592, 0.24, 0.045)
+
+[sub_resource type="Resource" id="Resource_eig8s"]
+script = ExtResource("1_6h02j")
+key = &"isolated_time"
+printed_label = "Time Isolated"
+type = 3
+required = true
+max_length = 5
+rect = Rect2(0.7, 0.592, 0.14, 0.045)
+
+[sub_resource type="Resource" id="Resource_d6jsr"]
+script = ExtResource("1_6h02j")
+key = &"de_isolation"
+printed_label = "De-isolated (sign)"
+type = 6
+rect = Rect2(0.4, 0.649, 0.54, 0.06)
+
+[sub_resource type="Resource" id="Resource_4jqox"]
+script = ExtResource("4_lasnp")
+job_property = &"isolation_serial"
+field_key = &"isolation_serial"
+rule_id = &"isolation_serial_matches_job_isolation_serial"
+category = 3
+
+[sub_resource type="Resource" id="Resource_8gjaw"]
+script = ExtResource("4_lasnp")
+job_property = &"date"
+field_key = &"isolated_date"
+failure_code = 1
+rule_id = &"isolated_date_matches_job_date"
+category = 3
+
+[resource]
+script = ExtResource("2_lasnp")
+doc_id = &"isolation_certificate"
+display_name = "Isolation Certificate"
+form_code = "ISO-11"
+trades = Array[StringName]([&"electrician", &"gas_engineer", &"fire_alarm_engineer"])
+fields = Array[ExtResource("1_6h02j")]([SubResource("Resource_lasnp"), SubResource("Resource_bk4rm"), SubResource("Resource_s8odk"), SubResource("Resource_rh1p2"), SubResource("Resource_mk576"), SubResource("Resource_11k74"), SubResource("Resource_qehsq"), SubResource("Resource_eig8s"), SubResource("Resource_d6jsr")])
+requires_signature = true
+validity_days = 1
+validation_rules = Array[ExtResource("3_bk4rm")]([SubResource("Resource_4jqox"), SubResource("Resource_8gjaw")])

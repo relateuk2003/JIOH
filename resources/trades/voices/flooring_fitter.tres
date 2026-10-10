@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="VoiceSetData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/voice_set_data.gd" id="1_cxmwk"]
+
+[resource]
+script = ExtResource("1_cxmwk")
+voice_id = &"flooring_fitter"
+pitch = 1.1
+words_per_minute = 150.0
+lines = {
+"accepted": ["Cheers."],
+"greeting": ["Ellery. Floors.", "Morning."],
+"queried": ["Says bonding on the sheet. Is there a hot works?"],
+"refused": ["Can't do it on that."],
+"waiting": ["..."],
+"walked": ["I'll go to the next site."]
+}

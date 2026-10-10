@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="TradespersonData" load_steps=8 format=3]
+
+[ext_resource type="Resource" path="res://resources/trades/bodies/decorator.tres" id="1_kxqd7"]
+[ext_resource type="Script" path="res://scripts/data/punctuality_profile.gd" id="2_qyiol"]
+[ext_resource type="Script" path="res://scripts/data/tradesperson_data.gd" id="3_peyw4"]
+[ext_resource type="Resource" path="res://resources/trades/voices/decorator.tres" id="4_swjws"]
+[ext_resource type="Script" path="res://scripts/data/waiting_profile.gd" id="5_kq3q8"]
+
+[sub_resource type="Resource" id="Resource_ou0p2"]
+script = ExtResource("2_qyiol")
+window_start_minutes = 100.0
+window_end_minutes = 140.0
+variance_minutes = 25.0
+drift_per_campaign_day = 5.0
+
+[sub_resource type="Resource" id="Resource_6sdrp"]
+script = ExtResource("5_kq3q8")
+knock_style = &"tap"
+uses_phone = false
+
+[resource]
+script = ExtResource("3_peyw4")
+trade_id = &"decorator"
+display_name = "Terry Faulkner"
+surname = "Faulkner"
+company = "Faulkner Decorators"
+punctuality = SubResource("Resource_ou0p2")
+patience_seconds = 360.0
+waiting = SubResource("Resource_6sdrp")
+error_tolerance = 4
+voice_set = ExtResource("4_swjws")
+body_profile = ExtResource("1_kxqd7")
+required_document_types = Array[StringName]([&"job_sheet"])

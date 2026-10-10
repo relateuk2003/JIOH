@@ -1,0 +1,12 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://shaders/ps1_standard.gdshader" id="1_ps1"]
+
+[resource]
+shader = ExtResource("1_ps1")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/uv_scale = Vector2(1, 1)
+shader_parameter/snap_enabled = true
+shader_parameter/snap_strength = 1.0
+shader_parameter/snap_disable_distance = 0.0
+shader_parameter/affine_strength = 1.0

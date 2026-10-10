@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BodyProfileData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/body_profile_data.gd" id="1_gdpjn"]
+
+[resource]
+script = ExtResource("1_gdpjn")
+body_id = &"plasterer"
+height_m = 1.83
+build = 3
+gait_speed = 1.5
+kit_colour = Color(0.92, 0.9, 0.86, 1)
+kit_notes = "White-spattered everything. Radio under one arm. Always mid-sentence on the phone."
+waiting_pose = &"fidget"

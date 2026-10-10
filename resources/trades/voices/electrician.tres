@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="VoiceSetData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/voice_set_data.gd" id="1_ljnpu"]
+
+[resource]
+script = ExtResource("1_ljnpu")
+voice_id = &"electrician"
+pitch = 1.05
+words_per_minute = 175.0
+lines = {
+"accepted": ["Lovely. Ta.", "Right, cheers."],
+"greeting": ["Morning. Isolation cert in there?", "Hollins. Should be a pack for me."],
+"queried": ["Where's the isolation cert?", "This isn't signed off. I'm not touching it."],
+"refused": ["No. Not without the cert. Not doing it.", "Ring me when it's sorted."],
+"waiting": ["...", "Any chance of this today?"],
+"walked": ["I've got another job at ten. I'm off."]
+}

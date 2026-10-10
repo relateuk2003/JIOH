@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BodyProfileData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/body_profile_data.gd" id="1_4q24l"]
+
+[resource]
+script = ExtResource("1_4q24l")
+body_id = &"gas_engineer"
+height_m = 1.72
+gait_speed = 1.1
+kit_colour = Color(0.85, 0.85, 0.82, 1)
+kit_notes = "Pressed polo, ID card on a reel, clipboard of his own. Reads everything."

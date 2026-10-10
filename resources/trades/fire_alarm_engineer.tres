@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="TradespersonData" load_steps=8 format=3]
+
+[ext_resource type="Resource" path="res://resources/trades/bodies/fire_alarm_engineer.tres" id="1_uo5xf"]
+[ext_resource type="Script" path="res://scripts/data/punctuality_profile.gd" id="2_cfodr"]
+[ext_resource type="Script" path="res://scripts/data/tradesperson_data.gd" id="3_7djkt"]
+[ext_resource type="Resource" path="res://resources/trades/voices/fire_alarm_engineer.tres" id="4_38eu7"]
+[ext_resource type="Script" path="res://scripts/data/waiting_profile.gd" id="5_8s0ba"]
+
+[sub_resource type="Resource" id="Resource_8bhq2"]
+script = ExtResource("2_cfodr")
+window_start_minutes = 15.0
+window_end_minutes = 25.0
+variance_minutes = 3.0
+drift_per_campaign_day = 3.0
+
+[sub_resource type="Resource" id="Resource_aurxy"]
+script = ExtResource("5_8s0ba")
+knock_style = &"polite"
+
+[resource]
+script = ExtResource("3_7djkt")
+trade_id = &"fire_alarm_engineer"
+display_name = "Priya Nandra"
+surname = "Nandra"
+company = "Northgate Fire & Security"
+punctuality = SubResource("Resource_8bhq2")
+patience_seconds = 300.0
+waiting = SubResource("Resource_aurxy")
+error_tolerance = 1
+read_pace_seconds_per_page = 10.0
+voice_set = ExtResource("4_38eu7")
+body_profile = ExtResource("1_uo5xf")
+required_document_types = Array[StringName]([&"job_sheet", &"permit_to_work", &"rams", &"access_key_docket", &"isolation_certificate"])

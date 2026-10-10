@@ -1,0 +1,171 @@
+[gd_scene load_steps=28 format=3]
+
+[ext_resource type="Script" path="res://scripts/levels/office_level.gd" id="1_level"]
+[ext_resource type="PackedScene" path="res://scenes/office/office_blockout.tscn" id="2_office"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="3_player"]
+[ext_resource type="Environment" path="res://resources/environment/ps1_environment.tres" id="4_env"]
+[ext_resource type="PackedScene" path="res://scenes/props/pigeon_hole_wall.tscn" id="5_holes"]
+[ext_resource type="PackedScene" path="res://scenes/props/date_stamp.tscn" id="6_stamp"]
+[ext_resource type="PackedScene" path="res://scenes/props/ink_pad.tscn" id="7_pad"]
+[ext_resource type="PackedScene" path="res://scenes/props/hole_punch.tscn" id="8_punch"]
+[ext_resource type="PackedScene" path="res://scenes/props/dot_matrix_printer.tscn" id="9_printer"]
+[ext_resource type="PackedScene" path="res://scenes/props/paper_box.tscn" id="10_box"]
+[ext_resource type="PackedScene" path="res://scenes/props/desk_fill.tscn" id="11_fill"]
+[ext_resource type="PackedScene" path="res://scenes/props/pen.tscn" id="12_pen"]
+[ext_resource type="PackedScene" path="res://scenes/props/wall_planner.tscn" id="13_planner"]
+[ext_resource type="PackedScene" path="res://scenes/props/key_cabinet.tscn" id="14_keys"]
+[ext_resource type="PackedScene" path="res://scenes/props/answerphone.tscn" id="15_phone"]
+[ext_resource type="PackedScene" path="res://scenes/props/crt_terminal.tscn" id="16_crt"]
+[ext_resource type="PackedScene" path="res://scenes/props/drawing_rack.tscn" id="17_rack"]
+[ext_resource type="PackedScene" path="res://scenes/props/register_book.tscn" id="18_book"]
+[ext_resource type="Script" path="res://scripts/systems/arrival_scheduler.gd" id="19_arrivals"]
+[ext_resource type="PackedScene" path="res://scenes/props/hatch.tscn" id="20_hatch"]
+[ext_resource type="PackedScene" path="res://scenes/props/handover_note.tscn" id="21_note"]
+[ext_resource type="PackedScene" path="res://scenes/props/desk_drawer.tscn" id="22_drawer"]
+[ext_resource type="Script" path="res://scripts/audio/acoustic_zones.gd" id="23_zones"]
+[ext_resource type="Script" path="res://scripts/audio/room_tone_rig.gd" id="24_tone"]
+[ext_resource type="Script" path="res://scripts/ui/pause_screen.gd" id="25_pause"]
+[ext_resource type="Script" path="res://scripts/slice/phase_dressing.gd" id="26_dressing"]
+[ext_resource type="Script" path="res://scripts/slice/day_open_fmv.gd" id="27_dayopen"]
+
+[node name="OfficeLevel" type="Node3D"]
+script = ExtResource("1_level")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("4_env")
+
+[node name="Office" parent="." instance=ExtResource("2_office")]
+
+[node name="PigeonHoleWall" parent="." instance=ExtResource("5_holes")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.2, 0, 0.13)
+
+[node name="DeskFill" parent="." instance=ExtResource("11_fill")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 9.7, 0.752, 3.6)
+
+[node name="ArrivalScheduler" type="Node" parent="."]
+script = ExtResource("19_arrivals")
+
+[node name="Hatch" parent="." instance=ExtResource("20_hatch")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 3.625)
+
+[node name="Sources" type="Node3D" parent="."]
+
+[node name="WallPlanner" parent="Sources" instance=ExtResource("13_planner")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.6, 1.55, 0.15)
+
+[node name="KeyCabinet" parent="Sources" instance=ExtResource("14_keys")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 15.83, 1.45, 2.5)
+
+[node name="DrawingRack" parent="Sources" instance=ExtResource("17_rack")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 15.2, 0, 1.2)
+
+[node name="Answerphone" parent="Sources" instance=ExtResource("15_phone")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 9.3, 0.75, 3.85)
+
+[node name="CrtTerminal" parent="Sources" instance=ExtResource("16_crt")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 9.33, 0.75, 3.05)
+
+[node name="Props" type="Node3D" parent="."]
+
+[node name="KeyRegister" parent="Props" instance=ExtResource("18_book")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.65, 1.565, 0.25)
+source = &"key_register"
+title = "KEY REGISTER"
+
+[node name="PermitRegister" parent="Props" instance=ExtResource("18_book")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.2, 1.565, 0.25)
+
+[node name="RamsFile" parent="Props" instance=ExtResource("18_book")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.75, 1.565, 0.25)
+source = &"file_store"
+title = "RISK ASSESSMENTS"
+layout = 1
+template_id = &"rams"
+
+[node name="Pen" parent="Props" instance=ExtResource("12_pen")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 0.752, 3.4)
+
+[node name="DateStamp" parent="Props" instance=ExtResource("6_stamp")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 9.75, 0.75, 4.08)
+
+[node name="InkPad" parent="Props" instance=ExtResource("7_pad")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 9.75, 0.75, 3.92)
+
+[node name="HolePunch" parent="Props" instance=ExtResource("8_punch")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 9.3, 0.75, 4.1)
+
+[node name="DotMatrixPrinter" parent="Props" instance=ExtResource("9_printer")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0.75, 0.6)
+with_stand = false
+
+[node name="SparePaperBox" parent="Props" instance=ExtResource("10_box")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5, 0, 4.9)
+
+[node name="Lights" type="Node3D" parent="."]
+
+[node name="ReceptionLight" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 2.2, 3)
+light_energy = 1.2
+omni_range = 8.0
+
+[node name="ReceptionLight2" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5, 2.2, 5)
+light_energy = 1.0
+omni_range = 7.0
+
+[node name="LobbyLight" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2.2, 4)
+light_energy = 0.8
+omni_range = 6.0
+
+[node name="CorridorLight" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2.2, 6.5)
+light_energy = 0.9
+omni_range = 7.0
+
+[node name="CorridorLight2" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 2.2, 6.5)
+light_energy = 0.9
+omni_range = 7.0
+
+[node name="FileStoreLight" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 2.2, 2.5)
+light_energy = 0.7
+omni_range = 6.0
+
+[node name="PrintRoomLight" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 2.2, 2.5)
+light_energy = 0.9
+omni_range = 6.0
+
+[node name="KitchenLight" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 2.2, 22.5)
+light_energy = 1.0
+omni_range = 8.0
+
+[node name="Ambient" type="DirectionalLight3D" parent="Lights"]
+transform = Transform3D(0.866, -0.25, 0.433, 0, 0.866, 0.5, -0.5, -0.433, 0.75, 0, 5, 0)
+light_energy = 0.25
+
+[node name="Player" parent="." instance=ExtResource("3_player")]
+
+[node name="HandoverNote" parent="." instance=ExtResource("21_note")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 9.6, 0.752, 3.08)
+
+[node name="DeskDrawer" parent="." instance=ExtResource("22_drawer")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 9.855, 0.62, 3.1)
+
+[node name="AcousticZones" type="Node3D" parent="."]
+script = ExtResource("23_zones")
+
+[node name="RoomTone" type="Node3D" parent="."]
+script = ExtResource("24_tone")
+
+[node name="PauseScreen" type="CanvasLayer" parent="."]
+script = ExtResource("25_pause")
+
+[node name="PhaseDressing" type="Node" parent="."]
+script = ExtResource("26_dressing")
+
+[node name="DayOpenFMV" type="Node" parent="."]
+script = ExtResource("27_dayopen")

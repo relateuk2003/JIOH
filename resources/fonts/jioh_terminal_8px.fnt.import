@@ -1,0 +1,17 @@
+[remap]
+
+importer="font_data_bmfont"
+type="FontFile"
+uid="uid://ci6s86mr8mvfv"
+path="res://.godot/imported/jioh_terminal_8px.fnt-e67a4e9e65410b39ce32cb5d63ec8876.fontdata"
+
+[deps]
+
+source_file="res://resources/fonts/jioh_terminal_8px.fnt"
+dest_files=["res://.godot/imported/jioh_terminal_8px.fnt-e67a4e9e65410b39ce32cb5d63ec8876.fontdata"]
+
+[params]
+
+fallbacks=[]
+compress=true
+scaling_mode=1

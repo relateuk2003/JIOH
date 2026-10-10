@@ -1,0 +1,411 @@
+[gd_resource type="Resource" script_class="DayKnowledge" load_steps=51 format=3]
+
+[ext_resource type="Script" path="res://resources/knowledge/contradiction_pair.gd" id="1_wg00d"]
+[ext_resource type="Script" path="res://resources/knowledge/drawing_sheet.gd" id="2_0i7b0"]
+[ext_resource type="Script" path="res://resources/knowledge/fact.gd" id="2_nfle6"]
+[ext_resource type="Script" path="res://scripts/jobs/job_record.gd" id="3_n7xbb"]
+[ext_resource type="Script" path="res://resources/knowledge/day_knowledge.gd" id="4_0i7b0"]
+[ext_resource type="Script" path="res://resources/knowledge/mail_message.gd" id="5_q1pxq"]
+[ext_resource type="Script" path="res://resources/knowledge/phone_message.gd" id="6_pqggu"]
+
+[sub_resource type="Resource" id="Resource_o1yum"]
+script = ExtResource("1_wg00d")
+fact_a = &"c_date"
+fact_b = &"c_date_phone"
+truth = &"c_date"
+note = "Kev's message names day 5; the planner says day 4. The planner is right."
+
+[sub_resource type="Resource" id="Resource_1cwv8"]
+script = ExtResource("1_wg00d")
+fact_a = &"s_loc_b"
+fact_b = &"s_loc_a"
+truth = &"s_loc_b"
+note = "Rev A of the stair drawing is still in the rack."
+
+[sub_resource type="Resource" id="Resource_bseun"]
+script = ExtResource("1_wg00d")
+fact_a = &"c_key_reg"
+fact_b = &"c_key_hook"
+truth = &"c_key_reg"
+note = "The 2.04 hook holds tag 41; the register says K14."
+
+[sub_resource type="Resource" id="Resource_y6q1t"]
+script = ExtResource("2_0i7b0")
+drawing_no = "B-201"
+title = "Block B stair cores, level 2"
+spaces = PackedStringArray("North stair L2", "Lift core", "Plant")
+fact_ids = Array[StringName]([&"s_loc_a"])
+
+[sub_resource type="Resource" id="Resource_8al6y"]
+script = ExtResource("2_0i7b0")
+drawing_no = "B-201"
+title = "Block B stair cores, level 2"
+revision = "B"
+spaces = PackedStringArray("East stair L2", "Lift core", "Plant")
+fact_ids = Array[StringName]([&"s_loc_b"])
+
+[sub_resource type="Resource" id="Resource_85hy1"]
+script = ExtResource("2_0i7b0")
+drawing_no = "B-204"
+title = "Block B level 2 general arrangement"
+revision = "C"
+spaces = PackedStringArray("Room 2.01", "Room 2.02", "Room 2.04", "Room 2.05", "WC")
+fact_ids = Array[StringName]([&"c_loc"])
+
+[sub_resource type="Resource" id="Resource_v1b3r"]
+script = ExtResource("2_nfle6")
+fact_id = &"s_trade"
+subject_id = &"d4_scaffold"
+key = &"trade"
+value = "Scaffolder"
+sources = Array[StringName]([&"wall_planner"])
+wording = "SCAFFOLD - Brennan's"
+
+[sub_resource type="Resource" id="Resource_b4o47"]
+script = ExtResource("2_nfle6")
+fact_id = &"s_site"
+subject_id = &"d4_scaffold"
+key = &"site"
+value = "Block B"
+sources = Array[StringName]([&"wall_planner", &"terminal_mail"])
+wording = "Blk B"
+
+[sub_resource type="Resource" id="Resource_n0mbh"]
+script = ExtResource("2_nfle6")
+fact_id = &"s_date"
+subject_id = &"d4_scaffold"
+key = &"date"
+also_answers = Array[StringName]([&"valid_from_date", &"valid_to_date"])
+value = "day:4"
+sources = Array[StringName]([&"wall_planner"])
+
+[sub_resource type="Resource" id="Resource_4q64o"]
+script = ExtResource("2_nfle6")
+fact_id = &"s_jobno"
+subject_id = &"d4_scaffold"
+key = &"job_number"
+value = "J2207"
+available_from_day = 3
+sources = Array[StringName]([&"returned_sheets"])
+
+[sub_resource type="Resource" id="Resource_2h8jm"]
+script = ExtResource("2_nfle6")
+fact_id = &"s_desc"
+subject_id = &"d4_scaffold"
+key = &"description"
+also_answers = Array[StringName]([&"works_description"])
+value = "Extend tower scaffold to the L2 landing"
+available_from_day = 2
+sources = Array[StringName]([&"terminal_mail"])
+
+[sub_resource type="Resource" id="Resource_7ubpq"]
+script = ExtResource("2_nfle6")
+fact_id = &"s_loc_b"
+subject_id = &"d4_scaffold"
+key = &"location"
+also_answers = Array[StringName]([&"area"])
+value = "East stair L2"
+sources = Array[StringName]([&"site_drawings"])
+wording = "Rev B"
+
+[sub_resource type="Resource" id="Resource_517lx"]
+script = ExtResource("2_nfle6")
+fact_id = &"s_loc_a"
+subject_id = &"d4_scaffold"
+key = &"location"
+also_answers = Array[StringName]([&"area"])
+value = "North stair L2"
+sources = Array[StringName]([&"site_drawings"])
+confidence = 2
+wording = "Rev A"
+
+[sub_resource type="Resource" id="Resource_mrnuc"]
+script = ExtResource("2_nfle6")
+fact_id = &"s_permit"
+subject_id = &"d4_scaffold"
+key = &"permit_number"
+value = "P0418"
+sources = Array[StringName]([&"permit_register"])
+wording = "Brennan's  tower  Blk B"
+
+[sub_resource type="Resource" id="Resource_avjdg"]
+script = ExtResource("2_nfle6")
+fact_id = &"s_ra_ref"
+subject_id = &"d4_scaffold"
+key = &"assessment_ref"
+value = "RA-112"
+sources = Array[StringName]([&"file_store"])
+
+[sub_resource type="Resource" id="Resource_im7gw"]
+script = ExtResource("2_nfle6")
+fact_id = &"s_ra_rev"
+subject_id = &"d4_scaffold"
+key = &"revision"
+value = "C"
+sources = Array[StringName]([&"file_store"])
+
+[sub_resource type="Resource" id="Resource_d1l4s"]
+script = ExtResource("2_nfle6")
+fact_id = &"s_ra_ctl"
+subject_id = &"d4_scaffold"
+key = &"control_measures"
+value = "Tower inspected and tagged; edge protection; exclusion zone below"
+sources = Array[StringName]([&"file_store"])
+
+[sub_resource type="Resource" id="Resource_v8sac"]
+script = ExtResource("2_nfle6")
+fact_id = &"s_ra_by"
+subject_id = &"d4_scaffold"
+key = &"assessor"
+value = "D. Brennan"
+sources = Array[StringName]([&"file_store"])
+
+[sub_resource type="Resource" id="Resource_xpo7k"]
+script = ExtResource("2_nfle6")
+fact_id = &"s_ra_date"
+subject_id = &"d4_scaffold"
+key = &"assessment_date"
+value = "day:2"
+available_from_day = 2
+sources = Array[StringName]([&"file_store"])
+
+[sub_resource type="Resource" id="Resource_7syyd"]
+script = ExtResource("2_nfle6")
+fact_id = &"c_trade"
+subject_id = &"d4_carpentry"
+key = &"trade"
+value = "Carpenter"
+sources = Array[StringName]([&"wall_planner"])
+wording = "JOINER - Moyes"
+
+[sub_resource type="Resource" id="Resource_osw4s"]
+script = ExtResource("2_nfle6")
+fact_id = &"c_site"
+subject_id = &"d4_carpentry"
+key = &"site"
+value = "Block B"
+sources = Array[StringName]([&"wall_planner"])
+wording = "Blk B"
+
+[sub_resource type="Resource" id="Resource_qdabn"]
+script = ExtResource("2_nfle6")
+fact_id = &"c_date"
+subject_id = &"d4_carpentry"
+key = &"date"
+also_answers = Array[StringName]([&"valid_from_date", &"valid_to_date"])
+value = "day:4"
+sources = Array[StringName]([&"wall_planner"])
+
+[sub_resource type="Resource" id="Resource_1fqrp"]
+script = ExtResource("2_nfle6")
+fact_id = &"c_date_phone"
+subject_id = &"d4_carpentry"
+key = &"date"
+also_answers = Array[StringName]([&"valid_from_date", &"valid_to_date"])
+value = "day:5"
+available_from_day = 3
+sources = Array[StringName]([&"answerphone"])
+
+[sub_resource type="Resource" id="Resource_fnfp5"]
+script = ExtResource("2_nfle6")
+fact_id = &"c_jobno"
+subject_id = &"d4_carpentry"
+key = &"job_number"
+value = "J2211"
+available_from_day = 2
+sources = Array[StringName]([&"terminal_mail"])
+
+[sub_resource type="Resource" id="Resource_psgqj"]
+script = ExtResource("2_nfle6")
+fact_id = &"c_desc"
+subject_id = &"d4_carpentry"
+key = &"description"
+also_answers = Array[StringName]([&"works_description"])
+value = "Rehang the fire door to 2.04 and fit a new closer"
+available_from_day = 2
+sources = Array[StringName]([&"terminal_mail"])
+
+[sub_resource type="Resource" id="Resource_ytkfb"]
+script = ExtResource("2_nfle6")
+fact_id = &"c_loc"
+subject_id = &"d4_carpentry"
+key = &"location"
+also_answers = Array[StringName]([&"area"])
+value = "Room 2.04"
+sources = Array[StringName]([&"site_drawings", &"terminal_mail"])
+
+[sub_resource type="Resource" id="Resource_dojq0"]
+script = ExtResource("2_nfle6")
+fact_id = &"c_permit"
+subject_id = &"d4_carpentry"
+key = &"permit_number"
+value = "P0419"
+sources = Array[StringName]([&"permit_register"])
+wording = "Moyes  fire door"
+
+[sub_resource type="Resource" id="Resource_icow4"]
+script = ExtResource("2_nfle6")
+fact_id = &"c_ra_ref"
+subject_id = &"d4_carpentry"
+key = &"assessment_ref"
+value = "RA-087"
+sources = Array[StringName]([&"file_store"])
+
+[sub_resource type="Resource" id="Resource_v7hjv"]
+script = ExtResource("2_nfle6")
+fact_id = &"c_ra_rev"
+subject_id = &"d4_carpentry"
+key = &"revision"
+value = "B"
+sources = Array[StringName]([&"file_store"])
+
+[sub_resource type="Resource" id="Resource_fcfke"]
+script = ExtResource("2_nfle6")
+fact_id = &"c_ra_ctl"
+subject_id = &"d4_carpentry"
+key = &"control_measures"
+value = "Two-person lift; door wedged open; dust sheets down"
+sources = Array[StringName]([&"file_store"])
+
+[sub_resource type="Resource" id="Resource_2c8as"]
+script = ExtResource("2_nfle6")
+fact_id = &"c_ra_by"
+subject_id = &"d4_carpentry"
+key = &"assessor"
+value = "K. Moyes"
+sources = Array[StringName]([&"file_store"])
+
+[sub_resource type="Resource" id="Resource_14ym4"]
+script = ExtResource("2_nfle6")
+fact_id = &"c_ra_date"
+subject_id = &"d4_carpentry"
+key = &"assessment_date"
+value = "day:1"
+sources = Array[StringName]([&"file_store"])
+
+[sub_resource type="Resource" id="Resource_vxq3n"]
+script = ExtResource("2_nfle6")
+fact_id = &"c_key_reg"
+subject_id = &"d4_carpentry"
+key = &"key_number"
+value = "K14"
+sources = Array[StringName]([&"key_register"])
+wording = "Rm 2.04"
+
+[sub_resource type="Resource" id="Resource_lrfme"]
+script = ExtResource("2_nfle6")
+fact_id = &"c_key_hook"
+subject_id = &"d4_carpentry"
+key = &"key_number"
+value = "K41"
+sources = Array[StringName]([&"key_cabinet"])
+wording = "tag on the 2.04 hook"
+
+[sub_resource type="Resource" id="Resource_skrag"]
+script = ExtResource("2_nfle6")
+fact_id = &"c_hook"
+subject_id = &"d4_carpentry"
+key = &"cabinet_position"
+value = "H14"
+sources = Array[StringName]([&"key_cabinet", &"key_register"])
+wording = "2.04"
+
+[sub_resource type="Resource" id="Resource_iqlkh"]
+script = ExtResource("2_nfle6")
+fact_id = &"c_issued"
+subject_id = &"d4_carpentry"
+key = &"issued_to"
+value = "Moyes Joinery"
+sources = Array[StringName]([&"wall_planner"])
+
+[sub_resource type="Resource" id="Resource_i3gor"]
+script = ExtResource("2_nfle6")
+fact_id = &"c_issued_phone"
+subject_id = &"d4_carpentry"
+key = &"issued_to"
+value = "Moyes Joinery"
+available_from_day = 3
+sources = Array[StringName]([&"answerphone"])
+confidence = 1
+
+[sub_resource type="Resource" id="Resource_ef7vj"]
+script = ExtResource("3_n7xbb")
+job_id = &"d4_scaffold"
+job_number = "J2207"
+trade = &"scaffolder"
+location = "East stair L2"
+scope = "Extend tower scaffold to the L2 landing"
+start_day = 4
+end_day = 4
+site = "Block B"
+permit_number = "P0418"
+
+[sub_resource type="Resource" id="Resource_yk1ka"]
+script = ExtResource("3_n7xbb")
+job_id = &"d4_carpentry"
+job_number = "J2211"
+trade = &"carpenter"
+location = "Room 2.04"
+scope = "Rehang the fire door to 2.04 and fit a new closer"
+start_day = 4
+end_day = 4
+key_number = "K14"
+site = "Block B"
+permit_number = "P0419"
+
+[sub_resource type="Resource" id="Resource_2lcqq"]
+script = ExtResource("5_q1pxq")
+message_id = &"mail_brennan"
+available_from_day = 2
+sender = "Denise <office@brennanscaffolding.co.uk>"
+subject = "Tower extension, Block B"
+body = "Morning,
+
+Confirming we are back {day:4} to Extend tower scaffold to the L2 landing, Block B, east stair as per the drawing. Can you have the permit ready for the lads. Job ref as on our last sheet.
+
+Regards
+Denise
+Brennan Scaffolding Ltd"
+fact_ids = Array[StringName]([&"s_desc", &"s_site"])
+
+[sub_resource type="Resource" id="Resource_fjecq"]
+script = ExtResource("5_q1pxq")
+message_id = &"mail_moyes"
+available_from_day = 2
+sender = "Kev Moyes <kev@moyesjoinery.co.uk>"
+subject = "Fire door 2.04 - J2211"
+body = "Hi,
+
+Got the order through, our job is J2211. Rehang the fire door to 2.04 and fit a new closer. It's Room 2.04 on your second floor.
+
+Kev"
+fact_ids = Array[StringName]([&"c_jobno", &"c_desc", &"c_loc"])
+
+[sub_resource type="Resource" id="Resource_6hgxe"]
+script = ExtResource("5_q1pxq")
+message_id = &"mail_janice"
+sender = "Janice <janice.office@site>"
+subject = "Bits and bobs"
+body = "Love,
+
+Printer needs a thump if it sulks. Stamp is in the top drawer, wind it before you use it, I never do. Key book is on top of the pigeon holes.
+
+J x"
+
+[sub_resource type="Resource" id="Resource_hrvi4"]
+script = ExtResource("6_pqggu")
+message_id = &"msg_kev"
+available_from_day = 3
+caller = "Kev (Moyes Joinery)"
+transcript = "Hiya, it's Kev, from Moyes. We'll be with you {day:5} first thing for the door in two-oh-four. Any problems give us a bell. Cheers."
+fact_ids = Array[StringName]([&"c_date_phone", &"c_issued_phone"])
+
+[resource]
+script = ExtResource("4_0i7b0")
+day = 3
+jobs_for_tomorrow = Array[ExtResource("3_n7xbb")]([SubResource("Resource_ef7vj"), SubResource("Resource_yk1ka")])
+facts = Array[ExtResource("2_nfle6")]([SubResource("Resource_v1b3r"), SubResource("Resource_b4o47"), SubResource("Resource_n0mbh"), SubResource("Resource_4q64o"), SubResource("Resource_2h8jm"), SubResource("Resource_7ubpq"), SubResource("Resource_517lx"), SubResource("Resource_mrnuc"), SubResource("Resource_avjdg"), SubResource("Resource_im7gw"), SubResource("Resource_d1l4s"), SubResource("Resource_v8sac"), SubResource("Resource_xpo7k"), SubResource("Resource_7syyd"), SubResource("Resource_osw4s"), SubResource("Resource_qdabn"), SubResource("Resource_1fqrp"), SubResource("Resource_fnfp5"), SubResource("Resource_psgqj"), SubResource("Resource_ytkfb"), SubResource("Resource_dojq0"), SubResource("Resource_icow4"), SubResource("Resource_v7hjv"), SubResource("Resource_fcfke"), SubResource("Resource_2c8as"), SubResource("Resource_14ym4"), SubResource("Resource_vxq3n"), SubResource("Resource_lrfme"), SubResource("Resource_skrag"), SubResource("Resource_iqlkh"), SubResource("Resource_i3gor")])
+contradictions = Array[ExtResource("1_wg00d")]([SubResource("Resource_o1yum"), SubResource("Resource_1cwv8"), SubResource("Resource_bseun")])
+phone_messages = Array[ExtResource("6_pqggu")]([SubResource("Resource_hrvi4")])
+mail = Array[ExtResource("5_q1pxq")]([SubResource("Resource_2lcqq"), SubResource("Resource_fjecq"), SubResource("Resource_6hgxe")])
+drawings = Array[ExtResource("2_0i7b0")]([SubResource("Resource_y6q1t"), SubResource("Resource_8al6y"), SubResource("Resource_85hy1")])

@@ -23,8 +23,12 @@ func check(cond: bool, what: String) -> void:
 		print("PROBE FAIL: ", what)
 
 
+const TEST_SLOT := 99
+
+
 func finish() -> void:
 	print("%s: %s" % [name, "PASSED" if failures == 0 else "%d FAILED" % failures])
+	remove_test_saves()
 	WorldClock.set_time_source(Callable())
 	WorldClock.set_time_zone_bias_override(null)
 	get_tree().quit(1 if failures > 0 else 0)
@@ -33,6 +37,7 @@ func finish() -> void:
 ## Puts the world on a controllable clock at local time on an epoch day.
 ## Clears any campaign and resyncs the phase machine.
 func use_fake_clock(epoch_day: int, hour: int, minute: int, bias_minutes := 0) -> void:
+	CampaignState.slot = TEST_SLOT
 	WorldClock.set_time_zone_bias_override(bias_minutes)
 	WorldClock.time_scale = 1.0
 	fake_utc = epoch_day * 86400 + hour * 3600 + minute * 60 - bias_minutes * 60
@@ -51,3 +56,14 @@ func advance(seconds: float) -> void:
 func set_local(epoch_day: int, hour: int, minute: int) -> void:
 	fake_utc = epoch_day * 86400 + hour * 3600 + minute * 60 - WorldClock.tz_bias_minutes() * 60
 	WorldClock.poll()
+
+
+## Deletes the probe save slot so probes never touch a real campaign.
+func remove_test_saves() -> void:
+	CampaignState.slot = TEST_SLOT
+	var dir := ProjectSettings.globalize_path(CampaignState.save_dir())
+	if not DirAccess.dir_exists_absolute(dir):
+		return
+	for f in DirAccess.get_files_at(dir):
+		DirAccess.remove_absolute(dir.path_join(f))
+	DirAccess.remove_absolute(dir)

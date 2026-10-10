@@ -1,0 +1,17 @@
+[remap]
+
+importer="font_data_bmfont"
+type="FontFile"
+uid="uid://qjgu3n6ymlyu"
+path="res://.godot/imported/jioh_display_10px.fnt-effd61aa11c2406fa632b9126b981de4.fontdata"
+
+[deps]
+
+source_file="res://resources/fonts/jioh_display_10px.fnt"
+dest_files=["res://.godot/imported/jioh_display_10px.fnt-effd61aa11c2406fa632b9126b981de4.fontdata"]
+
+[params]
+
+fallbacks=[]
+compress=true
+scaling_mode=1
